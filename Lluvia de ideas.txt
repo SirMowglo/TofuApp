@@ -1,0 +1,32 @@
+Red social de comida
+	- Red social en el que la gente sube lo que ha comido en el dia, comparte recetas 
+	y tiene un espacio para organizarse su planning de comida
+
+Red social para artistas
+	- Red social para artistas donde el artista puede subir publicaciones de una forma similar a instagram
+	pero pudiendo dar datos especificos como si es tradicional, si es 2D o 3D y que materiales/programas a usado
+
+
+Gestor de mazos de magic
+	- Aplicacion que permite al usuario crear mazos, buscar informacion sobre cartas y descubrir mazos de otras personas
+
+
+
+Gestor de biblioteca de juegos
+	- Hay una base de datos con muchos videojuegos
+	- El usuario:
+		- Puede añadir videojuegos a su biblioteca (una lista de tus videojuegos comprados)
+		- Puede buscar videojuegos para consultar la informacion de estos
+		- Puede añadirlos a una lista de deseados
+		- Puede valorar (positivamente o negativamente) videojuegos que tenga en su biblioteca
+		- Puede dejar una review en la pagina
+
+	- Hay una seccion de descubrir que muestra videojuegos aleatoriamente/segun algoritmo
+		- Puedes buscar por popularidad, por porcentaje de recomendacion, etc	
+	
+	- Los videojuegos:
+		- Tienen un sistema de valoraciones
+		- Tienen descripcion
+		- Pueden estar comprados o no
+		- Tienen una lista de reviews dejadas por los usuarios
+	
