@@ -69,8 +69,16 @@ Red social en el que la gente sube lo que ha comido en el dia, comparte recetas 
 
 ## Modelo de datos
 
-![DataModel_v2.png](D:\Archivos\Trabajo\Programacion\00_ProyectoFinal\assets\DataModel_v2.png)
+![DataModel_v2.png](assets/bad9b28c9e39fd4018d70d074d637f9d2ef3cfcd.png)
+
+
 
 ---
 
 ## Diseño
+
+
+
+---
+
+No hace falta token de refresco
