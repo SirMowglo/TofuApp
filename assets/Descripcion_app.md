@@ -1,16 +1,4 @@
-# Red social de comida
-
-**Posibles nombres:** 
-
-- Tofu
-
-- TofuBook
-
-- GreenBook
-
-- BreadFriends
-
-- Crumbs
+# Tofu App
 
 ---
 
@@ -65,19 +53,17 @@ Red social en el que la gente sube lo que ha comido en el dia, comparte recetas 
 
 - Puedes añadir comentarios y valorar las recetas
 
+- Lista de la compra con ingredientes necesarios para la siguiente semana
+
 ---
 
 ## Modelo de datos
 
-![DataModel_v2.png](assets/bad9b28c9e39fd4018d70d074d637f9d2ef3cfcd.png)
-
-
+![DataModelSimplified_v3.png](images/dbc6b831ba88b87b5b63c055c377f1aa7e24ed62.png)
 
 ---
 
 ## Diseño
-
-
 
 ---
 
