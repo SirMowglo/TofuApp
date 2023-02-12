@@ -1,4 +1,4 @@
-package com.trianaSalesianos.tofuApp.model.dto;
+package com.trianaSalesianos.tofuApp.model.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.trianaSalesianos.tofuApp.model.User;
@@ -6,20 +6,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class UserResponse {
 
-    private String id;
-    private String username, avatar, fullName;
+    protected String id;
+    protected String username, avatar, fullName;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
-    private LocalDateTime createdAt;
+    protected LocalDateTime createdAt;
 
 
     public static UserResponse fromUser(User user) {

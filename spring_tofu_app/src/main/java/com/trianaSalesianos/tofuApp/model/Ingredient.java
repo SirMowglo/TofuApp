@@ -11,8 +11,9 @@ import java.util.UUID;
 @Getter @Setter
 @Builder
 public class Ingredient {
+    //TODO Modelado de los ingredientes
     @Id
-    UUID id;
-    String name;
-    String img;
+    private UUID id;
+    private String name;
+    private String img;
 }

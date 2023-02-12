@@ -1,4 +1,4 @@
-package com.trianaSalesianos.tofuApp.model.dto;
+package com.trianaSalesianos.tofuApp.model.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

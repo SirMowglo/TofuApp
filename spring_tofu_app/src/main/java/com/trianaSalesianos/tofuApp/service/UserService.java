@@ -2,7 +2,7 @@ package com.trianaSalesianos.tofuApp.service;
 
 import com.trianaSalesianos.tofuApp.model.User;
 import com.trianaSalesianos.tofuApp.model.UserRole;
-import com.trianaSalesianos.tofuApp.model.dto.CreateUserRequest;
+import com.trianaSalesianos.tofuApp.model.dto.user.CreateUserRequest;
 import com.trianaSalesianos.tofuApp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -85,5 +85,9 @@ public class UserService {
         // Prevenimos errores al intentar borrar algo que no existe
         if (userRepository.existsById(id))
             userRepository.deleteById(id);
+    }
+
+    public boolean passwordMatch(User user, String clearPassword) {
+        return passwordEncoder.matches(clearPassword, user.getPassword());
     }
 }

@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Getter @Setter
 @Builder
 public class User implements UserDetails {
-
+    //TODO modelado de entidad de user
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -39,6 +39,7 @@ public class User implements UserDetails {
                     )
             }
     )
+    @Column(columnDefinition = "uuid")
     private UUID id;
 
     @NaturalId

@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,11 +14,13 @@ import java.util.UUID;
 @Getter @Setter
 @Builder
 public class Recipe {
+    //TODO modelado de las recetas
     @Id
-    UUID id;
-    String description;
-    int prepTime;   // in minutes
-    List<String> steps;
-    String img;
-    LocalDate createdAt;
+    private UUID id;
+    private String name;
+    private String description;
+    private int prepTime;   // in minutes
+    private List<String> steps;
+    private String img;
+    private LocalDateTime createdAt;
 }

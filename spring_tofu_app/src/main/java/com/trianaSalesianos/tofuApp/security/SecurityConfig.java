@@ -74,7 +74,7 @@ public class SecurityConfig {
 
 
 
-        http.addFilterBefore(null, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
 
         http.headers().frameOptions().disable();
@@ -85,7 +85,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web -> web.ignoring().antMatchers("/h2-console/**", "/auth/register"));
+        return (web -> web.ignoring().antMatchers("/h2-console/**", "/auth/register", "/auth/login"));
     }
 
 }
