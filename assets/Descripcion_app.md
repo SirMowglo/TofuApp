@@ -67,4 +67,6 @@ Red social en el que la gente sube lo que ha comido en el dia, comparte recetas 
 
 ---
 
+## Notas
+
 No hace falta token de refresco
