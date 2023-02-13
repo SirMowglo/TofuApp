@@ -38,7 +38,9 @@ public class UserService {
     public User createUserWithAdminRole(CreateUserRequest createUserRequest) {
         return createUser(createUserRequest, EnumSet.of(UserRole.ADMIN));
     }
-
+    public boolean userExists(String username) {
+        return userRepository.existsByUsername(username);
+    }
     public List<User> findAll() {
         return userRepository.findAll();
     }

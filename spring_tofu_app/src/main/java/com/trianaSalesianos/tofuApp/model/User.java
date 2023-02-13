@@ -14,6 +14,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 @Table(name = "user_entity")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor @AllArgsConstructor
-@Getter @Setter
+@Getter @Setter @ToString
 @Builder
 public class User implements UserDetails {
     //TODO modelado de entidad de user
@@ -47,10 +48,24 @@ public class User implements UserDetails {
     private String username;
     private String fullName;
     private String password;
+    @NaturalId
+    @Column(unique = true, updatable = false)
     private String email;
-
     private String avatar;
     private LocalDateTime birthday;
+    @ToString.Exclude
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+    private List<Recipe> recipes;
+
+    @ToString.Exclude
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(joinColumns = @JoinColumn(name = "user_id",
+            foreignKey = @ForeignKey(name="FK_FAVORITE_USER")),
+            inverseJoinColumns = @JoinColumn(name = "recipe_id",
+                    foreignKey = @ForeignKey(name="FK_FAVORITE_RECIPE")),
+            name = "favorites"
+    )
+    private List<Recipe> favorites;
     @CreatedDate
     private LocalDateTime createdAt;
     @Builder.Default

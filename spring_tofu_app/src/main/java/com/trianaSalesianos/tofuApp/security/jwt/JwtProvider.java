@@ -1,6 +1,7 @@
 package com.trianaSalesianos.tofuApp.security.jwt;
 
 import com.trianaSalesianos.tofuApp.model.User;
+import com.trianaSalesianos.tofuApp.security.errorhandling.JwtTokenException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
@@ -28,7 +29,8 @@ public class JwtProvider {
     private String jwtSecret;
 
     @Value("${jwt.duration}")
-    private int jwtLifeInDays;
+//    private int jwtLifeInDays;
+    private int jwtLifeInMinutes;
 
     private JwtParser jwtParser;
 
@@ -48,12 +50,18 @@ public class JwtProvider {
     public String generateToken(Authentication authentication) {
 
         User user = (User) authentication.getPrincipal();
+        return generateToken(user);
+
+    }
+
+    public String generateToken(User user) {
 
         Date tokenExpirationDateTime =
                 Date.from(
                         LocalDateTime
                                 .now()
-                                .plusDays(jwtLifeInDays)
+                                //.plusDays(jwtLifeInDays)
+                                .plusMinutes(jwtLifeInMinutes)
                                 .atZone(ZoneId.systemDefault())
                                 .toInstant()
                 );
@@ -75,8 +83,9 @@ public class JwtProvider {
             return true;
         } catch (SignatureException | MalformedJwtException | ExpiredJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
             log.info("Error con el token: " + ex.getMessage());
+            throw new JwtTokenException(ex.getMessage());
         }
-        return false;
+//        return false;
 
     }
 
