@@ -2,11 +2,16 @@ package com.trianaSalesianos.tofuApp.service;
 
 import com.trianaSalesianos.tofuApp.model.User;
 import com.trianaSalesianos.tofuApp.model.UserRole;
+import com.trianaSalesianos.tofuApp.model.dto.user.ChangePasswordRequest;
 import com.trianaSalesianos.tofuApp.model.dto.user.CreateUserRequest;
+import com.trianaSalesianos.tofuApp.model.dto.user.UserResponse;
 import com.trianaSalesianos.tofuApp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -91,5 +96,24 @@ public class UserService {
 
     public boolean passwordMatch(User user, String clearPassword) {
         return passwordEncoder.matches(clearPassword, user.getPassword());
+    }
+
+    public UserResponse changePassword(ChangePasswordRequest changePasswordRequest, User loggedUser){
+
+        try {
+            if (passwordMatch(loggedUser, changePasswordRequest.getOldPassword())) {
+                Optional<User> modified = editPassword(loggedUser.getId(), changePasswordRequest.getNewPassword());
+                if (modified.isPresent())
+                    return UserResponse.fromUser(modified.get());
+            }else{
+                // Lo ideal es que esto se gestionara de forma centralizada
+                // Se puede ver cómo hacerlo en la formación sobre Validación con Spring Boot
+                // y la formación sobre Gestión de Errores con Spring Boot
+                throw new RuntimeException();
+            }
+        }catch (RuntimeException ex){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password Data Error");
+        }
+        return null;
     }
 }
