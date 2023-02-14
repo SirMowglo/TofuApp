@@ -46,7 +46,7 @@ public class User implements UserDetails {
     @NaturalId
     @Column(unique = true, updatable = false)
     private String username;
-    private String fullName;
+    private String fullname;
     private String password;
     @NaturalId
     @Column(unique = true, updatable = false)

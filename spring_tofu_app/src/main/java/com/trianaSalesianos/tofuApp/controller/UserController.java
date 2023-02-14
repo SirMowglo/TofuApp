@@ -1,6 +1,7 @@
 package com.trianaSalesianos.tofuApp.controller;
 
 import com.trianaSalesianos.tofuApp.model.User;
+import com.trianaSalesianos.tofuApp.model.dto.page.PageDto;
 import com.trianaSalesianos.tofuApp.model.dto.user.*;
 import com.trianaSalesianos.tofuApp.security.jwt.JwtProvider;
 import com.trianaSalesianos.tofuApp.security.refresh.RefreshToken;
@@ -9,6 +10,8 @@ import com.trianaSalesianos.tofuApp.security.refresh.RefreshTokenRequest;
 import com.trianaSalesianos.tofuApp.security.refresh.RefreshTokenService;
 import com.trianaSalesianos.tofuApp.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,14 +33,23 @@ public class UserController {
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
 
+    @GetMapping("/user")
+    public PageDto<UserResponse> getAll(@RequestParam(value = "search", defaultValue = "") String search,
+                                        @PageableDefault(size = 10, page = 0) Pageable pageable){
+        return userService.getAllBySearch(search,pageable);
+    }
+
+    @GetMapping("/user/{username}")
+    public UserResponse getUserByUsername(@PathVariable String username){
+        return userService.getByUsername(username);
+    }
+
     @PostMapping("/auth/register")
     public ResponseEntity<UserResponse> createUserWithUserRole(@Valid @RequestBody CreateUserRequest createUserRequest) {
         User user = userService.createUserWithUserRole(createUserRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.fromUser(user));
     }
-
-    // Más adelante podemos manejar la seguridad de acceso a esta petición
 
     @PostMapping("/auth/register/admin")
     public ResponseEntity<UserResponse> createUserWithAdminRole(@Valid @RequestBody CreateUserRequest createUserRequest) {
@@ -49,8 +61,6 @@ public class UserController {
     @PostMapping("/auth/login")
     public ResponseEntity<JwtUserResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
 
-        // Realizamos la autenticación
-
         Authentication authentication =
                 authManager.authenticate(
                         new UsernamePasswordAuthenticationToken(
@@ -59,15 +69,12 @@ public class UserController {
                         )
                 );
 
-        // Una vez realizada, la guardamos en el contexto de seguridad
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Devolvemos una respuesta adecuada
         String token = jwtProvider.generateToken(authentication);
 
         User user = (User) authentication.getPrincipal();
 
-        // Eliminamos el token (si existe) antes de crearlo, ya que cada usuario debería tener solamente un token de refresco simultáneo
         refreshTokenService.deleteByUser(user);
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
 
@@ -76,7 +83,7 @@ public class UserController {
 
     }
 
-    @PutMapping("/user/changePassword")
+    @PutMapping("/user/changepassword")
     public UserResponse changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest,
                                                        @AuthenticationPrincipal User loggedUser) {
         return userService.changePassword(changePasswordRequest,loggedUser);

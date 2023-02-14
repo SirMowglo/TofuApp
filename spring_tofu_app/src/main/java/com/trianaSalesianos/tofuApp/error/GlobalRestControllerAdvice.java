@@ -2,6 +2,7 @@ package com.trianaSalesianos.tofuApp.error;
 
 import com.trianaSalesianos.tofuApp.error.model.impl.ApiErrorImpl;
 import com.trianaSalesianos.tofuApp.error.model.impl.ApiValidationSubError;
+import com.trianaSalesianos.tofuApp.exception.PwDataErrorException;
 import com.trianaSalesianos.tofuApp.exception.UserNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,10 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleNotFoundException(EntityNotFoundException exception, WebRequest request) {
         return buildApiError(exception.getMessage(), request, HttpStatus.NOT_FOUND);
     }
-
+    @ExceptionHandler({PwDataErrorException.class})
+    public ResponseEntity<?> handleBadRequestException(RuntimeException exception, WebRequest request) {
+        return buildApiError(exception.getMessage(), request, HttpStatus.BAD_REQUEST);
+    }
     private final ResponseEntity<Object> buildApiError(String message, WebRequest request, HttpStatus status) {
         return ResponseEntity
                 .status(status)

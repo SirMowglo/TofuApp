@@ -43,5 +43,5 @@ public class CreateUserRequest {
     @URL(message = "{createUserRequest.avatar.url}")
     private String avatar;
     @NotEmpty(message = "{createUserRequest.fullname.notempty}")
-    private String fullName;
+    private String fullname;
 }

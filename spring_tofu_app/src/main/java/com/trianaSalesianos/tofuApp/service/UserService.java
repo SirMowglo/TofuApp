@@ -1,12 +1,21 @@
 package com.trianaSalesianos.tofuApp.service;
 
+import com.trianaSalesianos.tofuApp.exception.PwDataErrorException;
+import com.trianaSalesianos.tofuApp.exception.UserNotFoundException;
 import com.trianaSalesianos.tofuApp.model.User;
 import com.trianaSalesianos.tofuApp.model.UserRole;
+import com.trianaSalesianos.tofuApp.model.dto.page.PageDto;
 import com.trianaSalesianos.tofuApp.model.dto.user.ChangePasswordRequest;
 import com.trianaSalesianos.tofuApp.model.dto.user.CreateUserRequest;
 import com.trianaSalesianos.tofuApp.model.dto.user.UserResponse;
 import com.trianaSalesianos.tofuApp.repository.UserRepository;
+import com.trianaSalesianos.tofuApp.search.spec.GenericSpecificationBuilder;
+import com.trianaSalesianos.tofuApp.search.util.SearchCriteria;
+import com.trianaSalesianos.tofuApp.search.util.SearchCriteriaExtractor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +38,8 @@ public class UserService {
                 .username(createUserRequest.getUsername())
                 .password(passwordEncoder.encode(createUserRequest.getPassword()))
                 .avatar(createUserRequest.getAvatar())
-                .fullName(createUserRequest.getFullName())
+                .fullname(createUserRequest.getFullname())
+                .email(createUserRequest.getEmail())
                 .roles(roles)
                 .build();
 
@@ -59,14 +69,10 @@ public class UserService {
     }
 
     public Optional<User> edit(User user) {
-
-        // El username no se puede editar
-        // La contraseña se edita en otro método
-
         return userRepository.findById(user.getId())
                 .map(u -> {
                     u.setAvatar(user.getAvatar());
-                    u.setFullName(user.getFullName());
+                    u.setFullname(user.getFullname());
                     return userRepository.save(u);
                 }).or(() -> Optional.empty());
 
@@ -100,7 +106,7 @@ public class UserService {
 
     public UserResponse changePassword(ChangePasswordRequest changePasswordRequest, User loggedUser){
 
-        try {
+        /*try {
             if (passwordMatch(loggedUser, changePasswordRequest.getOldPassword())) {
                 Optional<User> modified = editPassword(loggedUser.getId(), changePasswordRequest.getNewPassword());
                 if (modified.isPresent())
@@ -113,7 +119,40 @@ public class UserService {
             }
         }catch (RuntimeException ex){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password Data Error");
+        }*/
+
+        if (passwordMatch(loggedUser, changePasswordRequest.getOldPassword())) {
+            Optional<User> modified = editPassword(loggedUser.getId(), changePasswordRequest.getNewPassword());
+            if (modified.isPresent())
+                return UserResponse.fromUser(modified.get());
+        }else{
+            throw new PwDataErrorException();
         }
         return null;
+    }
+
+    public PageDto<UserResponse> search(List<SearchCriteria> params, Pageable pageable){
+        GenericSpecificationBuilder<User> userSpecificationBuilder = new GenericSpecificationBuilder<>(params, User.class);
+
+        Specification<User> spec = userSpecificationBuilder.build();
+        Page<UserResponse> userResponsePage = userRepository.findAll(spec,pageable).map(UserResponse::fromUser);
+
+        return new PageDto<>(userResponsePage);
+    }
+
+    public PageDto<UserResponse> getAllBySearch(String search, Pageable pageable){
+        List<SearchCriteria> params = SearchCriteriaExtractor.extractSearchCriteriaList(search);
+        PageDto<UserResponse> res = search(params,pageable);
+
+        if (res.getContent().isEmpty()) throw new UserNotFoundException();
+
+        return res;
+    }
+
+    public UserResponse getByUsername(String username){
+        Optional<User> user= userRepository.findFirstByUsername(username);
+        if(user.isEmpty()) throw new UserNotFoundException();
+
+        return UserResponse.fromUser(user.get());
     }
 }
