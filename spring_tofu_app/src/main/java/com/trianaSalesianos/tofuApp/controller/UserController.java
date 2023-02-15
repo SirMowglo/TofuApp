@@ -34,7 +34,7 @@ public class UserController {
     private final RefreshTokenService refreshTokenService;
 
     //TODO check del logout
-    // Edicion de usuarios
+    // Edicion de usuarios (changePasswords, changeAvatar, editUser(Email, fullname, birthday, description)
     // Borrado del usuario
 
     @GetMapping("/user")
@@ -92,12 +92,18 @@ public class UserController {
                                                        @AuthenticationPrincipal User loggedUser) {
         return userService.changePassword(changePasswordRequest,loggedUser);
     }
-
     @PutMapping("/auth/logout")
     public ResponseEntity<?> logout(@AuthenticationPrincipal User user){
-        if(refreshTokenService.existsByUser(user))
-            refreshTokenService.deleteByUser(user);
+        refreshTokenService.deleteByUser(user);
         return ResponseEntity.noContent().build();
+    }
+    @PutMapping("/user/edit")
+    public UserResponse editUser(){
+        return null;
+    }
+    @PutMapping("/user/changeavatar")
+    public UserResponse changeAvatar(){
+        return null;
     }
     @PostMapping("/refreshtoken")
     public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {

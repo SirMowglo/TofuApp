@@ -50,8 +50,10 @@ public class User implements UserDetails {
     @NaturalId
     @Column(unique = true, updatable = false)
     private String email;
-    private String avatar;
+    @Builder.Default
+    private String avatar = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
     private LocalDateTime birthday;
+    private String description;
 
     //TODO Gestion de fetch type lazy con subgraphos y seteo por defecto de las listas en vacia
     //TODO Gestion del borrado de recetas
