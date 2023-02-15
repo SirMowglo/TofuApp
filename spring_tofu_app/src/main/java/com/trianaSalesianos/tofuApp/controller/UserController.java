@@ -33,6 +33,10 @@ public class UserController {
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
 
+    //TODO check del logout
+    // Edicion de usuarios
+    // Borrado del usuario
+
     @GetMapping("/user")
     public PageDto<UserResponse> getAll(@RequestParam(value = "search", defaultValue = "") String search,
                                         @PageableDefault(size = 10, page = 0) Pageable pageable){
@@ -87,6 +91,13 @@ public class UserController {
     public UserResponse changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest,
                                                        @AuthenticationPrincipal User loggedUser) {
         return userService.changePassword(changePasswordRequest,loggedUser);
+    }
+
+    @PutMapping("/auth/logout")
+    public ResponseEntity<?> logout(@AuthenticationPrincipal User user){
+        if(refreshTokenService.existsByUser(user))
+            refreshTokenService.deleteByUser(user);
+        return ResponseEntity.noContent().build();
     }
     @PostMapping("/refreshtoken")
     public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {

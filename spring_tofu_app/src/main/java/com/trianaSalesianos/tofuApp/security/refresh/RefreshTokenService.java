@@ -50,6 +50,9 @@ public class RefreshTokenService {
 
     }
 
+    public boolean existsByUser(User user){
+        return refreshTokenRepository.existsByUser(user);
+    }
     @Transactional
     public int deleteByUser(User user) {
         return refreshTokenRepository.deleteByUser(user);

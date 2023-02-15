@@ -105,7 +105,7 @@ public class UserService {
     }
 
     public UserResponse changePassword(ChangePasswordRequest changePasswordRequest, User loggedUser){
-
+        //TODO comprobar que funciona la nueva implementacion
         /*try {
             if (passwordMatch(loggedUser, changePasswordRequest.getOldPassword())) {
                 Optional<User> modified = editPassword(loggedUser.getId(), changePasswordRequest.getNewPassword());
@@ -155,4 +155,5 @@ public class UserService {
 
         return UserResponse.fromUser(user.get());
     }
+
 }

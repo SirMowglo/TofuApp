@@ -14,7 +14,7 @@ import java.util.UUID;
 @Getter @Setter
 @Builder
 public class Ingredient {
-    //TODO Modelado de los ingredientes
+    //TODO gestion del borrado de las recetas
     @Id
     private UUID id;
     private String name;

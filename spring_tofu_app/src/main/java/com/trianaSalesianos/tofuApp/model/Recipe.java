@@ -16,7 +16,6 @@ import java.util.UUID;
 @Getter @Setter
 @Builder
 public class Recipe implements Serializable {
-    //TODO modelado de las recetas
     @Id
     private UUID id;
     private String name;
@@ -26,6 +25,10 @@ public class Recipe implements Serializable {
     private String img;
     @CreatedDate
     private LocalDateTime createdAt;
+
+    //TODO Gestion de fetch type lazy con subgraphos y seteo por defecto de las listas en vacia
+    //TODO Gestion del borrado de los ingredientes y usuario
+    // (si se borra receta, no se borra usuario, pero si se borra usuario se borra receta)
     @ToString.Exclude
     @ManyToOne()
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_RECIPE_USER"))

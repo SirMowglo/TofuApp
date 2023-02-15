@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 @Getter @Setter @ToString
 @Builder
 public class User implements UserDetails {
-    //TODO modelado de entidad de user
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -53,6 +52,9 @@ public class User implements UserDetails {
     private String email;
     private String avatar;
     private LocalDateTime birthday;
+
+    //TODO Gestion de fetch type lazy con subgraphos y seteo por defecto de las listas en vacia
+    //TODO Gestion del borrado de recetas
     @ToString.Exclude
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
     private List<Recipe> recipes;
