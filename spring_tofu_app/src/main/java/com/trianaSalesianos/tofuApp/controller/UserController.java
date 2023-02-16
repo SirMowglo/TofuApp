@@ -25,6 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,13 +44,15 @@ public class UserController {
         return userService.getAllBySearch(search,pageable);
     }
 
-    //TODO crear un dto que contenga los likes del usuario (o al menos el numero)
-    // Y que contenga la lista de recetas de las que es autor
     @GetMapping("/user/{username}")
-    public UserResponse getUserByUsername(@PathVariable String username){
+    public UserDetailsResponse getUserByUsername(@PathVariable String username){
         return userService.getByUsername(username);
     }
 
+    @GetMapping("/user/me")
+    public UserDetailsResponse getCurrentUserProfile(@AuthenticationPrincipal User user){
+        return UserDetailsResponse.fromUser(user);
+    }
     @PostMapping("/auth/register")
     public ResponseEntity<UserResponse> createUserWithUserRole(@Valid @RequestBody CreateUserRequest createUserRequest) {
         User user = userService.createUserWithUserRole(createUserRequest);
@@ -104,8 +107,15 @@ public class UserController {
                                  @Valid @RequestBody EditUserRequest editUserRequest){
         return userService.editUser(user,editUserRequest);
     }
+
+    @PutMapping("/user/edit/{id}")
+    public UserResponse editUserById(@PathVariable UUID id,
+                                     @Valid @RequestBody EditUserRequest editUserRequest){
+        return userService.editUser(id,editUserRequest);
+    }
     @PutMapping("/user/changeavatar")
-    public NewAvatarResponse changeAvatar(@RequestPart("file") MultipartFile file, @AuthenticationPrincipal User user){
+    public NewAvatarResponse changeAvatar(@RequestPart("file") MultipartFile file,
+                                          @AuthenticationPrincipal User user){
         return userService.changeAvatar(file, user);
     }
     @PostMapping("/refreshtoken")

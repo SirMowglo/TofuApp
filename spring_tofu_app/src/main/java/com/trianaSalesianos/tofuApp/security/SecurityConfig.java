@@ -31,6 +31,7 @@ public class SecurityConfig {
     private final AuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final AccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder =
@@ -62,18 +63,31 @@ public class SecurityConfig {
 
         http
                 .csrf().disable()
-                    .exceptionHandling()
-                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                        .accessDeniedHandler(jwtAccessDeniedHandler)
-                    .and()
-                        .sessionManagement()
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    .and()
-                        .authorizeRequests()
-                        .antMatchers("/note/**").hasRole("USER")
-                        .antMatchers("/auth/register/admin").hasRole("ADMIN")
-                        .anyRequest().authenticated();
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                //ACCESO PARA USUARIOS
+                .antMatchers(
+                        "/auth/logout",
+                        "/user/**",
+                        "/ingredient/**",
+                        "/recipe/**"
+                ).hasRole("USER")
 
+                //ACCESO PARA ADMINS
+                .antMatchers(
+                        "/auth/register/admin",
+                        "/auth/logout",
+                        "/user/**",
+                        "/ingredient/**",
+                        "/recipe/**"
+                ).hasRole("ADMIN")
+                .anyRequest().authenticated();
 
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -90,8 +104,7 @@ public class SecurityConfig {
         return (web -> web.ignoring().antMatchers("/h2-console/**",
                 "/auth/register",
                 "/auth/login",
-                "/refreshtoken",
-                "/user" //El usuario no deberia de estar aqui, es solo para realizar pruebas sin necesidad de auth
+                "/refreshtoken"
         ));
     }
 

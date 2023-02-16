@@ -38,8 +38,8 @@ public class Recipe implements Serializable {
     @Builder.Default
     private String img = "https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/british_shakshuka_26737_16x9.jpg";
     private String category;  //Vegetariano, vegano, hiper-proteico, hiper-calorico, hipo-calorico...
-    @CreatedDate
-    private LocalDateTime createdAt;
+    @Builder.Default
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     //TODO Gestion de fetch type lazy con subgraphos y seteo por defecto de las listas en vacia
     //TODO Gestion del borrado de los ingredientes y usuario

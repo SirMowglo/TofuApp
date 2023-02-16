@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.EnumSet;
@@ -154,11 +155,11 @@ public class UserService {
         return res;
     }
 
-    public UserResponse getByUsername(String username){
-        Optional<User> user= userRepository.findFirstByUsername(username);
-        if(user.isEmpty()) throw new UserNotFoundException();
+    public UserDetailsResponse getByUsername(String username){
+        User user= userRepository.findFirstByUsername(username)
+                .orElseThrow(() ->  new UserNotFoundException());
 
-        return UserResponse.fromUser(user.get());
+        return UserDetailsResponse.fromUser(user);
     }
 
     @Transactional
@@ -171,13 +172,35 @@ public class UserService {
     }
 
     public UserResponse editUser(User user, EditUserRequest editUserRequest){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         if (!editUserRequest.getEmail().isEmpty())
             user.setEmail(editUserRequest.getEmail());
 
         if(!editUserRequest.getBirthday().isEmpty()){
-            LocalDateTime newBirthday = LocalDateTime.parse(editUserRequest.getBirthday(), formatter);
+            LocalDate newBirthday = LocalDate.parse(editUserRequest.getBirthday(), formatter);
+            user.setBirthday(newBirthday);
+        }
+        if(!editUserRequest.getFullname().isEmpty())
+            user.setFullname(editUserRequest.getFullname());
+
+        if(!editUserRequest.getDescription().isEmpty())
+            user.setDescription(editUserRequest.getDescription());
+
+        return UserResponse.fromUser(userRepository.save(user));
+    }
+
+    public UserResponse editUser(UUID id, EditUserRequest editUserRequest){
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        if (!editUserRequest.getEmail().isEmpty())
+            user.setEmail(editUserRequest.getEmail());
+
+        if(!editUserRequest.getBirthday().isEmpty()){
+            LocalDate newBirthday = LocalDate.parse(editUserRequest.getBirthday(), formatter);
             user.setBirthday(newBirthday);
         }
         if(!editUserRequest.getFullname().isEmpty())

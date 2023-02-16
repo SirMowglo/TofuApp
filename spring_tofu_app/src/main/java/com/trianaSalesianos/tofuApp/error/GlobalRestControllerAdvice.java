@@ -2,7 +2,9 @@ package com.trianaSalesianos.tofuApp.error;
 
 import com.trianaSalesianos.tofuApp.error.model.impl.ApiErrorImpl;
 import com.trianaSalesianos.tofuApp.error.model.impl.ApiValidationSubError;
+import com.trianaSalesianos.tofuApp.exception.IngredientNotFoundException;
 import com.trianaSalesianos.tofuApp.exception.PwDataErrorException;
+import com.trianaSalesianos.tofuApp.exception.RecipeNotFoundException;
 import com.trianaSalesianos.tofuApp.exception.UserNotFoundException;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpHeaders;
@@ -29,7 +31,7 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     }
 
 
-    @ExceptionHandler({UserNotFoundException.class})
+    @ExceptionHandler({UserNotFoundException.class, RecipeNotFoundException.class, IngredientNotFoundException.class})
     public ResponseEntity<?> handleNotFoundException(EntityNotFoundException exception, WebRequest request) {
         return buildApiError(exception.getMessage(), request, HttpStatus.NOT_FOUND);
     }

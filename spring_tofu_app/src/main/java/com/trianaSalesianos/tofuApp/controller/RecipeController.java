@@ -56,8 +56,6 @@ public class RecipeController {
         if(!recipeRequest.getImg().isEmpty())
             created.setImg(recipeRequest.getImg());
 
-        recipeService.save(created);
-
         URI createdURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -65,7 +63,7 @@ public class RecipeController {
 
         return ResponseEntity
                 .created(createdURI)
-                .body(RecipeResponse.fromRecipe(created));
+                .body(RecipeResponse.fromRecipe(recipeService.save(created)));
     }
 
     @PutMapping("/img/{id}")

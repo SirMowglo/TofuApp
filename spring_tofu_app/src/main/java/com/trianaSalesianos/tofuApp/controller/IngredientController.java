@@ -25,7 +25,6 @@ import java.util.UUID;
 public class IngredientController {
     final private IngredientService ingredientService;
 
-    @JsonView(IngredientViews.Full.class)
     @GetMapping("/")
     public PageDto<IngredientResponse> getAll(@RequestParam(value = "search", defaultValue = "") String search,
                                               @PageableDefault(size = 10, page = 0) Pageable pageable) {

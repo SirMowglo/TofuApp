@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 @Service
 public class FileSystemStorageService implements StorageService{
 
-    @Value("{storage.location}")
+    @Value("${storage.location}")
     private String storageLocation;
 
     private Path rootLocation;

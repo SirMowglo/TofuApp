@@ -71,10 +71,9 @@ public class IngredientService {
         Ingredient ing = ingredientRepository.findById(id)
                 .orElseThrow(() -> new IngredientNotFoundException());
 
-        return IngredientResponse.fromIngredient(ingredientRepository.save(
-                ing.builder()
-                .name(ingredientRequest.getName())
-                .build()
-        ));
+        if(!ingredientRequest.getName().isEmpty())
+            ing.setName(ingredientRequest.getName());
+
+        return IngredientResponse.fromIngredient(ingredientRepository.save(ing));
     }
 }

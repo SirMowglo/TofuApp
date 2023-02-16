@@ -40,6 +40,7 @@ public class RecipeDetailsResponse {
                         .stream()
                         .map(RecipeIngredientResponse::fromRecipeIngredient)
                         .collect(Collectors.toList()))
+                .createdAt(recipe.getCreatedAt())
                 .build();
     }
 }

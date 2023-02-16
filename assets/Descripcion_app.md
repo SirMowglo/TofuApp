@@ -57,6 +57,8 @@ Red social en el que la gente sube lo que ha comido en el dia, comparte recetas 
 
 - Incluir valor nutricional en los ingredientes (kcal por 100gr, carbohidratos, proteinas...) 
 
+- Relacionar los ingredientes con el usuario, y que este tambien tenga lista de ingredientes
+
 ---
 
 ## Modelo de datos
@@ -70,5 +72,3 @@ Red social en el que la gente sube lo que ha comido en el dia, comparte recetas 
 ---
 
 ## Notas
-
-No hace falta token de refresco
