@@ -35,7 +35,7 @@ public class Recipe implements Serializable {
     private String steps;
     @Builder.Default
     private String img = "https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/british_shakshuka_26737_16x9.jpg";
-    private String categoria;  //Vegetariano, vegano, hiper-proteico, hiper-calorico, hipo-calorico...
+    private String category;  //Vegetariano, vegano, hiper-proteico, hiper-calorico, hipo-calorico...
     @CreatedDate
     private LocalDateTime createdAt;
 
