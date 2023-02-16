@@ -5,13 +5,12 @@ import com.trianaSalesianos.tofuApp.exception.UserNotFoundException;
 import com.trianaSalesianos.tofuApp.model.User;
 import com.trianaSalesianos.tofuApp.model.UserRole;
 import com.trianaSalesianos.tofuApp.model.dto.page.PageDto;
-import com.trianaSalesianos.tofuApp.model.dto.user.ChangePasswordRequest;
-import com.trianaSalesianos.tofuApp.model.dto.user.CreateUserRequest;
-import com.trianaSalesianos.tofuApp.model.dto.user.UserResponse;
+import com.trianaSalesianos.tofuApp.model.dto.user.*;
 import com.trianaSalesianos.tofuApp.repository.UserRepository;
 import com.trianaSalesianos.tofuApp.search.spec.GenericSpecificationBuilder;
 import com.trianaSalesianos.tofuApp.search.util.SearchCriteria;
 import com.trianaSalesianos.tofuApp.search.util.SearchCriteriaExtractor;
+import com.trianaSalesianos.tofuApp.service.files.StorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,8 +19,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +35,8 @@ import java.util.UUID;
 public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+
+    private final StorageService storageService;
 
     public User createUser(CreateUserRequest createUserRequest, EnumSet<UserRole> roles) {
         User user =  User.builder()
@@ -156,4 +161,31 @@ public class UserService {
         return UserResponse.fromUser(user.get());
     }
 
+    @Transactional
+    public NewAvatarResponse changeAvatar(MultipartFile file, User user){
+        String filename = storageService.store(file);
+        user.setAvatar(filename);
+
+        NewAvatarResponse newAvatar = NewAvatarResponse.fromUser(userRepository.save(user));
+        return newAvatar;
+    }
+
+    public UserResponse editUser(User user, EditUserRequest editUserRequest){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        if (!editUserRequest.getEmail().isEmpty())
+            user.setEmail(editUserRequest.getEmail());
+
+        if(!editUserRequest.getBirthday().isEmpty()){
+            LocalDateTime newBirthday = LocalDateTime.parse(editUserRequest.getBirthday(), formatter);
+            user.setBirthday(newBirthday);
+        }
+        if(!editUserRequest.getFullname().isEmpty())
+            user.setFullname(editUserRequest.getFullname());
+
+        if(!editUserRequest.getDescription().isEmpty())
+            user.setDescription(editUserRequest.getDescription());
+
+        return UserResponse.fromUser(userRepository.save(user));
+    }
 }

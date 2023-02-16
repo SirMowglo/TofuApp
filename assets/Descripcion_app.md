@@ -55,6 +55,8 @@ Red social en el que la gente sube lo que ha comido en el dia, comparte recetas 
 
 - Lista de la compra con ingredientes necesarios para la siguiente semana
 
+- Incluir valor nutricional en los ingredientes (kcal por 100gr, carbohidratos, proteinas...) 
+
 ---
 
 ## Modelo de datos

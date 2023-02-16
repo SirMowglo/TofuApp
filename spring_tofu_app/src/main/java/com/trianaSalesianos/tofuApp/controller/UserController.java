@@ -20,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
@@ -33,9 +34,8 @@ public class UserController {
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
 
-    //TODO check del logout
-    // Edicion de usuarios (changePasswords, changeAvatar, editUser(Email, fullname, birthday, description)
-    // Borrado del usuario
+    //TODO Borrado del usuario
+    // Controlar el acceso a los endpoints desde seguridad
 
     @GetMapping("/user")
     public PageDto<UserResponse> getAll(@RequestParam(value = "search", defaultValue = "") String search,
@@ -43,6 +43,8 @@ public class UserController {
         return userService.getAllBySearch(search,pageable);
     }
 
+    //TODO crear un dto que contenga los likes del usuario (o al menos el numero)
+    // Y que contenga la lista de recetas de las que es autor
     @GetMapping("/user/{username}")
     public UserResponse getUserByUsername(@PathVariable String username){
         return userService.getByUsername(username);
@@ -98,12 +100,13 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
     @PutMapping("/user/edit")
-    public UserResponse editUser(){
+    public UserResponse editUser(@AuthenticationPrincipal User user,
+                                 @Valid @RequestBody EditUserRequest editUserRequest){
         return null;
     }
     @PutMapping("/user/changeavatar")
-    public UserResponse changeAvatar(){
-        return null;
+    public NewAvatarResponse changeAvatar(@RequestPart("file") MultipartFile file, @AuthenticationPrincipal User user){
+        return userService.changeAvatar(file, user);
     }
     @PostMapping("/refreshtoken")
     public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {

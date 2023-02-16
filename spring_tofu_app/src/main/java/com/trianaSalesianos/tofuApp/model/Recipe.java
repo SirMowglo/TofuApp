@@ -1,6 +1,7 @@
 package com.trianaSalesianos.tofuApp.model;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -10,19 +11,31 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 @Entity
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 @Builder
 public class Recipe implements Serializable {
     @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(
+                            name = "uuid_gen_strategy_class",
+                            value = "org.hibernate.id.uuid.CustomVersionOneStrategy"
+                    )
+            }
+    )
     private UUID id;
     private String name;
     private String description;
     private int prepTime;   // in minutes
     private String steps;
-    private String img;
+    @Builder.Default
+    private String img = "https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/british_shakshuka_26737_16x9.jpg";
+    private String categoria;  //Vegetariano, vegano, hiper-proteico, hiper-calorico, hipo-calorico...
     @CreatedDate
     private LocalDateTime createdAt;
 
