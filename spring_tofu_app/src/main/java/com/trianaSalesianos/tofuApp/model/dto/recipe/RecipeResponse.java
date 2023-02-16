@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 public class RecipeResponse {
     private String name, description, category, img, author;
-    private int prepTime;
+    private Integer prepTime;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime createdAt;

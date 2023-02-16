@@ -17,6 +17,7 @@ import java.util.UUID;
 @Builder
 public class Ingredient {
     //TODO gestion del borrado de las recetas
+    // es posible que se necesite asociar a un usuario
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(

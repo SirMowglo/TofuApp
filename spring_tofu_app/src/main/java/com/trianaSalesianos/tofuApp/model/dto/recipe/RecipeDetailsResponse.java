@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Builder
 public class RecipeDetailsResponse {
     private String name, description, category, img, author, steps;
-    private int prepTime, favorites;
+    private Integer prepTime, favorites;
     private List<RecipeIngredientResponse> ingredients;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime createdAt;

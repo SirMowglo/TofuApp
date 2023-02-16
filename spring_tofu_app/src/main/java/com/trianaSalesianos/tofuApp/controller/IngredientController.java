@@ -61,7 +61,8 @@ public class IngredientController {
     }
     @JsonView(IngredientViews.Img.class)
     @PutMapping("/img/{id}")
-    public IngredientResponse changeImg(@RequestPart("file") MultipartFile file, @PathVariable UUID id){
+    public IngredientResponse changeImg(@RequestPart("file") MultipartFile file,
+                                        @PathVariable UUID id){
         return ingredientService.changeImg(file,id);
     }
 

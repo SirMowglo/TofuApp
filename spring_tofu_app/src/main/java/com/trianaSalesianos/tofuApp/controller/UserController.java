@@ -102,7 +102,7 @@ public class UserController {
     @PutMapping("/user/edit")
     public UserResponse editUser(@AuthenticationPrincipal User user,
                                  @Valid @RequestBody EditUserRequest editUserRequest){
-        return null;
+        return userService.editUser(user,editUserRequest);
     }
     @PutMapping("/user/changeavatar")
     public NewAvatarResponse changeAvatar(@RequestPart("file") MultipartFile file, @AuthenticationPrincipal User user){

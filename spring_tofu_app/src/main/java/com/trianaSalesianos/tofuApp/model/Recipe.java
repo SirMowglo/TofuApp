@@ -31,7 +31,9 @@ public class Recipe implements Serializable {
     private UUID id;
     private String name;
     private String description;
-    private int prepTime;   // in minutes
+
+    @Builder.Default
+    private Integer prepTime = 0;   // in minutes
     private String steps;
     @Builder.Default
     private String img = "https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/british_shakshuka_26737_16x9.jpg";
@@ -47,8 +49,9 @@ public class Recipe implements Serializable {
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_RECIPE_USER"))
     private User author;
     @ToString.Exclude
+    @Builder.Default
     @ManyToMany(mappedBy = "favorites", fetch = FetchType.EAGER)
-    private List<User> favoritedBy;
+    private List<User> favoritedBy = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "recipe")
