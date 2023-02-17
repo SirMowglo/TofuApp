@@ -83,7 +83,7 @@ public class RecipeController {
         return recipeService.update(recipeRequest, id);
     }
 
-    @PutMapping("/{id_recipe}/ingredient/{id_ingredient}")
+    @PostMapping("/{id_recipe}/ingredient/{id_ingredient}")
     public RecipeDetailsResponse addIngredientToRecipe(
             @PathVariable UUID id_recipe,
             @PathVariable UUID id_ingredient,
@@ -93,10 +93,11 @@ public class RecipeController {
         return recipeService.addIngredient(id_recipe,id_ingredient,recipeIngredientRequest);
     }
 
-    @PutMapping("/{id}/like")
-    public PageDto<UserLikesResponse> likeRecipe(
-            @AuthenticationPrincipal User user,
-            @PageableDefault(size = 10, page = 0) Pageable pageable){
-        return null;
+    @PostMapping("/{id}/like")
+    public UserLikesResponse likeRecipe(
+            @PathVariable UUID id,
+            @AuthenticationPrincipal User user){
+
+        return recipeService.likeRecipe(id, user);
     }
 }

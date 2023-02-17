@@ -41,27 +41,29 @@ public class RecipeService {
     private final IngredientRepository ingredientRepository;
     private final RecipeIngredientRepository recipeIngredientRepository;
     private final StorageService storageService;
+    private final UserRepository userRepository;
 
-    public PageDto<RecipeResponse> search(List<SearchCriteria> params, Pageable pageable){
+    public PageDto<RecipeResponse> search(List<SearchCriteria> params, Pageable pageable) {
         GenericSpecificationBuilder<Recipe> recipeSpecificationBuilder = new GenericSpecificationBuilder<>(params, Recipe.class);
 
         Specification<Recipe> spec = recipeSpecificationBuilder.build();
-        Page<RecipeResponse> recipeResponsePage = recipeRepository.findAll(spec,pageable).map(RecipeResponse::fromRecipe);
+        Page<RecipeResponse> recipeResponsePage = recipeRepository.findAll(spec, pageable).map(RecipeResponse::fromRecipe);
 
         return new PageDto<>(recipeResponsePage);
     }
 
     public PageDto<RecipeResponse> getAllBySearch(String search, Pageable pageable) {
         List<SearchCriteria> params = SearchCriteriaExtractor.extractSearchCriteriaList(search);
-        PageDto<RecipeResponse> res = search(params,pageable);
+        PageDto<RecipeResponse> res = search(params, pageable);
 
-        if(res.getContent().isEmpty()) throw new RecipeNotFoundException();
+        if (res.getContent().isEmpty()) throw new RecipeNotFoundException();
 
         return res;
     }
-    public Recipe findById(UUID id){
+
+    public Recipe findById(UUID id) {
         return recipeRepository.findById(id)
-                .orElseThrow(()-> new RecipeNotFoundException());
+                .orElseThrow(() -> new RecipeNotFoundException());
     }
 
     public Recipe save(Recipe recipe) {
@@ -83,19 +85,19 @@ public class RecipeService {
         Recipe rec = recipeRepository.findById(id)
                 .orElseThrow(() -> new RecipeNotFoundException());
 
-        if(!recipeRequest.getName().isEmpty())
+        if (!recipeRequest.getName().isEmpty())
             rec.setName(recipeRequest.getName());
 
-        if(!recipeRequest.getDescription().isEmpty())
+        if (!recipeRequest.getDescription().isEmpty())
             rec.setDescription(recipeRequest.getDescription());
 
-        if(!recipeRequest.getCategory().isEmpty())
+        if (!recipeRequest.getCategory().isEmpty())
             rec.setCategory(recipeRequest.getCategory());
 
-        if(!recipeRequest.getSteps().isEmpty())
+        if (!recipeRequest.getSteps().isEmpty())
             rec.setSteps(recipeRequest.getSteps());
 
-        if(!recipeRequest.getPrepTime().equals(0)){
+        if (!recipeRequest.getPrepTime().equals(0)) {
             rec.setPrepTime(recipeRequest.getPrepTime());
         }
 
@@ -105,12 +107,14 @@ public class RecipeService {
 
     public RecipeDetailsResponse addIngredient(UUID id_recipe,
                                                UUID id_ingredient,
-                                               RecipeIngredientRequest recipeIngredientRequest){
+                                               RecipeIngredientRequest recipeIngredientRequest) {
+
         Recipe recipe = recipeRepository.findById(id_recipe)
                 .orElseThrow(() -> new RecipeNotFoundException());
 
         Ingredient ingredient = ingredientRepository.findById(id_ingredient)
                 .orElseThrow(() -> new IngredientNotFoundException());
+
 
         RecipeIngredient ri = RecipeIngredient.builder()
                 .unit(recipeIngredientRequest.getUnit())
@@ -119,8 +123,10 @@ public class RecipeService {
                 .ingredient(ingredient)
                 .build();
 
+
         recipe.getRecipeIngredients().add(ri);
         ingredient.getRecipeIngredients().add(ri);
+
 
         recipeIngredientRepository.save(ri);
         recipeRepository.save(recipe);
@@ -129,7 +135,18 @@ public class RecipeService {
         return RecipeDetailsResponse.fromRecipe(recipe);
     }
 
-    public PageDto<UserLikesResponse> likeRecipe(){
-        return null;
+    public UserLikesResponse likeRecipe(UUID id, User user) {
+        Recipe recipe = recipeRepository.findById(id)
+                .orElseThrow(() -> new RecipeNotFoundException());
+
+
+        user.getFavorites().add(recipe);
+        recipe.getFavoritedBy().add(user);
+
+        userRepository.save(user);
+        recipeRepository.save(recipe);
+
+
+        return UserLikesResponse.fromUser(user);
     }
 }
