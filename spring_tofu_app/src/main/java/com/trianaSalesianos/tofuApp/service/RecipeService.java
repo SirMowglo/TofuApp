@@ -1,13 +1,13 @@
 package com.trianaSalesianos.tofuApp.service;
 
+
 import com.trianaSalesianos.tofuApp.exception.IngredientNotFoundException;
+import com.trianaSalesianos.tofuApp.exception.RecipeAuthorNotValidException;
 import com.trianaSalesianos.tofuApp.exception.RecipeNotFoundException;
-import com.trianaSalesianos.tofuApp.model.Ingredient;
-import com.trianaSalesianos.tofuApp.model.Recipe;
-import com.trianaSalesianos.tofuApp.model.RecipeIngredient;
-import com.trianaSalesianos.tofuApp.model.User;
+import com.trianaSalesianos.tofuApp.model.*;
 import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientRequest;
 import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientResponse;
+import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientWithAmountRequest;
 import com.trianaSalesianos.tofuApp.model.dto.ingredient.RecipeIngredientRequest;
 import com.trianaSalesianos.tofuApp.model.dto.page.PageDto;
 import com.trianaSalesianos.tofuApp.model.dto.recipe.RecipeDetailsResponse;
@@ -33,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -71,17 +72,21 @@ public class RecipeService {
     }
 
     @Transactional
-    public RecipeResponse changeImg(MultipartFile file, UUID id) {
-        String filename = storageService.store(file);
-        Recipe rec = recipeRepository.findById(id)
+    public RecipeResponse changeImg(MultipartFile file, UUID id, User user) {
+        Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new RecipeNotFoundException());
 
-        rec.setImg(filename);
+        if(!recipe.getAuthor().getId().equals(user.getId()))
+            throw new RecipeAuthorNotValidException();
 
-        return RecipeResponse.fromRecipe(recipeRepository.save(rec));
+        String filename = storageService.store(file);
+
+        recipe.setImg(filename);
+
+        return RecipeResponse.fromRecipe(recipeRepository.save(recipe));
     }
 
-    public RecipeResponse update(RecipeRequest recipeRequest, UUID id) {
+    public RecipeResponse update(RecipeRequest recipeRequest, UUID id, User user) {
         Recipe rec = recipeRepository.findById(id)
                 .orElseThrow(() -> new RecipeNotFoundException());
 
@@ -107,7 +112,8 @@ public class RecipeService {
 
     public RecipeDetailsResponse addIngredient(UUID id_recipe,
                                                UUID id_ingredient,
-                                               RecipeIngredientRequest recipeIngredientRequest) {
+                                               RecipeIngredientRequest recipeIngredientRequest,
+                                               User user) {
 
         Recipe recipe = recipeRepository.findById(id_recipe)
                 .orElseThrow(() -> new RecipeNotFoundException());
@@ -116,17 +122,27 @@ public class RecipeService {
                 .orElseThrow(() -> new IngredientNotFoundException());
 
 
-        RecipeIngredient ri = RecipeIngredient.builder()
-                .unit(recipeIngredientRequest.getUnit())
-                .amount(recipeIngredientRequest.getAmount())
-                .recipe(recipe)
-                .ingredient(ingredient)
-                .build();
+        if (!recipe.getAuthor().getId().equals(user.getId()))
+            throw new RecipeAuthorNotValidException();
+        RecipeIngredient ri;
 
+        if (!recipeIngredientRepository.existsById(new RecipeIngredientPK(id_recipe, id_ingredient))) {
+            ri = RecipeIngredient.builder()
+                    .unit(recipeIngredientRequest.getUnit())
+                    .amount(recipeIngredientRequest.getAmount())
+                    .recipe(recipe)
+                    .ingredient(ingredient)
+                    .build();
 
-        recipe.getRecipeIngredients().add(ri);
-        ingredient.getRecipeIngredients().add(ri);
+            recipe.getRecipeIngredients().add(ri);
+            ingredient.getRecipeIngredients().add(ri);
+        } else {
+            ri = recipeIngredientRepository.findById(new RecipeIngredientPK(id_recipe, id_ingredient)).get();
 
+            double amount = ri.getAmount();
+
+            ri.setAmount(amount + recipeIngredientRequest.getAmount());
+        }
 
         recipeIngredientRepository.save(ri);
         recipeRepository.save(recipe);
@@ -139,14 +155,68 @@ public class RecipeService {
         Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new RecipeNotFoundException());
 
-
-        user.getFavorites().add(recipe);
-        recipe.getFavoritedBy().add(user);
+        if (recipeRepository.isFavoritedByUser(user.getId(), id)) {
+            user.getFavorites().removeIf(f -> f.getId().equals(recipe.getId()));
+            recipe.getFavoritedBy().removeIf(u -> u.getId().equals(user.getId()));
+        } else {
+            user.getFavorites().add(recipe);
+            recipe.getFavoritedBy().add(user);
+        }
 
         userRepository.save(user);
         recipeRepository.save(recipe);
 
-
         return UserLikesResponse.fromUser(user);
+    }
+
+    public RecipeDetailsResponse updateAmount(UUID id_recipe, UUID id_ingredient, RecipeIngredientRequest recipeIngredientRequest, User user) {
+        Recipe recipe = recipeRepository.findById(id_recipe)
+                .orElseThrow(() -> new RecipeNotFoundException());
+        Ingredient ingredient = ingredientRepository.findById(id_ingredient)
+                .orElseThrow(() -> new IngredientNotFoundException());
+
+        if (!recipe.getAuthor().getId().equals(user.getId()))
+            throw new RecipeAuthorNotValidException();
+
+        if (!recipe.getRecipeIngredients()
+                .stream()
+                .anyMatch(i -> i.getIngredient().getId().equals(id_ingredient)))
+            throw new IngredientNotFoundException();
+
+        recipeRepository.updateAmount(
+                recipeIngredientRequest.getUnit(),
+                recipeIngredientRequest.getAmount(),
+                ingredient, recipe);
+
+        recipeRepository.save(recipe);
+        ingredientRepository.save(ingredient);
+
+        return RecipeDetailsResponse.fromRecipe(recipe);
+    }
+
+    public RecipeDetailsResponse createIngredientInRecipe(UUID id, IngredientWithAmountRequest ingredient, User user) {
+        Recipe recipe = recipeRepository.findById(id)
+                .orElseThrow(() -> new RecipeNotFoundException());
+
+        if (!recipe.getAuthor().getId().equals(user.getId()))
+            throw new RecipeAuthorNotValidException();
+
+        Ingredient ing = Ingredient.builder()
+                .name(ingredient.getName())
+                .img(ingredient.getImg())
+                .build();
+
+        RecipeIngredient ri = RecipeIngredient.builder()
+                .ingredient(ing)
+                .recipe(recipe)
+                .amount(ingredient.getAmount())
+                .unit(ingredient.getUnit())
+                .build();
+
+        recipeIngredientRepository.save(ri);
+        recipeRepository.save(recipe);
+        ingredientRepository.save(ing);
+
+        return RecipeDetailsResponse.fromRecipe(recipe);
     }
 }

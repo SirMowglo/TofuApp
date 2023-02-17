@@ -1,4 +1,4 @@
-package com.trianaSalesianos.tofuApp.security;
+package com.trianaSalesianos.tofuApp.config;
 
 import com.trianaSalesianos.tofuApp.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -74,7 +74,13 @@ public class SecurityConfig {
                 //ACCESO PARA USUARIOS
                 .antMatchers(
                         "/auth/logout",
-                        "/user/**",
+                        "/user",
+                        "/user/{username}",
+                        "/user/me",
+                        "/user/changepassword",
+                        "/user/edit",
+                        "/user/changeavatar",
+
                         "/ingredient/**",
                         "/recipe/**"
                 ).hasRole("USER")
@@ -82,10 +88,7 @@ public class SecurityConfig {
                 //ACCESO PARA ADMINS
                 .antMatchers(
                         "/auth/register/admin",
-                        "/auth/logout",
-                        "/user/**",
-                        "/ingredient/**",
-                        "/recipe/**"
+                        "/user/**"
                 ).hasRole("ADMIN")
                 .anyRequest().authenticated();
 

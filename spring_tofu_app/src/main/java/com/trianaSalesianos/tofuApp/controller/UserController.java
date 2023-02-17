@@ -36,7 +36,6 @@ public class UserController {
     private final RefreshTokenService refreshTokenService;
 
     //TODO Borrado del usuario
-    // Controlar el acceso a los endpoints desde seguridad
 
     @GetMapping("/user")
     public PageDto<UserResponse> getAll(@RequestParam(value = "search", defaultValue = "") String search,
@@ -108,10 +107,10 @@ public class UserController {
         return userService.editUser(user,editUserRequest);
     }
 
-    @PutMapping("/user/edit/{id}")
-    public UserResponse editUserById(@PathVariable UUID id,
+    @PutMapping("/user/edit/{username}")
+    public UserResponse editUserById(@PathVariable String username,
                                      @Valid @RequestBody EditUserRequest editUserRequest){
-        return userService.editUser(id,editUserRequest);
+        return userService.editUser(username ,editUserRequest);
     }
     @PutMapping("/user/changeavatar")
     public NewAvatarResponse changeAvatar(@RequestPart("file") MultipartFile file,

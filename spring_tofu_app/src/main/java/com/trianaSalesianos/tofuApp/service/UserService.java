@@ -190,8 +190,8 @@ public class UserService {
         return UserResponse.fromUser(userRepository.save(user));
     }
 
-    public UserResponse editUser(UUID id, EditUserRequest editUserRequest){
-        User user = userRepository.findById(id)
+    public UserResponse editUser(String username, EditUserRequest editUserRequest){
+        User user = userRepository.findFirstByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
