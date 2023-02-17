@@ -1,12 +1,15 @@
 package com.trianaSalesianos.tofuApp.controller;
 
 import com.trianaSalesianos.tofuApp.model.Recipe;
+import com.trianaSalesianos.tofuApp.model.RecipeIngredient;
 import com.trianaSalesianos.tofuApp.model.User;
+import com.trianaSalesianos.tofuApp.model.dto.ingredient.RecipeIngredientRequest;
 import com.trianaSalesianos.tofuApp.model.dto.page.PageDto;
 import com.trianaSalesianos.tofuApp.model.dto.recipe.NewRecipeRequest;
 import com.trianaSalesianos.tofuApp.model.dto.recipe.RecipeDetailsResponse;
 import com.trianaSalesianos.tofuApp.model.dto.recipe.RecipeRequest;
 import com.trianaSalesianos.tofuApp.model.dto.recipe.RecipeResponse;
+import com.trianaSalesianos.tofuApp.model.dto.user.UserLikesResponse;
 import com.trianaSalesianos.tofuApp.service.RecipeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -69,12 +72,31 @@ public class RecipeController {
     @PutMapping("/img/{id}")
     public RecipeResponse changeImg(@RequestPart("file") MultipartFile file,
                                     @PathVariable UUID id){
+        //TODO gestionar que la autoria sea la misma que del usuario logeado
         return recipeService.changeImg(file,id);
     }
 
     @PutMapping("/{id}")
     public RecipeResponse update(@PathVariable UUID id,
                                  @Valid @RequestBody RecipeRequest recipeRequest){
+        //TODO gestionar que la autoria sea la misma que del usuario logeado
         return recipeService.update(recipeRequest, id);
+    }
+
+    @PutMapping("/{id_recipe}/ingredient/{id_ingredient}")
+    public RecipeDetailsResponse addIngredientToRecipe(
+            @PathVariable UUID id_recipe,
+            @PathVariable UUID id_ingredient,
+            @RequestBody RecipeIngredientRequest recipeIngredientRequest
+            ){
+        //TODO gestionar que la autoria sea la misma que del usuario logeado
+        return recipeService.addIngredient(id_recipe,id_ingredient,recipeIngredientRequest);
+    }
+
+    @PutMapping("/{id}/like")
+    public PageDto<UserLikesResponse> likeRecipe(
+            @AuthenticationPrincipal User user,
+            @PageableDefault(size = 10, page = 0) Pageable pageable){
+        return null;
     }
 }

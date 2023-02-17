@@ -4,13 +4,19 @@ import com.trianaSalesianos.tofuApp.exception.IngredientNotFoundException;
 import com.trianaSalesianos.tofuApp.exception.RecipeNotFoundException;
 import com.trianaSalesianos.tofuApp.model.Ingredient;
 import com.trianaSalesianos.tofuApp.model.Recipe;
+import com.trianaSalesianos.tofuApp.model.RecipeIngredient;
 import com.trianaSalesianos.tofuApp.model.User;
 import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientRequest;
 import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientResponse;
+import com.trianaSalesianos.tofuApp.model.dto.ingredient.RecipeIngredientRequest;
 import com.trianaSalesianos.tofuApp.model.dto.page.PageDto;
+import com.trianaSalesianos.tofuApp.model.dto.recipe.RecipeDetailsResponse;
 import com.trianaSalesianos.tofuApp.model.dto.recipe.RecipeRequest;
 import com.trianaSalesianos.tofuApp.model.dto.recipe.RecipeResponse;
+import com.trianaSalesianos.tofuApp.model.dto.user.UserLikesResponse;
 import com.trianaSalesianos.tofuApp.model.dto.user.UserResponse;
+import com.trianaSalesianos.tofuApp.repository.IngredientRepository;
+import com.trianaSalesianos.tofuApp.repository.RecipeIngredientRepository;
 import com.trianaSalesianos.tofuApp.repository.RecipeRepository;
 import com.trianaSalesianos.tofuApp.repository.UserRepository;
 import com.trianaSalesianos.tofuApp.search.spec.GenericSpecificationBuilder;
@@ -32,6 +38,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RecipeService {
     private final RecipeRepository recipeRepository;
+    private final IngredientRepository ingredientRepository;
+    private final RecipeIngredientRepository recipeIngredientRepository;
     private final StorageService storageService;
 
     public PageDto<RecipeResponse> search(List<SearchCriteria> params, Pageable pageable){
@@ -93,5 +101,35 @@ public class RecipeService {
 
 
         return RecipeResponse.fromRecipe(recipeRepository.save(rec));
+    }
+
+    public RecipeDetailsResponse addIngredient(UUID id_recipe,
+                                               UUID id_ingredient,
+                                               RecipeIngredientRequest recipeIngredientRequest){
+        Recipe recipe = recipeRepository.findById(id_recipe)
+                .orElseThrow(() -> new RecipeNotFoundException());
+
+        Ingredient ingredient = ingredientRepository.findById(id_ingredient)
+                .orElseThrow(() -> new IngredientNotFoundException());
+
+        RecipeIngredient ri = RecipeIngredient.builder()
+                .unit(recipeIngredientRequest.getUnit())
+                .amount(recipeIngredientRequest.getAmount())
+                .recipe(recipe)
+                .ingredient(ingredient)
+                .build();
+
+        recipe.getRecipeIngredients().add(ri);
+        ingredient.getRecipeIngredients().add(ri);
+
+        recipeIngredientRepository.save(ri);
+        recipeRepository.save(recipe);
+        ingredientRepository.save(ingredient);
+
+        return RecipeDetailsResponse.fromRecipe(recipe);
+    }
+
+    public PageDto<UserLikesResponse> likeRecipe(){
+        return null;
     }
 }
