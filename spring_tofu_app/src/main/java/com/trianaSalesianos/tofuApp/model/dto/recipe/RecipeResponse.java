@@ -9,12 +9,14 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 public class RecipeResponse {
+    private UUID id;
     private String name, description, category, img, author;
     private Integer prepTime;
 
@@ -23,6 +25,7 @@ public class RecipeResponse {
 
     public static RecipeResponse fromRecipe(Recipe recipe){
         return RecipeResponse.builder()
+                .id(recipe.getId())
                 .name(recipe.getName())
                 .description(recipe.getDescription())
                 .category(recipe.getCategory())

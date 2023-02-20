@@ -23,9 +23,4 @@ class UserRepository {
     return UserResponse.fromJson(jsonDecode(jsonResponse));
 
   }
-
-
-
-
-
 }

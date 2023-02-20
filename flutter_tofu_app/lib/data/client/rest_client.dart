@@ -86,9 +86,6 @@ class RestClient {
         var responseJson = _response(response);
         return responseJson;
 
-    /*} on SocketException catch(ex) {
-      throw FetchDataException('No internet connection: ${ex.message}');
-    }*/
     } on Exception catch(ex) {
       throw ex;
     }
@@ -168,9 +165,7 @@ class AuthorizationInterceptor implements InterceptorContract {
   late LocalStorageService _localStorageService;
 
   AuthorizationInterceptor() {
-    //_localStorageService = getIt<LocalStorageService>();
     GetIt.I.getAsync<LocalStorageService>().then((value) => _localStorageService = value);
-
   }
 
 

@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Text(
-                'Welcome, ${user.fullname}',
+                'Welcome, ${user.email}',
                 style: TextStyle(
                   fontSize: 24
                 ),
@@ -33,10 +33,7 @@ class HomePage extends StatelessWidget {
                 height: 12,
               ),
               ElevatedButton(
-                //textColor: Theme.of(context).primaryColor,
-                /*style: TextButton.styleFrom(
-                  primary: Theme.of(context).primaryColor,
-                ),*/
+
                 child: Text('Logout'),
                 onPressed: (){
                   authBloc.add(UserLoggedOutEvent());

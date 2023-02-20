@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @SuperBuilder
 public class UserResponse {
 
+    protected UUID id;
     protected String username, avatar, fullname, email, description;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
@@ -25,6 +27,7 @@ public class UserResponse {
     public static UserResponse fromUser(User user) {
 
         return UserResponse.builder()
+                .id(user.getId())
                 .username(user.getUsername())
                 .avatar(user.getAvatar())
                 .email(user.getEmail())

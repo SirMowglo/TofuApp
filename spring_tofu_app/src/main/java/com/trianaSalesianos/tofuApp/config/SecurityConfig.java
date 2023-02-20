@@ -73,23 +73,24 @@ public class SecurityConfig {
                 .authorizeRequests()
                 //ACCESO PARA USUARIOS
                 .antMatchers(
+                ).hasRole("USER")
+
+                //ACCESO PARA ADMINS
+                .antMatchers(
+                        "/auth/register/admin",
+                        "/user/edit/{username}"
+                ).hasRole("ADMIN")
+                .antMatchers(
+                        "/ingredient/**",
+                        "/recipe/**",
                         "/auth/logout",
                         "/user",
                         "/user/{username}",
                         "/user/me",
                         "/user/changepassword",
                         "/user/edit",
-                        "/user/changeavatar",
-
-                        "/ingredient/**",
-                        "/recipe/**"
-                ).hasRole("USER")
-
-                //ACCESO PARA ADMINS
-                .antMatchers(
-                        "/auth/register/admin",
-                        "/user/**"
-                ).hasRole("ADMIN")
+                        "/user/changeavatar"
+                        ).hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated();
 
 

@@ -59,8 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                 //! Form
                 BlocBuilder<AuthenticationBloc, AuthenticationState>(
                   builder: (context, state) {
-                    final authBloc =
-                        BlocProvider.of<AuthenticationBloc>(context);
+                    final authBloc = BlocProvider.of<AuthenticationBloc>(context);
                     if (state is AuthenticationNotAuthenticatedState) {
                       return LoginForm();
                     }
