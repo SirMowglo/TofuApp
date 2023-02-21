@@ -45,6 +45,8 @@ class UserResponse extends User {
     email = json['email'];
     description = json['description'];
   }
+
+  
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;

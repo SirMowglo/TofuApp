@@ -3,10 +3,10 @@ part of 'recipe_list_bloc.dart';
 enum RecipeListStatus { initial, success, failure }
 
 class RecipeListState extends Equatable {
-  const RecipeListState({
-  this.status = RecipeListStatus.initial, 
-  this.recipeList = const <RecipeResponse>[], 
-  this.hasReachedMax = false});
+  const RecipeListState(
+      {this.status = RecipeListStatus.initial,
+      this.recipeList = const <RecipeResponse>[],
+      this.hasReachedMax = false});
 
   final RecipeListStatus status;
   final List<RecipeResponse> recipeList;

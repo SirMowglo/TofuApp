@@ -8,15 +8,11 @@ import 'data/services/authentication_service.dart';
 import 'views/views.dart';
 
 void main() {
-  //WidgetsFlutterBinding.ensureInitialized();
-  //await SharedPreferences.getInstance();
   setupAsyncDependencies();
   configureDependencies();
-  //await getIt.allReady();
 
   runApp(BlocProvider<AuthenticationBloc>(
     create: (context) {
-      //GlobalContext.ctx = context;
       final authService = getIt<JwtAuthenticationService>();
       return AuthenticationBloc(authService)..add(AppLoadedEvent());
     },

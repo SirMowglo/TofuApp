@@ -17,7 +17,7 @@ class UserRepository {
   }
 
   Future<dynamic> me() async {
-    String url = "/me";
+    String url = "/user/me";
 
     var jsonResponse = await _client.get(url);
     return UserResponse.fromJson(jsonDecode(jsonResponse));

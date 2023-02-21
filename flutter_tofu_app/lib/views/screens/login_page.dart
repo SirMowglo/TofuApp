@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tofu_app/bloc/authentication/authentication_bloc.dart';
-import 'package:flutter_tofu_app/views/widgets/LoginForm.dart';
+import 'package:flutter_tofu_app/views/widgets/login_form_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {

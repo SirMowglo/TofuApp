@@ -69,11 +69,9 @@ class RestClient {
         var responseJson = _response(response);
         return responseJson;
 
-
     } on SocketException catch(ex) {
       throw FetchDataException('No internet connection: ${ex.message}');
     }
-
   }
 
   Future<dynamic> post(String url, dynamic body) async {

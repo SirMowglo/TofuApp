@@ -1,74 +1,85 @@
-import 'dart:convert';
+import 'package:flutter_tofu_app/models/recipe.dart';
 
-import 'package:equatable/equatable.dart';
+class RecipePageResponse {
+  final List<RecipeResponse>? content;
+  final bool? last;
+  final bool? first;
+  final int? totalPages;
+  final int? totalElements;
 
-import 'recipe.dart';
-
-class RecipePageResponse extends Equatable {
-  final List<RecipeResponse> content;
-  final bool last;
-  final bool first;
-  final int totalPages;
-  final int totalElements;
-  const RecipePageResponse({
-    required this.content,
-    required this.last,
-    required this.first,
-    required this.totalPages,
-    required this.totalElements,
-  });
-
-  RecipePageResponse copyWith({
-    List<RecipeResponse>? content,
-    bool? last,
-    bool? first,
-    int? totalPages,
-    int? totalElements,
-  }) {
+  const RecipePageResponse(
+      {this.content,
+      this.last,
+      this.first,
+      this.totalPages,
+      this.totalElements});
+  RecipePageResponse copyWith(
+      {List<RecipeResponse>? content,
+      bool? last,
+      bool? first,
+      int? totalPages,
+      int? totalElements}) {
     return RecipePageResponse(
-      content: content ?? this.content,
-      last: last ?? this.last,
-      first: first ?? this.first,
-      totalPages: totalPages ?? this.totalPages,
-      totalElements: totalElements ?? this.totalElements,
-    );
+        content: content ?? this.content,
+        last: last ?? this.last,
+        first: first ?? this.first,
+        totalPages: totalPages ?? this.totalPages,
+        totalElements: totalElements ?? this.totalElements);
   }
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'content': content.map((x) => x.toMap()).toList(),
+  Map<String, Object?> toJson() {
+    return {
+      'content':
+          content?.map<Map<String, dynamic>>((data) => data.toJson()).toList(),
       'last': last,
       'first': first,
       'totalPages': totalPages,
-      'totalElements': totalElements,
+      'totalElements': totalElements
     };
   }
 
-  factory RecipePageResponse.fromMap(Map<String, dynamic> map) {
+  static RecipePageResponse fromJson(Map<String, Object?> json) {
     return RecipePageResponse(
-      content: List<RecipeResponse>.from((map['content'] as List<int>).map<RecipeResponse>((x) => RecipeResponse.fromMap(x as Map<String,dynamic>),),),
-      last: map['last'] as bool,
-      first: map['first'] as bool,
-      totalPages: map['totalPages'].toInt() as int,
-      totalElements: map['totalElements'].toInt() as int,
-    );
+        content: json['content'] == null
+            ? []
+            : (json['content'] as List)
+                .map<RecipeResponse>((data) =>
+                    RecipeResponse.fromJson(data as Map<String, Object?>))
+                .toList(),
+        last: json['last'] == null ? null : json['last'] as bool,
+        first: json['first'] == null ? null : json['first'] as bool,
+        totalPages:
+            json['totalPages'] == null ? null : json['totalPages'] as int,
+        totalElements: json['totalElements'] == null
+            ? null
+            : json['totalElements'] as int);
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory RecipePageResponse.fromJson(String source) => RecipePageResponse.fromMap(json.decode(source) as Map<String, dynamic>);
+  @override
+  String toString() {
+    return '''RecipePageResponse(
+                content:${content.toString()},
+last:$last,
+first:$first,
+totalPages:$totalPages,
+totalElements:$totalElements
+    ) ''';
+  }
 
   @override
-  bool get stringify => true;
+  bool operator ==(Object other) {
+    return other is RecipePageResponse &&
+        other.runtimeType == runtimeType &&
+        other.content == content &&
+        other.last == last &&
+        other.first == first &&
+        other.totalPages == totalPages &&
+        other.totalElements == totalElements;
+  }
 
   @override
-  List<Object> get props {
-    return [
-      content,
-      last,
-      first,
-      totalPages,
-      totalElements,
-    ];
+  int get hashCode {
+    return Object.hash(
+        runtimeType, content, last, first, totalPages, totalElements);
   }
 }
