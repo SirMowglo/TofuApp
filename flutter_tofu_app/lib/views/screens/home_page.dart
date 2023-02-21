@@ -18,6 +18,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final authBloc = BlocProvider.of<AuthenticationBloc>(context);
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 230, 230, 230),
       body: SafeArea(
         minimum: const EdgeInsets.all(16),
         child: BlocProvider(

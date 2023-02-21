@@ -3,27 +3,37 @@ import 'package:flutter_tofu_app/models/recipe.dart';
 
 class RecipeCard extends StatelessWidget {
   const RecipeCard({super.key, required this.recipe});
-
   final RecipeResponse recipe;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          elevation: 3.0,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        elevation: 3.0,
+        child: Container(
+          height: 120,
+          width: double.infinity,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                      'https://raw.githubusercontent.com/SirMowglo/TofuApp/main/spring_tofu_app/uploads/${recipe.img}'))),
           child: Container(
-            height: 120,
-            width: double.infinity,
             decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(recipe.img!))),
+              gradient: RadialGradient(
+                  // begin: Alignment.topCenter,
+                  // end: Alignment.center,
+                  radius: 2,
+                  colors: [
+                    Color.fromARGB(0, 0, 0, 0),
+                    Color.fromARGB(199, 0, 0, 0),
+                  ]),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -39,7 +49,7 @@ class RecipeCard extends StatelessWidget {
                         Shadow(
                           offset: Offset(1.0, 1.0),
                           blurRadius: 2.0,
-                          color: Color.fromARGB(150, 0, 0, 0),
+                          color: Color.fromARGB(200, 0, 0, 0),
                         )
                       ],
                     ),
@@ -56,7 +66,7 @@ class RecipeCard extends StatelessWidget {
                         Shadow(
                           offset: Offset(0.5, 0.5),
                           blurRadius: 2.0,
-                          color: Color.fromARGB(150, 0, 0, 0),
+                          color: Color.fromARGB(200, 0, 0, 0),
                         )
                       ],
                     ),
@@ -85,8 +95,8 @@ class RecipeCard extends StatelessWidget {
               ],
             ),
           ),
-          margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 5.0),
         ),
+        margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 5.0),
       ),
     );
   }

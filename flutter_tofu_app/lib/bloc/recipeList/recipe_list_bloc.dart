@@ -41,7 +41,7 @@ class RecipeListBloc extends Bloc<RecipeListEvent, RecipeListState> {
         return emit(state.copyWith(
           status: RecipeListStatus.success,
           recipeList: recipePage.content,
-          hasReachedMax: false,
+          hasReachedMax: recipePage.content!.length< 10 ? true :false,
         ));
       }
 

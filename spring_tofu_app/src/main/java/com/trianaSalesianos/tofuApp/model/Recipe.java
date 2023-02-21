@@ -36,7 +36,7 @@ public class Recipe implements Serializable {
     private Integer prepTime = 0;   // in minutes
     private String steps;
     @Builder.Default
-    private String img = "https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/british_shakshuka_26737_16x9.jpg";
+    private String img = "default_recipe.jpg";
     private String category;  //Vegetariano, vegano, hiper-proteico, hiper-calorico, hipo-calorico...
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();

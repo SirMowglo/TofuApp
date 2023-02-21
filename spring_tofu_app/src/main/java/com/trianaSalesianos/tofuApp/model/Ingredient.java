@@ -33,7 +33,7 @@ public class Ingredient {
     private UUID id;
     private String name;
     @Builder.Default
-    private String img = "https://writerscafe.s3.amazonaws.com/stories/f85ec3155ba34e2147c27f3560ab3a33.jpg";
+    private String img = "default_ingredient.jpg";
     @Builder.Default
     @OneToMany(mappedBy = "ingredient")
     private List<RecipeIngredient> recipeIngredients = new ArrayList<>();

@@ -89,7 +89,8 @@ public class SecurityConfig {
                         "/user/me",
                         "/user/changepassword",
                         "/user/edit",
-                        "/user/changeavatar"
+                        "/user/changeavatar",
+                        "/download/{filename:.+}"
                         ).hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated();
 
