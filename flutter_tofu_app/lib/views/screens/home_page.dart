@@ -18,9 +18,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final authBloc = BlocProvider.of<AuthenticationBloc>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Page'),
-      ),
       body: SafeArea(
         minimum: const EdgeInsets.all(16),
         child: BlocProvider(

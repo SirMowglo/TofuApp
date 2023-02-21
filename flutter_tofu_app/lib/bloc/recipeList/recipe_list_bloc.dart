@@ -47,7 +47,7 @@ class RecipeListBloc extends Bloc<RecipeListEvent, RecipeListState> {
 
       numPage++;
       final recipePage = await recipeRepository.getRecipeList(numPage);
-      recipePage.content!.length< 10
+      recipePage.content!.length< 10 || recipePage.content!.isEmpty
           ? emit(state.copyWith(hasReachedMax: true))
           : emit(
               state.copyWith(

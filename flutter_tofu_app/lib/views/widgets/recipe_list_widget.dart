@@ -42,7 +42,7 @@ class _RecipeListState extends State<RecipeList> {
 
         //! Estado de exito
         case RecipeListStatus.success:
-          if (state.recipeList.isEmpty) {
+          if (state.recipeList.isEmpty ) {
             return const Center(
               child: Text('No recipes'),
             );
@@ -50,11 +50,14 @@ class _RecipeListState extends State<RecipeList> {
           return ListView.builder(
             itemBuilder: (BuildContext context, int index) {
               return index >= state.recipeList.length
-                  ? const Center(
-                      child: SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: CircularProgressIndicator(strokeWidth: 1.5),
+                  ? Center(
+                      child: Container(
+                          width: 3,
+                          height: 3,
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.all(Radius.circular(3))
+                          ),
                       ),
                     )
                   : RecipeCard(recipe: state.recipeList[index]);
@@ -83,6 +86,6 @@ class _RecipeListState extends State<RecipeList> {
     if (!scrollController.hasClients) return false;
     final maxScroll = scrollController.position.maxScrollExtent;
     final currentScroll = scrollController.offset;
-    return currentScroll >= (maxScroll * 0.9);
+    return currentScroll >= (maxScroll * 0.8);
   }
 }
