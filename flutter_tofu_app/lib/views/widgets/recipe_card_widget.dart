@@ -31,7 +31,7 @@ class RecipeCard extends StatelessWidget {
                   radius: 2,
                   colors: [
                     Color.fromARGB(0, 0, 0, 0),
-                    Color.fromARGB(199, 0, 0, 0),
+                    Color.fromARGB(170, 0, 0, 0),
                   ]),
             ),
             child: Column(
@@ -44,7 +44,7 @@ class RecipeCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 189, 241, 140),
                       shadows: [
                         Shadow(
                           offset: Offset(1.0, 1.0),
@@ -81,7 +81,7 @@ class RecipeCard extends StatelessWidget {
                     'Author: ${recipe.author!}',
                     style: TextStyle(
                       fontSize: 15,
-                      color: Colors.white,
+                      color: Color.fromARGB(200, 255, 255, 255),
                       shadows: [
                         Shadow(
                           offset: Offset(1.0, 1.0),

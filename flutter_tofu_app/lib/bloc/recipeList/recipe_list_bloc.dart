@@ -41,18 +41,19 @@ class RecipeListBloc extends Bloc<RecipeListEvent, RecipeListState> {
         return emit(state.copyWith(
           status: RecipeListStatus.success,
           recipeList: recipePage.content,
-          hasReachedMax: recipePage.content!.length< 10 ? true :false,
+          hasReachedMax: recipePage.content!.length < 10 ? true : false,
         ));
       }
 
       numPage++;
       final recipePage = await recipeRepository.getRecipeList(numPage);
-      recipePage.content!.length< 10 || recipePage.content!.isEmpty
+      recipePage.content!.length < 10 || recipePage.content!.isEmpty
           ? emit(state.copyWith(hasReachedMax: true))
           : emit(
               state.copyWith(
                 status: RecipeListStatus.success,
-                recipeList: List.of(state.recipeList)..addAll(recipePage.content!),
+                recipeList: List.of(state.recipeList)
+                  ..addAll(recipePage.content!),
                 hasReachedMax: false,
               ),
             );

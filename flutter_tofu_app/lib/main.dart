@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_tofu_app/views/screens/home_page.dart';
+import 'package:flutter_tofu_app/views/screens/main_page.dart';
 
 import 'bloc/authentication/authentication_bloc.dart';
 import 'config/locator.dart';
@@ -47,8 +47,7 @@ class TofuApp extends StatelessWidget {
         builder: (context, state) {
           GlobalContext.ctx = context;
           if (state is AuthenticationAuthenticatedState) {
-            // show home page
-            return HomePage(
+            return MainPage(
                 user: state.user,
                 );
           }

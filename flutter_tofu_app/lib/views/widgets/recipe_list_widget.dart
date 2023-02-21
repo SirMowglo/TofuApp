@@ -50,15 +50,17 @@ class _RecipeListState extends State<RecipeList> {
           return ListView.builder(
             itemBuilder: (BuildContext context, int index) {
               return index >= state.recipeList.length
-                  ? Center(
-                      child: Container(
+                  ? Column(
+                      children: [
+                        SizedBox(width: 10, height: 10,),
+                        Container(
                           width: 3,
                           height: 3,
                           decoration: BoxDecoration(
                             color: Colors.grey,
                             borderRadius: BorderRadius.all(Radius.circular(3))
                           ),
-                      ),
+                      ),]
                     )
                   : RecipeCard(recipe: state.recipeList[index]);
             },

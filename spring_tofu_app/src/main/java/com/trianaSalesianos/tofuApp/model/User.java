@@ -51,7 +51,7 @@ public class User implements UserDetails {
     @Column(unique = true, updatable = false)
     private String email;
     @Builder.Default
-    private String avatar = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+    private String avatar = "default_user_avatar.png";
     private LocalDate birthday;
     private String description;
 
