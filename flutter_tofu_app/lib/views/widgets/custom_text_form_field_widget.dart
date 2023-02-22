@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomTextFormField extends StatelessWidget {
   final String hint;
   final bool obscureText;
-  final double? padding;
+  final double? hPadding;
   final String? errorText;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -12,7 +12,7 @@ class CustomTextFormField extends StatelessWidget {
       {super.key,
       required this.hint,
       required this.obscureText,
-      this.padding,
+      this.hPadding,
       this.validator,
       this.errorText,
       this.controller});
@@ -21,7 +21,7 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          EdgeInsets.symmetric(horizontal: padding == null ? 15 : padding!),
+          EdgeInsets.symmetric(horizontal: hPadding == null ? 15 : hPadding!),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: TextFormField(

@@ -38,6 +38,7 @@ class TofuApp extends StatelessWidget {
         '/login':(context) => LoginPage(),
         '/register':(context) => RegisterPage()
       },
+      debugShowCheckedModeBanner: false,
       // home: 
     );
   }
