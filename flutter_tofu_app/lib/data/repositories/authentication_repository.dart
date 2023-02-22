@@ -20,15 +20,14 @@ class AuthenticationRepository {
 
   Future<dynamic> doLogin(String username, String password) async {
     String url = "/auth/login";
+    LoginRequest loginRequest = LoginRequest(username: username, password: password);
+    var jsonResponse = await _client.post(url, jsonEncode(loginRequest));
 
-    var jsonResponse = await _client.post(
-        url, LoginRequest(username: username, password: password));
     return LoginResponse.fromJson(jsonDecode(jsonResponse));
   }
 
-  Future<dynamic> register(String username, String email, String verifyEmail,
-      String password, String verifyPassword, String fullname) async {
-        
+  Future<void> register(String username, String email, String verifyEmail, String password,
+      String verifyPassword, String fullname) async {
     String url = "/auth/register";
     RegisterRequest rr = RegisterRequest(
         username: username,
@@ -38,8 +37,6 @@ class AuthenticationRepository {
         verifyPassword: verifyPassword,
         fullname: fullname);
 
-    var jsonResponse = await _client.post(url, rr);
-
-    return UserResponse.fromJson(jsonDecode(jsonResponse));
+    var jsonResponse = await _client.post(url, rr.toJson());
   }
 }

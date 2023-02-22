@@ -56,6 +56,8 @@ class _SignInFormState extends State<SignInForm> {
       listener: (context, state) {
         if (state is LoginFailureState) {
           _showError(state.error);
+        }else if(state is LoginSuccessState){
+          Navigator.pushReplacementNamed(context, '/');
         }
       },
       builder: (context, state) {

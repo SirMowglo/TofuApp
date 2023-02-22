@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tofu_app/bloc/register/register_cubit.dart';
 import 'package:flutter_tofu_app/views/views.dart';
+import 'package:flutter_tofu_app/views/widgets/register_form_widget.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -19,60 +22,11 @@ class RegisterPage extends StatelessWidget {
         ]),
       ),
       body: SafeArea(
-        minimum: EdgeInsets.all(3),
-        child: Form(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 20,
-                width: 20,
-              ),
-              CustomTextFormField(hint: "Full Name", obscureText: false),
-              SizedBox(
-                height: 20,
-                width: 20,
-              ),
-              CustomTextFormField(
-                hint: "Username",
-                obscureText: false,
-              ),
-              SizedBox(
-                height: 20,
-                width: 20,
-              ),
-              CustomTextFormField(hint: "Password", obscureText: true),
-              SizedBox(
-                height: 20,
-                width: 20,
-              ),
-              CustomTextFormField(
-                hint: "Verified password",
-                obscureText: true,
-              ),
-              SizedBox(
-                height: 20,
-                width: 20,
-              ),
-              CustomTextFormField(hint: "Email", obscureText: false),
-              SizedBox(
-                height: 20,
-                width: 20,
-              ),
-              CustomTextFormField(hint: "Verified Email", obscureText: false),
-              SizedBox(
-                height: 20,
-                width: 20,
-              ),
-              CustomButton(
-                text: 'Register',
-                color: Color.fromARGB(255, 155, 214, 100),
-                padding: 35,
-                textColor: Colors.white,
-              ),
-            ],
-          ),
-        ),
-      ),
+          minimum: EdgeInsets.all(3),
+          child: BlocProvider<RegisterCubit>(
+              create: (context) => RegisterCubit(),
+              child: RegisterForm(),
+              )),
     );
   }
 }

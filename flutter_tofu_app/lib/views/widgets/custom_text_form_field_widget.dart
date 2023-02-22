@@ -7,6 +7,7 @@ class CustomTextFormField extends StatelessWidget {
   final String? errorText;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final String? Function(String?)? onChanged;
 
   const CustomTextFormField(
       {super.key,
@@ -15,7 +16,7 @@ class CustomTextFormField extends StatelessWidget {
       this.hPadding,
       this.validator,
       this.errorText,
-      this.controller});
+      this.controller, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,7 @@ class CustomTextFormField extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: TextFormField(
+          onChanged: onChanged,
           key: key,
           validator: validator,
           obscureText: obscureText,

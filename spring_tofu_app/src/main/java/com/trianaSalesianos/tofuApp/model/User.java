@@ -13,10 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -52,14 +49,18 @@ public class User implements UserDetails {
     private String email;
     @Builder.Default
     private String avatar = "default_user_avatar.png";
-    private LocalDate birthday;
-    private String description;
+    @Builder.Default
+    private LocalDate birthday = LocalDate.of(2000,1,1);
+
+    @Builder.Default
+    private String description = "";
 
     //TODO Gestion de fetch type lazy con subgraphos y seteo por defecto de las listas en vacia
     //TODO Gestion del borrado de recetas
     @ToString.Exclude
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
-    private List<Recipe> recipes;
+    @Builder.Default
+    private List<Recipe> recipes = new ArrayList<>();
 
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.EAGER)
@@ -69,7 +70,8 @@ public class User implements UserDetails {
                     foreignKey = @ForeignKey(name="FK_FAVORITE_RECIPE")),
             name = "favorites"
     )
-    private List<Recipe> favorites;
+    @Builder.Default
+    private List<Recipe> favorites = new ArrayList<>();
     @CreatedDate
     private LocalDateTime createdAt;
     @Builder.Default

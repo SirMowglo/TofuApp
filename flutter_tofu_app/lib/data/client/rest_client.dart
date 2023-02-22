@@ -81,7 +81,7 @@ class RestClient {
 
         Uri uri = Uri.parse(ApiConstants.baseUrl + url);
 
-        final response = await _httpClient.post(uri, body: jsonEncode(body));
+        final response = await _httpClient.post(uri, body: body);
         var responseJson = _response(response);
         return responseJson;
 

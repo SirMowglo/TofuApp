@@ -11,17 +11,14 @@ import '../../models/user.dart';
 import '../widgets/recipe_list_widget.dart';
 
 class MainPage extends StatefulWidget {
-  final User user;
-
   const MainPage({super.key, required this.user});
-
+  final User user;
   @override
   State<MainPage> createState() => _MainPageState(user);
 }
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
-  final User user;
 
   final List<Widget> _pages = [
     SafeArea(minimum: const EdgeInsets.all(2), child: _HomePage()),
@@ -29,7 +26,7 @@ class _MainPageState extends State<MainPage> {
     SafeArea(minimum: const EdgeInsets.all(2), child: _SettingsPage())
   ];
 
-  _MainPageState(this.user);
+  _MainPageState(User user);
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +67,8 @@ class _MainPageState extends State<MainPage> {
                 color: Color.fromARGB(255, 145, 199, 94),
                 width: 1,
               ),
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15), topRight: Radius.circular(15))),
+              borderRadius:
+                  BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
             child: GNav(
@@ -115,8 +112,7 @@ class _HomePage extends StatelessWidget {
     return BlocProvider(
       create: (_) {
         final recipeRepo = new RecipeRepository();
-        return RecipeListBloc(recipeRepository: recipeRepo)
-          ..add(GetRecipesEvent());
+        return RecipeListBloc(recipeRepository: recipeRepo)..add(GetRecipesEvent());
       },
       child: const RecipeList(),
     );

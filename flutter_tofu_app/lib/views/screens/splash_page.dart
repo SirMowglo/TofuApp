@@ -15,15 +15,10 @@ class SplashPage extends StatelessWidget {
       builder: (context, state) {
         GlobalContext.ctx = context;
         if (state is AuthenticationAuthenticatedState) {
-          return MainPage(
-            user: state.user,
-          );
+          return MainPage(user: state.user,);
         }
         return LoginPage();
       },
     );
-    // return const Scaffold(
-    //   body: Center(child: CircularProgressIndicator()),
-    // );
   }
 }
