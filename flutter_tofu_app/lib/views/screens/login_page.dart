@@ -7,9 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
-  static Route<void> route() {
-    return MaterialPageRoute<void>(builder: (_) => const LoginPage());
-  }
 
   @override
   State<StatefulWidget> createState() => _LoginPageState();

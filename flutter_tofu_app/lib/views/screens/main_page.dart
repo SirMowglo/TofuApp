@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tofu_app/data/repositories/recipe_repository.dart';
+import 'package:flutter_tofu_app/views/widgets/custom_button_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -24,7 +25,7 @@ class _MainPageState extends State<MainPage> {
 
   final List<Widget> _pages = [
     SafeArea(minimum: const EdgeInsets.all(2), child: _HomePage()),
-    SafeArea(minimum: const EdgeInsets.all(2), child: Text("Profile")),
+    SafeArea(minimum: const EdgeInsets.all(2), child: _ProfilePage()),
     SafeArea(minimum: const EdgeInsets.all(2), child: _SettingsPage())
   ];
 
@@ -33,12 +34,12 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( 
+      appBar: AppBar(
         centerTitle: true,
         toolbarHeight: 50,
         title: ClipRRect(
           child: Container(
-            width:  90,
+            width: 90,
             height: 40,
             decoration: BoxDecoration(
               color: Color.fromARGB(200, 255, 255, 255),
@@ -46,12 +47,12 @@ class _MainPageState extends State<MainPage> {
             ),
             child: Center(
               child: Text(
-                    'TOFU',
-                    style: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 20,
-                        color: Color.fromARGB(255, 155, 214, 100)),
-                  ),
+                'TOFU',
+                style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 20,
+                    color: Color.fromARGB(255, 155, 214, 100)),
+              ),
             ),
           ),
         ),
@@ -128,12 +129,24 @@ class _SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final authBloc = BlocProvider.of<AuthenticationBloc>(context);
     return Center(
-      child: ElevatedButton(
-        child: Text('Logout'),
-        onPressed: () {
+      child: CustomButton(
+        height: 50,
+        color: Color.fromARGB(255, 223, 94, 77),
+        textColor: Colors.white,
+        text: 'Logout',
+        onTap: () {
           authBloc.add(UserLoggedOutEvent());
         },
       ),
     );
+  }
+}
+
+class _ProfilePage extends StatelessWidget {
+  const _ProfilePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: const Text("Profile"));
   }
 }

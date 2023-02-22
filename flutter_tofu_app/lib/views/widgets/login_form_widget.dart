@@ -102,6 +102,7 @@ class _SignInFormState extends State<SignInForm> {
               //! Login Button
               SizedBox(height: 30),
               CustomButton(
+                text: 'Login',
                 color: Color.fromARGB(255, 155, 214, 100),
                 padding: 35,
                 textColor: Colors.white,
@@ -110,7 +111,7 @@ class _SignInFormState extends State<SignInForm> {
               ),
 
               //! Register Text
-              SizedBox(height: 15),
+              SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -120,10 +121,16 @@ class _SignInFormState extends State<SignInForm> {
                         color: Color.fromARGB(255, 114, 114, 114),
                         fontWeight: FontWeight.w400),
                   ),
-                  Text(
-                    'Register now',
-                    style: GoogleFonts.openSans(
-                        color: Colors.blueAccent, fontWeight: FontWeight.w500),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/register');
+                    },
+                    child: Text(
+                      'Register now',
+                      style: GoogleFonts.openSans(
+                          color: Colors.blueAccent,
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ],
               )

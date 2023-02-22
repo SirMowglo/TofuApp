@@ -40,8 +40,6 @@ public class CreateUserRequest {
     private String email;
     @NotEmpty(message = "{createUserRequest.verifyemail.notempty}")
     private String verifyEmail;
-    @URL(message = "{createUserRequest.avatar.url}")
-    private String avatar;
     @NotEmpty(message = "{createUserRequest.fullname.notempty}")
     private String fullname;
 }

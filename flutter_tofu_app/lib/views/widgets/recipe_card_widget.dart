@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tofu_app/models/recipe.dart';
+import 'package:flutter_tofu_app/models/recipe_response.dart';
 
 class RecipeCard extends StatelessWidget {
   const RecipeCard({super.key, required this.recipe});

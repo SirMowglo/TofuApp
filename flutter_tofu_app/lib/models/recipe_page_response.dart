@@ -1,4 +1,4 @@
-import 'package:flutter_tofu_app/models/recipe.dart';
+import 'package:flutter_tofu_app/models/recipe_response.dart';
 
 class RecipePageResponse {
   final List<RecipeResponse>? content;

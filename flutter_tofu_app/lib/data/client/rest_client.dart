@@ -12,6 +12,7 @@ import 'package:injectable/injectable.dart';
 import 'package:http/http.dart' as http;
 
 import '../../main.dart';
+import '../../tofu_app.dart';
 import '../services/localstorage_service.dart';
 
 class ApiConstants {
@@ -90,7 +91,7 @@ class RestClient {
 
   }
 
-
+  //TODO Crear clases de errores para manejarlos en el front
   dynamic _response(http.Response response) {
     switch (response.statusCode) {
       case 200:

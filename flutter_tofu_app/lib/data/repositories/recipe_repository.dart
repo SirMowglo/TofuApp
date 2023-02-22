@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter_tofu_app/data/client/rest_client.dart';
-import 'package:flutter_tofu_app/models/recipe.dart';
-import 'package:flutter_tofu_app/models/recipe_page.dart';
+import 'package:flutter_tofu_app/models/recipe_response.dart';
+import 'package:flutter_tofu_app/models/recipe_page_response.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../config/locator.dart';
