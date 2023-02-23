@@ -71,6 +71,10 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+//                .antMatchers(
+//                        "/v3/api-docs/**",
+//                        "/swagger-ui/**"
+//                ).permitAll()
                 //ACCESO PARA USUARIOS
                 .antMatchers(
                 ).hasRole("USER")
@@ -109,7 +113,11 @@ public class SecurityConfig {
         return (web -> web.ignoring().antMatchers("/h2-console/**",
                 "/auth/register",
                 "/auth/login",
-                "/refreshtoken"
+                "/refreshtoken",
+                "/v3/api-docs/**",
+                "/swagger-ui/**",
+                "/swagger-ui.html",
+                "/swagger-resources/**"
         ));
     }
 

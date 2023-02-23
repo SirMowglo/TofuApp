@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tofu_app/data/repositories/recipe_repository.dart';
@@ -28,10 +30,11 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     final List<Widget> _pages = [
       SafeArea(minimum: const EdgeInsets.all(2), child: _HomePage()),
-      SafeArea(minimum: const EdgeInsets.all(2), child: _ProfilePage(user: user)),
+      SafeArea(
+          minimum: const EdgeInsets.all(2), child: _ProfilePage(user: user)),
       SafeArea(minimum: const EdgeInsets.all(2), child: _SettingsPage())
     ];
-    
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -69,8 +72,8 @@ class _MainPageState extends State<MainPage> {
                 color: Color.fromARGB(255, 145, 199, 94),
                 width: 1,
               ),
-              borderRadius:
-                  BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15), topRight: Radius.circular(15))),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
             child: GNav(
@@ -114,7 +117,8 @@ class _HomePage extends StatelessWidget {
     return BlocProvider(
       create: (_) {
         final recipeRepo = new RecipeRepository();
-        return RecipeListBloc(recipeRepository: recipeRepo)..add(GetRecipesEvent());
+        return RecipeListBloc(recipeRepository: recipeRepo)
+          ..add(GetRecipesEvent());
       },
       child: const RecipeList(),
     );
@@ -146,6 +150,61 @@ class _ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('${user.fullname}'));
+    return Padding(
+      padding: EdgeInsets.only(top: 60, left: 10, right: 10),
+      child: Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.center,
+          children: [
+            Container(
+              width: double.infinity,
+              height: 300,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Color.fromARGB(60, 0, 0, 0),
+                        blurRadius: 4,
+                        offset: Offset(0, 3))
+                  ]),
+            ),
+            Positioned(
+              top: -58,
+              child: Container(
+                width: 116,
+                height: 116,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 230, 230, 230),
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                ),
+              ),
+            ),
+            Positioned(
+              top: -50,
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                    color: Colors.red,
+                    image: DecorationImage(
+                        image: NetworkImage(
+                            'https://raw.githubusercontent.com/SirMowglo/TofuApp/main/spring_tofu_app/uploads/${user.avatar}')),
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                    border: Border.all(
+                        style: BorderStyle.solid,
+                        color: Colors.white,
+                        width: 4,
+                        strokeAlign: BorderSide.strokeAlignCenter)),
+              ),
+            ),
+            Text('${user.fullname}',
+            style: GoogleFonts.montserrat(
+              color: Colors.grey[600],
+              fontSize: 23,
+              fontWeight: FontWeight.w500
+            ),),
+          ]),
+    );
   }
 }

@@ -1,8 +1,19 @@
 package com.trianaSalesianos.tofuApp.controller;
 
 import com.trianaSalesianos.tofuApp.model.dto.file.FileResponse;
+import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientResponse;
 import com.trianaSalesianos.tofuApp.service.files.StorageService;
 import com.trianaSalesianos.tofuApp.utils.MediaTypeUrlResource;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -15,14 +26,38 @@ import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 
+@Tag(name = "Files", description = "Files controller")
 @RestController
 @RequiredArgsConstructor
 public class FileController {
 
     private final StorageService storageService;
 
+    @Operation(summary = "Uploading multiple files")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "File uploaded succesfully",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = FileResponse.class),
+                            examples = {@ExampleObject(
+                                    value = """
+                                                {
+                                                    "name": "koalaSad.jpg",
+                                                    "uri": "http://localhost:8080/download/koalaSad.jpg",
+                                                    "type": "image/jpeg",
+                                                    "size": 51423
+                                                }                                                                    
+                                            """
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "400",
+                    description = "There was an error with the data provided",
+                    content = @Content),
+    })
     @PostMapping("/upload/files")
-    public ResponseEntity<?> upload(@RequestPart("files") MultipartFile[] files) {
+    public ResponseEntity<?> upload(
+            @RequestBody(description = "Files to upload")
+            @RequestPart("files") MultipartFile[] files) {
 
         //FileResponse response = uploadFile(file);
 
@@ -35,9 +70,31 @@ public class FileController {
                 .status(HttpStatus.CREATED)
                 .body(result);
     }
-
+    @Operation(summary = "Uploading a file")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "File uploaded succesfully",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = FileResponse.class),
+                            examples = {@ExampleObject(
+                                    value = """
+                                                {
+                                                    "name": "koalaSad.jpg",
+                                                    "uri": "http://localhost:8080/download/koalaSad.jpg",
+                                                    "type": "image/jpeg",
+                                                    "size": 51423
+                                                }                                                                    
+                                            """
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "400",
+                    description = "There was an error with the data provided",
+                    content = @Content),
+    })
     @PostMapping("/upload")
-    public ResponseEntity<?> upload(@RequestPart("file") MultipartFile file) {
+    public ResponseEntity<?> upload(
+            @RequestBody(description = "File to upload")
+            @RequestPart("file") MultipartFile file) {
 
         FileResponse response = uploadFile(file);
 
@@ -62,8 +119,26 @@ public class FileController {
 
     }
 
+    @Operation(summary = "Download an image from the server")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Ingredient fetched succesfully",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Resource.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                                Resource
+                                            """
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "Image not found",
+                    content = @Content),
+    })
     @GetMapping("/download/{filename:.+}")
-    public ResponseEntity<Resource> getFile(@PathVariable String filename){
+    public ResponseEntity<Resource> getFile(
+            @Parameter(description = "Name of the image and its extension")
+            @PathVariable String filename){
         MediaTypeUrlResource resource =
                 (MediaTypeUrlResource) storageService.loadAsResource(filename);
 
