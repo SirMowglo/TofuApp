@@ -90,8 +90,7 @@ class RestClient {
     }
 
   }
-
-  //TODO Crear clases de errores para manejarlos en el front
+  
   dynamic _response(http.Response response) {
     switch (response.statusCode) {
       case 200:

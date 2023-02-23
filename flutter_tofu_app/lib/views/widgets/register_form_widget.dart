@@ -147,7 +147,6 @@ class _RegisterFormState extends State<RegisterForm> {
                   onTap: snapshot.hasData
                       ? () {
                           {
-                            //! IMPORTANTE 
                             //TODO Manejo de errores del server
                             _registerCubit?.register();
                             if (_registerCubit?.state is RegisterFailure) {

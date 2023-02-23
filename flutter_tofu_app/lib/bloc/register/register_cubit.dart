@@ -64,9 +64,9 @@ class RegisterCubit extends Cubit<RegisterState> {
     if (password.length < 8) {
       _passwordController.sink
           .addError("The password need to be longer than 8 characters");
-    } else if (!password.containsLowercase && !password.containsUppercase) {
+    } else if (!password.containsUpperAndLower) {
       _passwordController.sink.addError(
-          "The password needs to have both lowercase and uppercase characters");
+          "The password needs to have lower and uppercase");
     } else if (!password.containsNumber) {
       _passwordController.sink
           .addError("The password needs to have at least one number");
@@ -125,15 +125,14 @@ class RegisterCubit extends Cubit<RegisterState> {
           _passwordController.value,
           _verifiedPasswordController.value,
           _fullnameController.value);
-    } on CustomException catch (err) {
+    } on Exception catch (err) {
       emit(RegisterFailure());
     }
   }
 }
 
 extension StringValidators on String {
-  bool get containsUppercase => contains(RegExp(r'[A-Z]'));
-  bool get containsLowercase => contains(RegExp(r'[a-z]'));
+  bool get containsUpperAndLower => contains(RegExp(r'\w*([A-Z][a-z]*)'));
   bool get containsNumber => contains(RegExp(r'[0-9]'));
   bool get isEmail => contains(RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$'));
   bool get containsSpecialChar => contains(RegExp(r'[^a-zA-Z0-9_\-\.]+$'));
