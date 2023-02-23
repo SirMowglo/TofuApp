@@ -159,6 +159,8 @@ class NotFoundException extends CustomException {
 
 
 
+
+
 class AuthorizationInterceptor implements InterceptorContract {
 
   late LocalStorageService _localStorageService;

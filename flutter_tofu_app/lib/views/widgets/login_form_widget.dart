@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tofu_app/bloc/login/login_event.dart';
+import 'package:flutter_tofu_app/errors/server_exception.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../bloc/authentication/authentication_bloc.dart';
@@ -19,8 +22,7 @@ class LoginForm extends StatelessWidget {
     final authBloc = BlocProvider.of<AuthenticationBloc>(context);
 
     return BlocProvider<LoginBloc>(
-        create: (context) => LoginBloc(authBloc, authService),
-        child: SignInForm());
+        create: (context) => LoginBloc(authBloc, authService), child: SignInForm());
   }
 }
 
@@ -56,7 +58,7 @@ class _SignInFormState extends State<SignInForm> {
       listener: (context, state) {
         if (state is LoginFailureState) {
           _showError(state.error);
-        }else if(state is LoginSuccessState){
+        } else if (state is LoginSuccessState) {
           Navigator.pushReplacementNamed(context, '/');
         }
       },
@@ -69,9 +71,7 @@ class _SignInFormState extends State<SignInForm> {
 
         return Form(
           key: _key,
-          autovalidateMode: _autoValidate
-              ? AutovalidateMode.always
-              : AutovalidateMode.disabled,
+          autovalidateMode: _autoValidate ? AutovalidateMode.always : AutovalidateMode.disabled,
           child: Column(
             children: [
               //! Textfield para el username
@@ -108,8 +108,7 @@ class _SignInFormState extends State<SignInForm> {
                 color: Color.fromARGB(255, 155, 214, 100),
                 padding: 35,
                 textColor: Colors.white,
-                onTap:
-                    state is LoginLoadingState ? () {} : _onLoginButtonPressed,
+                onTap: state is LoginLoadingState ? () {} : _onLoginButtonPressed,
               ),
 
               //! Register Text
@@ -120,8 +119,7 @@ class _SignInFormState extends State<SignInForm> {
                   Text(
                     'Not a member? ',
                     style: GoogleFonts.openSans(
-                        color: Color.fromARGB(255, 114, 114, 114),
-                        fontWeight: FontWeight.w400),
+                        color: Color.fromARGB(255, 114, 114, 114), fontWeight: FontWeight.w400),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -130,8 +128,7 @@ class _SignInFormState extends State<SignInForm> {
                     child: Text(
                       'Register now',
                       style: GoogleFonts.openSans(
-                          color: Colors.blueAccent,
-                          fontWeight: FontWeight.w500),
+                          color: Colors.blueAccent, fontWeight: FontWeight.w500),
                     ),
                   ),
                 ],

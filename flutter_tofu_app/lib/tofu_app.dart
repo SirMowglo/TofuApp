@@ -36,7 +36,7 @@ class TofuApp extends StatelessWidget {
       routes: {
         '/':(context) => SplashPage(),
         '/login':(context) => LoginPage(),
-        '/register':(context) => RegisterPage()
+        '/register':(context) => RegisterPage(),
       },
       debugShowCheckedModeBanner: false,
       // home: 

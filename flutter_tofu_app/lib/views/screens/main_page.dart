@@ -11,25 +11,27 @@ import '../../models/user.dart';
 import '../widgets/recipe_list_widget.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key, required this.user});
-  final User user;
+  User user;
+
+  MainPage({super.key, required this.user});
+
   @override
   State<MainPage> createState() => _MainPageState(user);
 }
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
-
-  final List<Widget> _pages = [
-    SafeArea(minimum: const EdgeInsets.all(2), child: _HomePage()),
-    SafeArea(minimum: const EdgeInsets.all(2), child: _ProfilePage()),
-    SafeArea(minimum: const EdgeInsets.all(2), child: _SettingsPage())
-  ];
-
-  _MainPageState(User user);
+  User user;
+  _MainPageState(this.user);
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _pages = [
+      SafeArea(minimum: const EdgeInsets.all(2), child: _HomePage()),
+      SafeArea(minimum: const EdgeInsets.all(2), child: _ProfilePage(user: user)),
+      SafeArea(minimum: const EdgeInsets.all(2), child: _SettingsPage())
+    ];
+    
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -139,10 +141,11 @@ class _SettingsPage extends StatelessWidget {
 }
 
 class _ProfilePage extends StatelessWidget {
-  const _ProfilePage({super.key});
+  _ProfilePage({super.key, required this.user});
+  User user;
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: const Text("Profile"));
+    return Center(child: Text('${user.fullname}'));
   }
 }

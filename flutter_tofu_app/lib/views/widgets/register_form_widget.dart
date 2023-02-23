@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tofu_app/bloc/register/register_cubit.dart';
-import 'package:flutter_tofu_app/data/repositories/authentication_repository.dart';
 
-import '../../config/locator.dart';
-import '../../data/services/authentication_service.dart';
 import 'custom_button_widget.dart';
 import 'custom_text_form_field_widget.dart';
 
@@ -39,7 +36,8 @@ class _RegisterFormState extends State<RegisterForm> {
                   onChanged: (text) {
                     _registerCubit?.updateUserName(text!);
                   },
-                  errorText: snapshot.hasError ? snapshot.error.toString() : null,
+                  errorText:
+                      snapshot.hasError ? snapshot.error.toString() : null,
                 );
               }),
           //! Fullname field
@@ -56,7 +54,8 @@ class _RegisterFormState extends State<RegisterForm> {
                   onChanged: (text) {
                     _registerCubit?.updateFullName(text!);
                   },
-                  errorText: snapshot.hasError ? snapshot.error.toString() : null,
+                  errorText:
+                      snapshot.hasError ? snapshot.error.toString() : null,
                 );
               }),
           //! Password field
@@ -73,7 +72,8 @@ class _RegisterFormState extends State<RegisterForm> {
                   onChanged: (text) {
                     _registerCubit?.updatePassword(text!);
                   },
-                  errorText: snapshot.hasError ? snapshot.error.toString() : null,
+                  errorText:
+                      snapshot.hasError ? snapshot.error.toString() : null,
                 );
               }),
           //! Verified password field
@@ -90,7 +90,8 @@ class _RegisterFormState extends State<RegisterForm> {
                   onChanged: (text) {
                     _registerCubit?.updateVerifiedPassword(text!);
                   },
-                  errorText: snapshot.hasError ? snapshot.error.toString() : null,
+                  errorText:
+                      snapshot.hasError ? snapshot.error.toString() : null,
                 );
               }),
           //! Email field
@@ -107,7 +108,8 @@ class _RegisterFormState extends State<RegisterForm> {
                   onChanged: (text) {
                     _registerCubit?.updateEmail(text!);
                   },
-                  errorText: snapshot.hasError ? snapshot.error.toString() : null,
+                  errorText:
+                      snapshot.hasError ? snapshot.error.toString() : null,
                 );
               }),
           //! Verified email| field
@@ -124,7 +126,8 @@ class _RegisterFormState extends State<RegisterForm> {
                   onChanged: (text) {
                     _registerCubit?.updateVerifiedEmail(text!);
                   },
-                  errorText: snapshot.hasError ? snapshot.error.toString() : null,
+                  errorText:
+                      snapshot.hasError ? snapshot.error.toString() : null,
                 );
               }),
           SizedBox(
@@ -143,9 +146,16 @@ class _RegisterFormState extends State<RegisterForm> {
                   textColor: Colors.white,
                   onTap: snapshot.hasData
                       ? () {
-                          _registerCubit?.register();
-                          _registerCubit?.clean();
-                          Navigator.pushReplacementNamed(context, '/login');
+                          {
+                            //! IMPORTANTE 
+                            //TODO Manejo de errores del server
+                            _registerCubit?.register();
+                            if (_registerCubit?.state is RegisterFailure) {
+                              _showError("prueba");
+                            }
+                            _registerCubit?.clean();
+                            Navigator.pushReplacementNamed(context, '/login');
+                          }
                         }
                       : () {},
                 );
@@ -153,5 +163,9 @@ class _RegisterFormState extends State<RegisterForm> {
         ],
       ),
     );
+  }
+
+  void _showError(String error) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
   }
 }

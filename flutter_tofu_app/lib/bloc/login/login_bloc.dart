@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
+import 'package:flutter_tofu_app/errors/server_exception.dart';
 
 import '../../data/client/rest_client.dart';
 import '../../data/services/authentication_service.dart';
@@ -10,7 +13,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthenticationBloc _authenticationBloc;
   final AuthenticationService _authenticationService;
 
-  LoginBloc(AuthenticationBloc authenticationBloc, AuthenticationService authenticationService)
+  LoginBloc(AuthenticationBloc authenticationBloc,
+      AuthenticationService authenticationService)
       : assert(authenticationBloc != null),
         assert(authenticationService != null),
         _authenticationBloc = authenticationBloc,
@@ -25,9 +29,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     emit(LoginLoadingState());
     try {
-      print("object");
-      final user =
-          await _authenticationService.signInWithEmailAndPassword(event.email, event.password);
+      final user = await _authenticationService.signInWithEmailAndPassword(
+          event.email, event.password);
       if (user != null) {
         _authenticationBloc.add(UserLoggedInEvent(user: user));
         emit(LoginSuccessState());
@@ -38,7 +41,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } on AuthenticationException catch (e) {
       emit(LoginFailureState(error: e.message));
     } on CustomException catch (err) {
-      emit(LoginFailureState(error: 'An unknown error occurred ${err.message}'));
+      ServerException ex = ServerException.fromJson(jsonDecode(err.message));
+
+      emit(LoginFailureState(
+          error: ex.subErrors != null
+              ? ex.subErrors!.first.message!.split(',').toList().first
+              : ex.message!)
+              
+              );
     }
   }
 }
