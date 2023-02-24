@@ -4,11 +4,11 @@
 
 ### Descripcion
 
-Red social en el que la gente sube lo que ha comido en el dia, comparte recetas  y tiene un espacio para organizarse su planning de comida
+Red social similar a instagram en la que la gente puede subir recetas, crear sus propios plannings semanales, subir lo que comen en el dia, y compartir todo esto con otros usuarios.
 
 --- 
 
-### Entidades
+### Entidades (DEPRECATED, toca actualizar)
 
 **Usuario:**
 
@@ -59,16 +59,32 @@ Red social en el que la gente sube lo que ha comido en el dia, comparte recetas 
 
 - Relacionar los ingredientes con el usuario, y que este tambien tenga lista de ingredientes
 
+- "Stories" para subir tu comida del dia, parecido a bereal
+
+- Lista de seguidores de cada usuario
+
 ---
 
 ## Modelo de datos
 
-![DataModelSimplified_v3.png](images/dbc6b831ba88b87b5b63c055c377f1aa7e24ed62.png)
+![bad9b28c9e39fd4018d70d074d637f9d2ef3cfcd.png](assets/186d88715baf35fc15063b7da33a85bf45612557.png)
 
 ---
 
 ## Diseño
 
+- **Paginas:** Login, Register, Listado de recetas de seguidores, listado de busqueda, pagina de detalles de receta, detalles de ingrediente, perfil, Lista de me gusta, lista de seguidores, creacion de recetas, creacion de ingredientes, vista calendario del planning semanal, vista de lista de compra
+
+- **Colores de acento:** Verde Lima, purpura, naranja
+
+- **Themes:** Dark theme, Light theme
+
+- **Tipografia:** Montserrat y OpenSans
+
+- **Logo:** Un bloque de tofu con un fondo de estrella
+
 ---
 
 ## Notas
+
+Preguntar a luismi por si se puede integrar firebase
