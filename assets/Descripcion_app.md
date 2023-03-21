@@ -6,41 +6,6 @@
 
 Red social similar a instagram en la que la gente puede subir recetas, crear sus propios plannings semanales, subir lo que comen en el dia, y compartir todo esto con otros usuarios.
 
---- 
-
-### Entidades (DEPRECATED, toca actualizar)
-
-**Usuario:**
-
-- <u>Atributos:</u> *ID, role, nombre, contraseña, cumpleaños, email*
-
-- Acciones: Crear recetas y añadir recetas de otros usuarios a su lista
-
-- Si es admin o cocinero, puede añadir ingredientes a la base de datos
-
-**Receta:**
-
-- <u>Atributos:</u>  *ID, categoria, tipo de plato, descripcion, lista de ingredientes, lista de pasos, imagen de portada, tiempo de preparacion*
-
-**Categoria:**
-
-- <u>Atributos: </u>*ID, nombre categoria*
-
-- Vegetariano, vegano, hipocalorica, proteica...
-
-**Tipo de plato:**
-
-- <u>Atributos: </u> *ID, tipo de plato
-- Desayuno, cena, almuerzo, snack, postre
-
-**Pasos:**
-
-- <u>Atributos:</u>  *ID, numero del paso, descripcion*
-
-**Ingrediente:**
-
-- <u>Atributos:</u>  *ID, nombre, cantidad*
-
 ---
 
 ## Ideas para agrandarlo
@@ -66,8 +31,6 @@ Red social similar a instagram en la que la gente puede subir recetas, crear sus
 ---
 
 ## Modelo de datos
-
-![bad9b28c9e39fd4018d70d074d637f9d2ef3cfcd.png](assets/186d88715baf35fc15063b7da33a85bf45612557.png)
 
 ---
 

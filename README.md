@@ -35,21 +35,14 @@ Currently in super early development as a class project
    - There's a postman collection available in the main directory of the project
    
    - You can access the documentation via: [Swagger UI](http://localhost:8080/swagger-ui/index.html#/) for more details.
-   
 
 ## Documentation
 
-![](images/2023-02-24-00-08-48-image.png)
+#### *In progress*
 
 ## Screens
 
-![](images/2023-02-24-00-10-54-image.png)![](images/2023-02-24-00-11-19-image.png)
-
-![](images/2023-02-24-00-12-14-image.png)
-
-![](images/2023-02-24-00-12-30-image.png)
-
-![](images/2023-02-24-00-12-50-image.png)
+#### *In progress*
 
 ## Author
 
