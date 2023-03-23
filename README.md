@@ -8,10 +8,6 @@ Currently in super early development as a class project
 
 ## Requirements
 
-- Flutter v3.7.0-19.0.pre
-
-- Dart v3.0.0
-
 - Maven & spring
 
 - Docker

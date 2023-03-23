@@ -10,17 +10,17 @@ Red social similar a instagram en la que la gente puede subir recetas, crear sus
 
 ## Ideas para agrandarlo
 
-- Puede gestionar sus comidas de la semana en un calendario
+- Gestion de comidas semanal en un calendario
 
-- Puede descubrir nuevas recetas de otras personas
+- Descubrir recetas de otras personas
 
-- Puede añadir planning de semanas de otras personas
+- Planning semanal de otras personas
 
-- Puedes añadir comentarios y valorar las recetas
+- Seccion de comentarios 
 
 - Lista de la compra con ingredientes necesarios para la siguiente semana
 
-- Incluir valor nutricional en los ingredientes (kcal por 100gr, carbohidratos, proteinas...) 
+- Valor nutricional en los ingredientes (kcal por 100gr, carbohidratos, proteinas...) 
 
 - Relacionar los ingredientes con el usuario, y que este tambien tenga lista de ingredientes
 
@@ -31,6 +31,8 @@ Red social similar a instagram en la que la gente puede subir recetas, crear sus
 ---
 
 ## Modelo de datos
+
+![DataModel_v3.png](D:\Librerias\Trabajos\Programacion\TofuApp\assets\model\DataModel_v3.png)
 
 ---
 
@@ -50,4 +52,4 @@ Red social similar a instagram en la que la gente puede subir recetas, crear sus
 
 ## Notas
 
-Preguntar a luismi por si se puede integrar firebase
+Librerias Kotlin: Retrofit 2, Dagger Hilt, Jetpack Compose
