@@ -24,4 +24,13 @@ public class RecipeIngredient {
     private Ingredient ingredient;
     double amount;
     String unit; //in cm, pieces,
+
+    @PreRemove
+    public void setRecipeAndIngredientsNull(){
+        this.recipe.setRecipeIngredients(null);
+        this.ingredient.setRecipeIngredients(null);
+
+        this.recipe = null;
+        this.ingredient = null;
+    }
 }

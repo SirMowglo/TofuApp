@@ -96,12 +96,6 @@ public class RecipeService {
         if (!recipeRequest.getDescription().isEmpty())
             rec.setDescription(recipeRequest.getDescription());
 
-        if (!recipeRequest.getCategory().isEmpty())
-            rec.setCategory(recipeRequest.getCategory());
-
-        if (!recipeRequest.getSteps().isEmpty())
-            rec.setSteps(recipeRequest.getSteps());
-
         if (!recipeRequest.getPrepTime().equals(0)) {
             rec.setPrepTime(recipeRequest.getPrepTime());
         }

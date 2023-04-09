@@ -3,9 +3,7 @@ package com.trianaSalesianos.tofuApp.model;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
@@ -28,7 +26,10 @@ public class Step {
             }
     )
     private UUID id;
-    private Recipe recipe;
     private Integer stepNumber;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "recipe_id")
+    private Recipe recipe;
 }

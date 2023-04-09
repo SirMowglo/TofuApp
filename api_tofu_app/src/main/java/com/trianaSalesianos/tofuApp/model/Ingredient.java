@@ -3,10 +3,7 @@ package com.trianaSalesianos.tofuApp.model;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -16,8 +13,6 @@ import java.util.UUID;
 @Getter @Setter
 @Builder
 public class Ingredient {
-    //TODO gestion del borrado de las recetas
-    // es posible que se necesite asociar a un usuario
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -31,10 +26,32 @@ public class Ingredient {
             }
     )
     private UUID id;
-    private String name;
+    private String name, description;
     @Builder.Default
     private String img = "default_ingredient.jpg";
     @Builder.Default
-    @OneToMany(mappedBy = "ingredient")
+    @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RecipeIngredient> recipeIngredients = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
+
+    //===============================
+    //METODOS PRE-REMOVE Y AUXILIARES
+    //===============================
+    @PreRemove
+    public void setNullRecipes(){
+        recipeIngredients.forEach(a -> a.setIngredient(null));
+    }
+
+    public void addToAuthor(User u) {
+        this.author = u;
+        u.getIngredients().add(this);
+    }
+
+    public void removeFromAuthor(User u) {
+        this.author = null;
+        u.getIngredients().remove(this);
+    }
 }

@@ -58,12 +58,25 @@ public class User implements UserDetails {
     //TODO Gestion de fetch type lazy con subgraphos y seteo por defecto de las listas en vacia
     //TODO Gestion del borrado de recetas
     @ToString.Exclude
-    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<Recipe> recipes = new ArrayList<>();
 
     @ToString.Exclude
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "following")
+    @Builder.Default
+    private List<User> followers = new ArrayList<>();
+
+    @ToString.Exclude
+    @JoinTable(name = "followers",
+    joinColumns = {@JoinColumn(name = "user_id")},
+    inverseJoinColumns = {@JoinColumn(name = "follower_id")})
+    @ManyToMany(cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<User> following = new ArrayList<>();
+
+    @ToString.Exclude
+    @ManyToMany
     @JoinTable(joinColumns = @JoinColumn(name = "user_id",
             foreignKey = @ForeignKey(name="FK_FAVORITE_USER")),
             inverseJoinColumns = @JoinColumn(name = "recipe_id",
@@ -72,6 +85,13 @@ public class User implements UserDetails {
     )
     @Builder.Default
     private List<Recipe> favorites = new ArrayList<>();
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "author")
+    @Builder.Default
+    private List<Ingredient> ingredients = new ArrayList<>();
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<DietDays> dietDays = new ArrayList<>();
     @CreatedDate
     private LocalDateTime createdAt;
     @Builder.Default
@@ -127,4 +147,43 @@ public class User implements UserDetails {
         return enabled;
     }
 
+    //===============================
+    //METODOS PRE-REMOVE Y AUXILIARES
+    //===============================
+
+    @PreRemove
+    public void setNullIngredientsAuthor(){
+        ingredients.forEach(a -> a.setAuthor(null));
+    }
+
+    @PreRemove
+    public void removeFavorite(){
+        favorites.forEach(this::removeFromFavorite);
+    }
+
+    public void favoriteRecipe(Recipe r) {
+        this.favorites.add(r);
+        r.getFavoritedBy().add(this);
+    }
+
+    public void removeFromFavorite(Recipe r) {
+        this.favorites.remove(r);
+        r.getFavoritedBy().remove(this);
+    }
+
+    @PreRemove
+    public void removeFollows(){
+        following.forEach(this::removeFromFollowing);
+        followers.forEach(a -> a.getFollowing().remove(this));
+    }
+
+    public void follow(User u) {
+        this.following.add(u);
+        u.getFollowers().add(this);
+    }
+
+    public void removeFromFollowing(User u) {
+        this.following.remove(u);
+        u.getFollowers().remove(this);
+    }
 }

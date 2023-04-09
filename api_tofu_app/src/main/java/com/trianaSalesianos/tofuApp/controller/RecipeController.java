@@ -163,8 +163,6 @@ public class RecipeController {
                 .name(recipeRequest.getName())
                 .description(recipeRequest.getDescription())
                 .author(loggedUser)
-                .steps(recipeRequest.getSteps())
-                .category(recipeRequest.getCategory())
                 .prepTime(recipeRequest.getPrepTime())
                 .build();
 

@@ -8,9 +8,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+
 @Entity
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
@@ -32,28 +31,66 @@ public class Recipe implements Serializable {
     private String name;
     private String description;
 
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "type_id")
+    private Type type;
+
     @Builder.Default
     private Integer prepTime = 0;   // in minutes
-    private String steps;
+
+    @OneToMany(mappedBy ="recipe",cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Step> steps = new ArrayList<>();
     @Builder.Default
     private String img = "default_recipe.jpg";
-    private String category;  //Vegetariano, vegano, hiper-proteico, hiper-calorico, hipo-calorico...
+    @ManyToMany
+    @JoinTable(
+            name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id", foreignKey = @ForeignKey(name="FK_CATEGORY_RECIPE")),
+            inverseJoinColumns = @JoinColumn(name = "category_id", foreignKey = @ForeignKey(name="FK_RECIPE_CATEGORY"))
+    )
+    private Set<Category> categories = new HashSet<>();  //Vegetariano, vegano, hiper-proteico, hiper-calorico, hipo-calorico...
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
-
-    //TODO Gestion de fetch type lazy con subgraphos y seteo por defecto de las listas en vacia
-    //TODO Gestion del borrado de los ingredientes y usuario
-    // (si se borra receta, no se borra usuario, pero si se borra usuario se borra receta)
     @ToString.Exclude
-    @ManyToOne()
-    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_RECIPE_USER"))
+    @ManyToOne
+    @JoinColumn(name = "author_id", foreignKey = @ForeignKey(name = "FK_RECIPE_AUTHOR"))
     private User author;
     @ToString.Exclude
     @Builder.Default
-    @ManyToMany(mappedBy = "favorites", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "favorites")
     private List<User> favoritedBy = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RecipeIngredient> recipeIngredients = new ArrayList<>();
+
+    //===============================
+    //METODOS PRE-REMOVE Y AUXILIARES
+    //===============================
+
+    @PreRemove
+    public void removeFavorite(){
+        favoritedBy.forEach(this::removeFavorite);
+    }
+
+    public void favorite(User u) {
+        this.favoritedBy.add(u);
+        u.getFavorites().add(this);
+    }
+
+    public void removeFavorite(User u) {
+        this.favoritedBy.remove(u);
+        u.getFavorites().remove(this);
+    }
+
+    public void addToAuthor(User u) {
+        this.author = u;
+        u.getRecipes().add(this);
+    }
+
+    public void removeFromAuthor(User u) {
+        this.author = null;
+        u.getRecipes().remove(this);
+    }
 }

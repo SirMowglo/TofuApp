@@ -6,6 +6,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -15,7 +18,7 @@ import java.util.UUID;
 public class Category {
 
     @Id
-    @GeneratedValue(generator = "UUID")
+    @GeneratedValue(generator = " UUID")
     @GenericGenerator(
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator",
@@ -28,4 +31,5 @@ public class Category {
     )
     private UUID id;
     private String name;
+
 }

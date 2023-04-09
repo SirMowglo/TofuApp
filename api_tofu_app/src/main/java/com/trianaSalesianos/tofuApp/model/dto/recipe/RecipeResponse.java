@@ -28,7 +28,7 @@ public class RecipeResponse {
                 .id(recipe.getId())
                 .name(recipe.getName())
                 .description(recipe.getDescription())
-                .category(recipe.getCategory())
+                .category(recipe.getCategories().stream().findFirst().get().getName())
                 .img(recipe.getImg())
                 .author(recipe.getAuthor().getFullname())
                 .prepTime(recipe.getPrepTime())

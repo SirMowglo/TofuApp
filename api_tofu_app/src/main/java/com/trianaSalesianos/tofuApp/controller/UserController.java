@@ -441,7 +441,7 @@ public class UserController {
                     content = @Content),
 
     })
-    @PutMapping("/auth/logout")
+    @PostMapping("/auth/logout")
     public ResponseEntity<?> logout(@AuthenticationPrincipal User user){
         refreshTokenService.deleteByUser(user);
         return ResponseEntity.noContent().build();
