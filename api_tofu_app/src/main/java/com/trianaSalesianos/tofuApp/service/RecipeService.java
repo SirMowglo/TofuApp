@@ -1,24 +1,17 @@
 package com.trianaSalesianos.tofuApp.service;
 
 
-import com.trianaSalesianos.tofuApp.exception.IngredientNotFoundException;
-import com.trianaSalesianos.tofuApp.exception.RecipeAuthorNotValidException;
-import com.trianaSalesianos.tofuApp.exception.RecipeNotFoundException;
+import com.trianaSalesianos.tofuApp.exception.*;
 import com.trianaSalesianos.tofuApp.model.*;
-import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientRequest;
-import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientResponse;
-import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientWithAmountRequest;
+import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientAmountRequest;
 import com.trianaSalesianos.tofuApp.model.dto.ingredient.RecipeIngredientRequest;
+import com.trianaSalesianos.tofuApp.model.dto.ingredient.RecipeIngredientResponse;
 import com.trianaSalesianos.tofuApp.model.dto.page.PageDto;
 import com.trianaSalesianos.tofuApp.model.dto.recipe.RecipeDetailsResponse;
 import com.trianaSalesianos.tofuApp.model.dto.recipe.RecipeRequest;
 import com.trianaSalesianos.tofuApp.model.dto.recipe.RecipeResponse;
 import com.trianaSalesianos.tofuApp.model.dto.user.UserLikesResponse;
-import com.trianaSalesianos.tofuApp.model.dto.user.UserResponse;
-import com.trianaSalesianos.tofuApp.repository.IngredientRepository;
-import com.trianaSalesianos.tofuApp.repository.RecipeIngredientRepository;
-import com.trianaSalesianos.tofuApp.repository.RecipeRepository;
-import com.trianaSalesianos.tofuApp.repository.UserRepository;
+import com.trianaSalesianos.tofuApp.repository.*;
 import com.trianaSalesianos.tofuApp.search.spec.GenericSpecificationBuilder;
 import com.trianaSalesianos.tofuApp.search.util.SearchCriteria;
 import com.trianaSalesianos.tofuApp.search.util.SearchCriteriaExtractor;
@@ -30,6 +23,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
@@ -43,6 +37,10 @@ public class RecipeService {
     private final RecipeIngredientRepository recipeIngredientRepository;
     private final StorageService storageService;
     private final UserRepository userRepository;
+    private final TypeRepository typeRepository;
+    private final CategoryRepository categoryRepository;
+    private final StepRepository stepRepository;
+
 
     public PageDto<RecipeResponse> search(List<SearchCriteria> params, Pageable pageable) {
         GenericSpecificationBuilder<Recipe> recipeSpecificationBuilder = new GenericSpecificationBuilder<>(params, Recipe.class);
@@ -100,13 +98,19 @@ public class RecipeService {
             rec.setPrepTime(recipeRequest.getPrepTime());
         }
 
+        //TODO En vez de crear un type, buscar uno ya existente y asociarlo
+        if (!recipeRequest.getType().equals(0)) {
+            rec.setType(Type.builder().name(recipeRequest.getType()).build());
+        }
 
         return RecipeResponse.fromRecipe(recipeRepository.save(rec));
     }
 
-    public RecipeDetailsResponse addIngredient(UUID id_recipe,
+
+    //TODO FIXEO da EntityExistsException
+    public RecipeIngredientResponse addIngredient(UUID id_recipe,
                                                UUID id_ingredient,
-                                               RecipeIngredientRequest recipeIngredientRequest,
+                                               IngredientAmountRequest recipeIngredientRequest,
                                                User user) {
 
         Recipe recipe = recipeRepository.findById(id_recipe)
@@ -128,8 +132,6 @@ public class RecipeService {
                     .ingredient(ingredient)
                     .build();
 
-            recipe.getRecipeIngredients().add(ri);
-            ingredient.getRecipeIngredients().add(ri);
         } else {
             ri = recipeIngredientRepository.findById(new RecipeIngredientPK(id_recipe, id_ingredient)).get();
 
@@ -137,33 +139,32 @@ public class RecipeService {
 
             ri.setAmount(amount + recipeIngredientRequest.getAmount());
         }
-
         recipeIngredientRepository.save(ri);
-        recipeRepository.save(recipe);
-        ingredientRepository.save(ingredient);
 
-        return RecipeDetailsResponse.fromRecipe(recipe);
+        return RecipeIngredientResponse.fromRecipeIngredient(ri);
     }
 
     public UserLikesResponse likeRecipe(UUID id, User user) {
+        User userAuthenticated = userRepository.findFirstByUsername(user.getUsername())
+                .orElseThrow(() -> new UserNotFoundException());
         Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new RecipeNotFoundException());
 
-        if (recipeRepository.isFavoritedByUser(user.getId(), id)) {
-            user.getFavorites().removeIf(f -> f.getId().equals(recipe.getId()));
-            recipe.getFavoritedBy().removeIf(u -> u.getId().equals(user.getId()));
+        if (recipeRepository.isFavoritedByUser(userAuthenticated.getId(), id)) {
+            userAuthenticated.getFavorites().removeIf(f -> f.getId().equals(recipe.getId()));
+            recipe.getFavoritedBy().removeIf(u -> u.getId().equals(userAuthenticated.getId()));
         } else {
-            user.getFavorites().add(recipe);
-            recipe.getFavoritedBy().add(user);
+            userAuthenticated.getFavorites().add(recipe);
+            recipe.getFavoritedBy().add(userAuthenticated);
         }
 
-        userRepository.save(user);
+        userRepository.save(userAuthenticated);
         recipeRepository.save(recipe);
 
-        return UserLikesResponse.fromUser(user);
+        return UserLikesResponse.fromUser(userAuthenticated);
     }
 
-    public RecipeDetailsResponse updateAmount(UUID id_recipe, UUID id_ingredient, RecipeIngredientRequest recipeIngredientRequest, User user) {
+    public RecipeDetailsResponse updateAmount(UUID id_recipe, UUID id_ingredient, IngredientAmountRequest recipeIngredientRequest, User user) {
         Recipe recipe = recipeRepository.findById(id_recipe)
                 .orElseThrow(() -> new RecipeNotFoundException());
         Ingredient ingredient = ingredientRepository.findById(id_ingredient)
@@ -188,16 +189,19 @@ public class RecipeService {
         return RecipeDetailsResponse.fromRecipe(recipe);
     }
 
-    public RecipeDetailsResponse createIngredientInRecipe(UUID id, IngredientWithAmountRequest ingredient, User user) {
+    public RecipeIngredientResponse createIngredientInRecipe(UUID id, RecipeIngredientRequest ingredient, User user) {
+        User userAuthenticated = userRepository.findFirstByUsername(user.getUsername())
+                .orElseThrow(() -> new UserNotFoundException());
         Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new RecipeNotFoundException());
 
-        if (!recipe.getAuthor().getId().equals(user.getId()))
+        if (!recipe.getAuthor().getId().equals(userAuthenticated.getId()))
             throw new RecipeAuthorNotValidException();
 
         Ingredient ing = Ingredient.builder()
                 .name(ingredient.getName())
-                .img(ingredient.getImg())
+                .description(ingredient.getDescription())
+                .author(userAuthenticated)
                 .build();
 
         RecipeIngredient ri = RecipeIngredient.builder()
@@ -207,10 +211,153 @@ public class RecipeService {
                 .unit(ingredient.getUnit())
                 .build();
 
+        ingredientRepository.save(ing);
         recipeIngredientRepository.save(ri);
         recipeRepository.save(recipe);
-        ingredientRepository.save(ing);
 
+        return RecipeIngredientResponse.fromRecipeIngredient(ri);
+    }
+
+
+    public void deleteById(UUID id, User user) {
+        Recipe recipe = recipeRepository.findById(id)
+                .orElseThrow(() -> new RecipeNotFoundException());
+
+        if (!recipe.getAuthor().getId().equals(user.getId()))
+            throw new RecipeAuthorNotValidException();
+
+        recipeRepository.deleteById(id);
+    }
+
+    //TODO Falta testeo (necesita crear categoria para testear)
+    public RecipeResponse addCategoryToRecipe(User user, UUID idCategory, UUID idRecipe) {
+        Recipe recipe = recipeRepository.findById(idRecipe)
+                .orElseThrow(() -> new RecipeNotFoundException());
+
+        Category category = categoryRepository.findById(idCategory)
+                .orElseThrow(() -> new CategoryNotFoundException());
+
+        if (!recipe.getAuthor().getId().equals(user.getId()))
+            throw new RecipeAuthorNotValidException();
+
+        //OTra opcion seria probar con anymatch
+        boolean hasCategory = recipe.getCategories()
+                .stream()
+                .filter(c -> c.getId().equals(idCategory))
+                .toList().size()>0;
+
+        System.out.println(recipe.getCategories()
+                .stream()
+                .filter(c -> c.getId().equals(idCategory))
+                .toList().size());
+
+
+        if(!hasCategory){
+            recipe.getCategories().add(category);
+        }else{
+            recipe.getCategories().remove(category);
+        }
+        recipeRepository.save(recipe);
+
+
+        return RecipeResponse.fromRecipe(recipe);
+    }
+
+    //TODO Falta testeo (necesita crear type para testear)
+    public RecipeResponse changeType(User user, UUID idType, UUID idRecipe) {
+        Recipe recipe = recipeRepository.findById(idRecipe)
+                .orElseThrow(() -> new RecipeNotFoundException());
+
+        Type type = typeRepository.findById(idType)
+                .orElseThrow(() -> new TypeNotFoundException());
+
+        if (!recipe.getAuthor().getId().equals(user.getId()))
+            throw new RecipeAuthorNotValidException();
+
+        recipe.setType(type);
+        recipeRepository.save(recipe);
+
+        return RecipeResponse.fromRecipe(recipe);
+    }
+
+    //TODO Falta testeo
+    public RecipeDetailsResponse removeIngredient(User user, UUID idIngredient, UUID idRecipe) {
+        Recipe recipe = recipeRepository.findById(idRecipe)
+                .orElseThrow(() -> new RecipeNotFoundException());
+
+        Ingredient ingredient = ingredientRepository.findById(idIngredient)
+                .orElseThrow(() -> new IngredientNotFoundException());
+
+        if (!recipe.getAuthor().getId().equals(user.getId()))
+            throw new RecipeAuthorNotValidException();
+
+        RecipeIngredientPK idRI = new RecipeIngredientPK(idRecipe, idIngredient);
+
+        if (recipeIngredientRepository.existsById(idRI)) {
+            RecipeIngredient ri = recipeIngredientRepository.findById(idRI)
+                    .orElseThrow(() -> new EntityNotFoundException());
+
+            recipe.getRecipeIngredients().removeIf(r -> r.getId().equals(ri.getId()));
+            ingredient.getRecipeIngredients().removeIf(r -> r.getId().equals(ri.getId()));
+
+            recipeIngredientRepository.deleteById(idRI);
+
+            recipeRepository.save(recipe);
+            ingredientRepository.save(ingredient);
+        }else throw new IngredientNotFoundInRecipeException();
+
+        return RecipeDetailsResponse.fromRecipe(recipe);
+    }
+
+    //TODO Falta testeo
+    public RecipeResponse removeCategoryFromRecipe(User user, UUID idCategory, UUID idRecipe) {
+        Recipe recipe = recipeRepository.findById(idRecipe)
+                .orElseThrow(() -> new RecipeNotFoundException());
+
+
+        if (!recipe.getAuthor().getId().equals(user.getId()))
+            throw new RecipeAuthorNotValidException();
+
+        if(categoryRepository.existsById(idCategory))
+            recipe.getCategories().removeIf(c -> c.getId().equals(idCategory));
+        else throw new CategoryNotFoundException();
+
+        recipeRepository.save(recipe);
+
+        return RecipeResponse.fromRecipe(recipe);
+    }
+
+    public RecipeDetailsResponse removeStepFromRecipe(User user, UUID idStep, UUID idRecipe) {
+        Recipe recipe = recipeRepository.findById(idRecipe)
+                .orElseThrow(() -> new RecipeNotFoundException());
+
+        if (!recipe.getAuthor().getId().equals(user.getId()))
+            throw new RecipeAuthorNotValidException();
+
+        if(stepRepository.existsById(idStep)) {
+            recipe.getSteps().removeIf(s -> s.getId().equals(idStep));
+            recipe.getSteps().forEach(s -> s.setStepNumber(recipe.getSteps().indexOf(s)+1));
+        }
+        else throw new StepNotFoundException();
+
+        recipeRepository.save(recipe);
+        return RecipeDetailsResponse.fromRecipe(recipe);
+    }
+
+    public RecipeDetailsResponse addStepToRecipe(User user, UUID idStep, UUID idRecipe) {
+        Recipe recipe = recipeRepository.findById(idRecipe)
+                .orElseThrow(() -> new RecipeNotFoundException());
+        Step step = stepRepository.findById(idStep)
+                .orElseThrow(() -> new StepNotFoundException());
+
+        if (!recipe.getAuthor().getId().equals(user.getId()))
+            throw new RecipeAuthorNotValidException();
+
+        recipe.getSteps().add(step);
+        recipe.getSteps().forEach(s -> s.setStepNumber(recipe.getSteps().indexOf(s)+1));
+
+        recipeRepository.save(recipe);
+        stepRepository.save(step);
         return RecipeDetailsResponse.fromRecipe(recipe);
     }
 }

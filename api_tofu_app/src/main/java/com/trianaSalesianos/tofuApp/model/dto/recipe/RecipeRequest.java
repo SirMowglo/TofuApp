@@ -18,10 +18,8 @@ public class RecipeRequest {
     private String name;
     @Size(max = 254, message = "{recipeRequest.description.sizemax}")
     private String description;
-    @Size(max = 24, message = "{recipeRequest.category.sizemax}")
-    private String category;
-
-    private String steps;
+    @Size(max = 12, message = "{recipeRequest.type.sizemax}")
+    private String type;
     @Max(value = 1000, message = "{recipeRequest.preptime.max}")
     @Min(value = 0, message = "{recipeRequest.preptime.min}")
     private Integer prepTime;

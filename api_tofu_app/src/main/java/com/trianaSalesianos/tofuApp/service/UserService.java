@@ -100,7 +100,6 @@ public class UserService {
     }
 
     public void deleteById(UUID id) {
-        // Prevenimos errores al intentar borrar algo que no existe
         if (userRepository.existsById(id))
             userRepository.deleteById(id);
     }
@@ -162,11 +161,11 @@ public class UserService {
     }
 
     @Transactional
-    public NewAvatarResponse changeAvatar(MultipartFile file, User user){
+    public UserResponse changeAvatar(MultipartFile file, User user){
         String filename = storageService.store(file);
         user.setAvatar(filename);
 
-        NewAvatarResponse newAvatar = NewAvatarResponse.fromUser(userRepository.save(user));
+        UserResponse newAvatar = UserResponse.fromUser(userRepository.save(user));
         return newAvatar;
     }
 
@@ -209,5 +208,28 @@ public class UserService {
             user.setDescription(editUserRequest.getDescription());
 
         return UserResponse.fromUser(userRepository.save(user));
+    }
+
+    public UserDetailsResponse followUser(User user, String username) {
+        User userAuthenticated = findByUsername(user.getUsername())
+                .orElseThrow(() -> new UserNotFoundException());
+        User userToFollow = findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException());
+
+        if(userAuthenticated.getUsername().equals(userToFollow.getUsername()))
+            return UserDetailsResponse.fromUser(userAuthenticated);
+
+        if(userRepository.isFollowingUser(userToFollow.getId(),userAuthenticated.getId())){
+            userAuthenticated.getFollowing().removeIf(u -> u.getUsername().equals(userToFollow.getUsername()));
+            userToFollow.getFollowers().removeIf(u -> u.getUsername().equals(userAuthenticated.getUsername()));
+        }else{
+           userAuthenticated.getFollowing().add(userToFollow);
+           userToFollow.getFollowers().add(userAuthenticated);
+        }
+
+        userRepository.save(userAuthenticated);
+        userRepository.save(userToFollow);
+
+        return UserDetailsResponse.fromUser(userAuthenticated);
     }
 }

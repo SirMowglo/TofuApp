@@ -63,7 +63,7 @@ public class User implements UserDetails {
     private List<Recipe> recipes = new ArrayList<>();
 
     @ToString.Exclude
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "following")
+    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "following")
     @Builder.Default
     private List<User> followers = new ArrayList<>();
 
@@ -71,7 +71,7 @@ public class User implements UserDetails {
     @JoinTable(name = "followers",
     joinColumns = {@JoinColumn(name = "user_id")},
     inverseJoinColumns = {@JoinColumn(name = "follower_id")})
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @Builder.Default
     private List<User> following = new ArrayList<>();
 
@@ -152,12 +152,12 @@ public class User implements UserDetails {
     //===============================
 
     @PreRemove
-    public void setNullIngredientsAuthor(){
+    public void setNull(){
         ingredients.forEach(a -> a.setAuthor(null));
-    }
 
-    @PreRemove
-    public void removeFavorite(){
+        following.forEach(this::removeFromFollowing);
+        followers.forEach(a -> a.getFollowing().remove(this));
+
         favorites.forEach(this::removeFromFavorite);
     }
 
@@ -171,11 +171,6 @@ public class User implements UserDetails {
         r.getFavoritedBy().remove(this);
     }
 
-    @PreRemove
-    public void removeFollows(){
-        following.forEach(this::removeFromFollowing);
-        followers.forEach(a -> a.getFollowing().remove(this));
-    }
 
     public void follow(User u) {
         this.following.add(u);

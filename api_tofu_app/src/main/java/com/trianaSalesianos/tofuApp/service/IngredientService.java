@@ -1,6 +1,8 @@
 package com.trianaSalesianos.tofuApp.service;
 
+import com.trianaSalesianos.tofuApp.exception.IngredientAuthorNotValidException;
 import com.trianaSalesianos.tofuApp.exception.IngredientNotFoundException;
+import com.trianaSalesianos.tofuApp.exception.RecipeAuthorNotValidException;
 import com.trianaSalesianos.tofuApp.exception.UserNotFoundException;
 import com.trianaSalesianos.tofuApp.model.Ingredient;
 import com.trianaSalesianos.tofuApp.model.User;
@@ -74,6 +76,18 @@ public class IngredientService {
         if(!ingredientRequest.getName().isEmpty())
             ing.setName(ingredientRequest.getName());
 
+        if(!ingredientRequest.getDescription().isEmpty())
+            ing.setDescription(ingredientRequest.getDescription());
+
         return IngredientResponse.fromIngredient(ingredientRepository.save(ing));
+    }
+
+    public void delete(UUID id, User user) {
+        Ingredient ing = findById(id);
+
+        if (!ing.getAuthor().getId().equals(user.getId()))
+            throw new IngredientAuthorNotValidException();
+
+        ingredientRepository.delete(ing);
     }
 }

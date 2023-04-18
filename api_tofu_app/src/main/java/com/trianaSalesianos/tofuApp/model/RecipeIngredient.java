@@ -14,23 +14,15 @@ public class RecipeIngredient {
     @EmbeddedId
     private RecipeIngredientPK id = new RecipeIngredientPK();
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @MapsId("id_recipe")
     @JoinColumn(name="id_recipe")
     private Recipe recipe;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @MapsId("id_ingredient")
     @JoinColumn(name="id_ingredient")
     private Ingredient ingredient;
     double amount;
     String unit; //in cm, pieces,
 
-    @PreRemove
-    public void setRecipeAndIngredientsNull(){
-        this.recipe.setRecipeIngredients(null);
-        this.ingredient.setRecipeIngredients(null);
-
-        this.recipe = null;
-        this.ingredient = null;
-    }
 }

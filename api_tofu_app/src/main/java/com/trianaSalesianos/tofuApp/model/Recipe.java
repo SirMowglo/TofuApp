@@ -32,7 +32,7 @@ public class Recipe implements Serializable {
     private String description;
 
     @ToString.Exclude
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "type_id")
     private Type type;
 
@@ -43,12 +43,13 @@ public class Recipe implements Serializable {
     private List<Step> steps = new ArrayList<>();
     @Builder.Default
     private String img = "default_recipe.jpg";
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "recipe_category",
             joinColumns = @JoinColumn(name = "recipe_id", foreignKey = @ForeignKey(name="FK_CATEGORY_RECIPE")),
             inverseJoinColumns = @JoinColumn(name = "category_id", foreignKey = @ForeignKey(name="FK_RECIPE_CATEGORY"))
     )
+    @Builder.Default
     private Set<Category> categories = new HashSet<>();  //Vegetariano, vegano, hiper-proteico, hiper-calorico, hipo-calorico...
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -58,7 +59,7 @@ public class Recipe implements Serializable {
     private User author;
     @ToString.Exclude
     @Builder.Default
-    @ManyToMany(mappedBy = "favorites")
+    @ManyToMany(mappedBy = "favorites", cascade = CascadeType.PERSIST)
     private List<User> favoritedBy = new ArrayList<>();
 
     @Builder.Default
