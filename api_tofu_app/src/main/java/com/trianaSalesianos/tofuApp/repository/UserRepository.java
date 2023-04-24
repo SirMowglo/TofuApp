@@ -23,4 +23,7 @@ public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificat
     Optional<User> findFirstByUsername(String username);
     boolean existsByUsername(String username);
 
+    @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM User u JOIN u.followers r WHERE u.id = :followId AND r.id = :userId")
+    public boolean isFollowingUser(@Param("followId") UUID followId, @Param("userId") UUID userId);
+
 }

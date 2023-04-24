@@ -8,15 +8,15 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class IngredientRequest {
-    @JsonView({IngredientViews.Full.class,IngredientViews.Name.class})
     @NotEmpty(message = "{ingredientRequest.name.notempty}")
     private String name;
-    @JsonView({IngredientViews.Full.class,IngredientViews.Img.class})
-    private String img;
+    @Size(max = 254, message = "{ingredientRequest.description.sizemax}")
+    private String description;
 }

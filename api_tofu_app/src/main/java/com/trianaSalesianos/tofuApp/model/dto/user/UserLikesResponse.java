@@ -16,12 +16,13 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 public class UserLikesResponse {
-    private String username;
+    private String username, fullname;
     private List<RecipeResponse> favorites;
 
     public static UserLikesResponse fromUser(User user){
         return UserLikesResponse.builder()
                 .username(user.getUsername())
+                .fullname(user.getFullname())
                 .favorites(user.getFavorites()
                         .stream()
                         .map(RecipeResponse::fromRecipe)

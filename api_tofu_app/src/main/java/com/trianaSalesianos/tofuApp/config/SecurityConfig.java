@@ -87,6 +87,10 @@ public class SecurityConfig {
                 .antMatchers(
                         "/ingredient/**",
                         "/recipe/**",
+                        "/category/**",
+                        "/type/**",
+                        "/dietday/**",
+                        "/step/**",
                         "/auth/logout",
                         "/user",
                         "/user/{username}",

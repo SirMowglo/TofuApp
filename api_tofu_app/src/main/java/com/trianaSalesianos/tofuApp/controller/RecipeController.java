@@ -1,13 +1,13 @@
 package com.trianaSalesianos.tofuApp.controller;
 
+import com.trianaSalesianos.tofuApp.exception.UserNotFoundException;
 import com.trianaSalesianos.tofuApp.model.Recipe;
-import com.trianaSalesianos.tofuApp.model.RecipeIngredient;
+import com.trianaSalesianos.tofuApp.model.Type;
 import com.trianaSalesianos.tofuApp.model.User;
-import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientResponse;
-import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientWithAmountRequest;
+import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientAmountRequest;
 import com.trianaSalesianos.tofuApp.model.dto.ingredient.RecipeIngredientRequest;
+import com.trianaSalesianos.tofuApp.model.dto.ingredient.RecipeIngredientResponse;
 import com.trianaSalesianos.tofuApp.model.dto.page.PageDto;
-import com.trianaSalesianos.tofuApp.model.dto.recipe.NewRecipeRequest;
 import com.trianaSalesianos.tofuApp.model.dto.recipe.RecipeDetailsResponse;
 import com.trianaSalesianos.tofuApp.model.dto.recipe.RecipeRequest;
 import com.trianaSalesianos.tofuApp.model.dto.recipe.RecipeResponse;
@@ -25,9 +25,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -86,7 +86,7 @@ public class RecipeController {
                     description = "Recipe Not found",
                     content = @Content),
     })
-    @GetMapping("/")
+    @GetMapping("")
     public PageDto<RecipeResponse> getAll(
             @Parameter(description = "Can be used to search recipes by their variables")
             @RequestParam(value = "search", defaultValue = "") String search,
@@ -153,23 +153,14 @@ public class RecipeController {
                     description = "There was an error with the data provided",
                     content = @Content),
     })
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<RecipeResponse> create(
             @AuthenticationPrincipal User loggedUser,
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Values required to create a recipe")
-            @Valid @RequestBody NewRecipeRequest recipeRequest
+            @Valid @RequestBody RecipeRequest recipeRequest
     ){
-        Recipe created = Recipe.builder()
-                .name(recipeRequest.getName())
-                .description(recipeRequest.getDescription())
-                .author(loggedUser)
-                .steps(recipeRequest.getSteps())
-                .category(recipeRequest.getCategory())
-                .prepTime(recipeRequest.getPrepTime())
-                .build();
 
-        if(!recipeRequest.getImg().isEmpty())
-            created.setImg(recipeRequest.getImg());
+        Recipe created = recipeService.createRecipe(recipeRequest, loggedUser);
 
         URI createdURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -308,13 +299,13 @@ public class RecipeController {
                     content = @Content),
     })
     @PostMapping("/{id_recipe}/ingredient/{id_ingredient}")
-    public RecipeDetailsResponse addIngredientToRecipe(
+    public RecipeIngredientResponse addIngredientToRecipe(
             @AuthenticationPrincipal User user,
             @Parameter(description = "Id of the recipe")
             @PathVariable UUID id_recipe,
             @Parameter(description = "Id of the ingredient to be added")
             @PathVariable UUID id_ingredient,
-            @RequestBody RecipeIngredientRequest recipeIngredientRequest
+            @RequestBody IngredientAmountRequest recipeIngredientRequest
             ){
         return recipeService.addIngredient(id_recipe,id_ingredient,recipeIngredientRequest,user);
     }
@@ -384,12 +375,12 @@ public class RecipeController {
                     content = @Content),
     })
     @PostMapping("/{id_recipe}/ingredient/")
-    public RecipeDetailsResponse createIngredientInRecipe(
+    public RecipeIngredientResponse createIngredientInRecipe(
             @AuthenticationPrincipal User user,
             @Parameter(description = "Id of the recipe")
             @PathVariable UUID id_recipe,
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Values needed to create the ingredient")
-            @RequestBody IngredientWithAmountRequest ingredient
+            @RequestBody RecipeIngredientRequest ingredient
     ){
         return recipeService.createIngredientInRecipe(id_recipe,ingredient, user);
     }
@@ -509,9 +500,69 @@ public class RecipeController {
             @Parameter(description = "Id of the ingredient")
             @PathVariable UUID id_ingredient,
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Values needed to update the amount")
-            @RequestBody RecipeIngredientRequest recipeIngredientRequest
+            @RequestBody IngredientAmountRequest recipeIngredientRequest
     ){
         return recipeService.updateAmount(id_recipe, id_ingredient, recipeIngredientRequest, user);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> removeRecipe(@PathVariable UUID id, @AuthenticationPrincipal User user){
+
+        recipeService.deleteById(id, user);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+    @PostMapping("/{id_recipe}/category/{id_category}")
+    public RecipeResponse addCategoryToRecipe(
+            @AuthenticationPrincipal User user,
+            @PathVariable UUID id_recipe,
+            @PathVariable UUID id_category
+    ){
+        return recipeService.addCategoryToRecipe(user, id_category,id_recipe);
+    }
+
+    @PutMapping("/{id_recipe}/type/{id_type}")
+    public RecipeResponse changeType(
+            @AuthenticationPrincipal User user,
+            @PathVariable UUID id_recipe,
+            @PathVariable UUID id_type
+            ){
+        return recipeService.changeType(user, id_type, id_recipe);
+    }
+
+    @DeleteMapping("/{id_recipe}/ingredient/{id_ingredient}")
+    public RecipeDetailsResponse removeIngredientFromRecipe(
+            @AuthenticationPrincipal User user,
+            @PathVariable UUID id_recipe,
+            @PathVariable UUID id_ingredient
+    ){
+
+        return recipeService.removeIngredient(user, id_ingredient,id_recipe);
+    }
+
+    @DeleteMapping("/{id_recipe}/category/{id_category}")
+    public RecipeResponse removeCategoryFromRecipe(
+            @AuthenticationPrincipal User user,
+            @PathVariable UUID id_recipe,
+            @PathVariable UUID id_category
+    ){
+        return recipeService.removeCategoryFromRecipe(user, id_category, id_recipe);
+    }
+
+    @DeleteMapping("/{id_recipe}/step/{id_step}")
+    public RecipeDetailsResponse removeStepFromRecipe(
+            @AuthenticationPrincipal User user,
+            @PathVariable UUID id_recipe,
+            @PathVariable UUID id_step
+    ){
+        return recipeService.removeStepFromRecipe(user,id_step,id_recipe);
+    }
+    @PostMapping("/{id_recipe}/step/{id_step}")
+    public RecipeDetailsResponse addStepToRecipe(
+            @AuthenticationPrincipal User user,
+            @PathVariable UUID id_recipe,
+            @PathVariable UUID id_step
+    ){
+        return recipeService.addStepToRecipe(user,id_step,id_recipe);
+    }
 }

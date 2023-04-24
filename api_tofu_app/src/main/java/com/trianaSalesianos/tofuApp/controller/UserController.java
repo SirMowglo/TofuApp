@@ -1,5 +1,6 @@
 package com.trianaSalesianos.tofuApp.controller;
 
+import com.trianaSalesianos.tofuApp.exception.UserNotFoundException;
 import com.trianaSalesianos.tofuApp.model.User;
 import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientResponse;
 import com.trianaSalesianos.tofuApp.model.dto.page.PageDto;
@@ -256,7 +257,7 @@ public class UserController {
     })
     @GetMapping("/user/me")
     public UserDetailsResponse getCurrentUserProfile(@AuthenticationPrincipal User user){
-        return UserDetailsResponse.fromUser(user);
+        return userService.getByUsername(user.getUsername());
     }
 
     @Operation(summary = "Register a new user")
@@ -342,7 +343,7 @@ public class UserController {
                                                     "createdAt": "16/02/2023 18:53:03",
                                                     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYzEzMjAwMS04NjViLTFhNWItODE4Ni01YjViYmEzMjAwMDAiLCJpYXQiOjE2NzcxOTEyNzcsImV4cCI6MTY3NzE5MjE3N30.8u6bWqGlfZVv89cyXwQ3oB5_jp6Zbe9CeoDQQ1_FhRCv4eICfiuqEmdj6CmaVkx4CbdQ4doV4vizsYPygcOBzA",
                                                     "refreshToken": "0b046be0-3c77-4167-9b6b-4d2f6e976574"
-                                                }                                                                   
+                                                }                                                        
                                             """
                             )}
                     )}),
@@ -441,7 +442,7 @@ public class UserController {
                     content = @Content),
 
     })
-    @PutMapping("/auth/logout")
+    @PostMapping("/auth/logout")
     public ResponseEntity<?> logout(@AuthenticationPrincipal User user){
         refreshTokenService.deleteByUser(user);
         return ResponseEntity.noContent().build();
@@ -524,7 +525,7 @@ public class UserController {
             @ApiResponse(responseCode = "200",
                     description = "Avatar edited succesfully",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = NewAvatarResponse.class),
+                            schema = @Schema(implementation = UserResponse.class),
                             examples = {@ExampleObject(
                                     value = """
                                                 {
@@ -544,7 +545,7 @@ public class UserController {
 
     })
     @PutMapping("/user/changeavatar")
-    public NewAvatarResponse changeAvatar(
+    public UserResponse changeAvatar(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "New avatar")
             @RequestPart("file") MultipartFile file,
                                           @AuthenticationPrincipal User user){
@@ -591,5 +592,25 @@ public class UserController {
                 })
                 .orElseThrow(() -> new RefreshTokenException("Refresh token not found"));
 
+    }
+    @DeleteMapping("/user/{username}")
+    public ResponseEntity<?> removeUser(@PathVariable String username){
+            User user = userService.findByUsername(username).orElseThrow(() -> new UserNotFoundException());
+            userService.delete(user);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+    @DeleteMapping("/user/me")
+    public ResponseEntity<?> removeAuthenticatedUser(
+            @AuthenticationPrincipal User user){
+        userService.delete(user);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PostMapping("/user/follow/{username}")
+    public UserDetailsResponse followUser(
+            @PathVariable String username,
+            @AuthenticationPrincipal User user){
+        return userService.followUser(user, username);
     }
 }

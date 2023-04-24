@@ -13,18 +13,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class RecipeIngredientResponse {
-    private RecipeResponse recipe;
-    @JsonView(IngredientViews.Name.class)
     private IngredientResponse ingredient;
     double amount;
-    String unit;
+    String unit, recipeName;
 
     public static RecipeIngredientResponse fromRecipeIngredient(RecipeIngredient r){
         return RecipeIngredientResponse.builder()
-                .recipe(RecipeResponse.fromRecipe(r.getRecipe()))
                 .ingredient(IngredientResponse.fromIngredient(r.getIngredient()))
                 .amount(r.getAmount())
                 .unit(r.getUnit())
+                .recipeName(r.getRecipe().getName())
                 .build();
     }
 }

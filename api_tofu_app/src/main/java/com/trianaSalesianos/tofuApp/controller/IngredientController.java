@@ -2,9 +2,9 @@ package com.trianaSalesianos.tofuApp.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.trianaSalesianos.tofuApp.model.Ingredient;
+import com.trianaSalesianos.tofuApp.model.User;
 import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientRequest;
 import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientResponse;
-import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientViews;
 import com.trianaSalesianos.tofuApp.model.dto.page.PageDto;
 import com.trianaSalesianos.tofuApp.service.IngredientService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,7 +19,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -78,7 +80,7 @@ public class IngredientController {
                     description = "Ingredient Not found",
                     content = @Content),
     })
-    @GetMapping("/")
+    @GetMapping("")
     public PageDto<IngredientResponse> getAll(
             @Parameter(description = "Can be used to search ingredients by their variables")
             @RequestParam(value = "search", defaultValue = "") String search,
@@ -106,7 +108,6 @@ public class IngredientController {
                     description = "Ingredient not found",
                     content = @Content),
     })
-    @JsonView(IngredientViews.Full.class)
     @GetMapping("/{id}")
     public IngredientResponse getById(
             @Parameter(description = "Id of the ingredient to get")
@@ -134,18 +135,17 @@ public class IngredientController {
                     description = "There was an error with the data provided",
                     content = @Content),
     })
-    @JsonView(IngredientViews.Full.class)
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<IngredientResponse> create(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Data required to create an ingredient")
-            @JsonView(IngredientViews.Full.class)
-            @Valid @RequestBody IngredientRequest ingredientRequest) {
+            @Valid @RequestBody IngredientRequest ingredientRequest,
+            @AuthenticationPrincipal User user
+    ) {
         Ingredient created = Ingredient.builder()
                 .name(ingredientRequest.getName())
+                .description(ingredientRequest.getDescription())
+                .author(user)
                 .build();
-
-        if(!ingredientRequest.getImg().isEmpty())
-            created.setImg(ingredientRequest.getImg());
 
         ingredientService.save(created);
 
@@ -181,7 +181,6 @@ public class IngredientController {
                     content = @Content),
 
     })
-    @JsonView(IngredientViews.Img.class)
     @PutMapping("/img/{id}")
     public IngredientResponse changeImg(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Image to upload")
@@ -214,14 +213,23 @@ public class IngredientController {
                     content = @Content),
 
     })
-    @JsonView(IngredientViews.Name.class)
     @PutMapping("/{id}")
     public IngredientResponse update(
             @Parameter(description = "Id of the ingredient to edit")
             @PathVariable UUID id,
                                      @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "New name for the ingredient")
-                                     @JsonView(IngredientViews.Name.class)
                                      @Valid @RequestBody IngredientRequest ingredientRequest){
         return ingredientService.update(ingredientRequest,id);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> removeIngredient(
+            @AuthenticationPrincipal User user,
+            @PathVariable UUID id
+    ){
+
+        ingredientService.delete(id, user);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

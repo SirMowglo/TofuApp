@@ -18,10 +18,9 @@ import java.util.UUID;
 public class UserResponse {
 
     protected UUID id;
-    protected String username, avatar, fullname, email, description;
+    protected String username, avatar, fullname, description;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
-    protected LocalDateTime createdAt;
+
 
 
     public static UserResponse fromUser(User user) {
@@ -30,10 +29,8 @@ public class UserResponse {
                 .id(user.getId())
                 .username(user.getUsername())
                 .avatar(user.getAvatar())
-                .email(user.getEmail())
                 .fullname(user.getFullname())
                 .description(user.getDescription())
-                .createdAt(user.getCreatedAt())
                 .build();
     }
 }
