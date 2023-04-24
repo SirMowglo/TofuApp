@@ -18,12 +18,13 @@ public class StepResponse {
     private String description, recipeName;
 
     public static StepResponse fromStep(Step s) {
+        String recipeName = s.getRecipe().getName();
 
         return StepResponse.builder()
                 .id(s.getId())
                 .description(s.getDescription())
-                .stepNumber(s.getStepNumber(stepRequest.getStepNumber()))
-                .recipeName(s.getRecipe().getName())
+                .stepNumber(s.getStepNumber())
+                .recipeName(recipeName)
                 .build();
     }
 }

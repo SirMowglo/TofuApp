@@ -71,4 +71,8 @@ public class CategoryService {
 
         categoryRepository.delete(c);
     }
+
+    public boolean categoryExists(String s) {
+        return categoryRepository.existsByName(s);
+    }
 }

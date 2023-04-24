@@ -28,15 +28,32 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     }
 
 
-    @ExceptionHandler({UserNotFoundException.class, RecipeNotFoundException.class, IngredientNotFoundException.class})
+    @ExceptionHandler({
+            UserNotFoundException.class,
+            RecipeNotFoundException.class,
+            IngredientNotFoundException.class,
+            TypeNotFoundException.class,
+            StepNotFoundException.class,
+            IngredientNotFoundInRecipeException.class,
+            DietDaysNotFoundException.class,
+            CategoryNotFoundException.class,
+    })
     public ResponseEntity<?> handleNotFoundException(EntityNotFoundException exception, WebRequest request) {
         return buildApiError(exception.getMessage(), request, HttpStatus.NOT_FOUND);
     }
-    @ExceptionHandler({PwDataErrorException.class})
+    @ExceptionHandler({
+            PwDataErrorException.class,
+            RecipeTypeInUse.class,
+
+    })
     public ResponseEntity<?> handleBadRequestException(RuntimeException exception, WebRequest request) {
         return buildApiError(exception.getMessage(), request, HttpStatus.BAD_REQUEST);
     }
-    @ExceptionHandler({RecipeAuthorNotValidException.class})
+    @ExceptionHandler({
+            RecipeAuthorNotValidException.class,
+            IngredientAuthorNotValidException.class,
+            DietUserNotValidException.class,
+    })
     public ResponseEntity<?> handleForbiddenException(RuntimeException exception, WebRequest request) {
         return buildApiError(exception.getMessage(), request, HttpStatus.FORBIDDEN);
     }

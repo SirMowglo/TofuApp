@@ -1,5 +1,7 @@
 package com.trianaSalesianos.tofuApp.model.dto.category;
 
+import com.trianaSalesianos.tofuApp.validation.annotation.UniqueCategory;
+import com.trianaSalesianos.tofuApp.validation.annotation.ValidHexColor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CategoryRequest {
 
-    //TODO Unique category name
+    @UniqueCategory
     private String name;
-    //TODO HEXADECIMAL color
+    @ValidHexColor
     private String color;
 }

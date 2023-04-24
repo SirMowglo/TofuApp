@@ -1,6 +1,7 @@
 package com.trianaSalesianos.tofuApp.controller;
 
 import com.trianaSalesianos.tofuApp.model.Category;
+import com.trianaSalesianos.tofuApp.model.Recipe;
 import com.trianaSalesianos.tofuApp.model.Step;
 import com.trianaSalesianos.tofuApp.model.User;
 import com.trianaSalesianos.tofuApp.model.dto.category.CategoryRequest;
@@ -32,29 +33,27 @@ import java.util.UUID;
 public class StepController {
     private final StepService stepService;
 
+    @GetMapping("")
     public PageDto<StepResponse> getAll(
             @RequestParam(value = "search", defaultValue = "") String search,
             @PageableDefault(size = 10, page = 0) Pageable pageable
     ){
         return stepService.getAllBySearch(search, pageable);
     }
-
+    @GetMapping("/{id}")
     public StepResponse getById(
             @Parameter(description = "Id of the step to get")
             @PathVariable UUID id) {
         return StepResponse.fromStep(stepService.findById(id));
     }
-
-    @PostMapping("/")
+    @PostMapping("/recipe/{id}")
     public ResponseEntity<StepResponse> create(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Data required to create a step")
             @Valid @RequestBody StepRequest stepRequest,
-            @AuthenticationPrincipal User user
+            @AuthenticationPrincipal User user,
+            @PathVariable UUID id
     ) {
-        Step created = Step.builder()
-                .stepNumber(stepRequest.getStepNumber())
-                .description(stepRequest.getDescription())
-                .build();
+        Step created = stepService.createStep(user,stepRequest,id);
 
         stepService.save(created);
 
@@ -68,6 +67,9 @@ public class StepController {
                 .body(StepResponse.fromStep(created));
     }
 
+
+
+    @PutMapping("/{id}")
     public StepResponse update(
             @Parameter(description = "Id of the category to edit")
             @PathVariable UUID id,

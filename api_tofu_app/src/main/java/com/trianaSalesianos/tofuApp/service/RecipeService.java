@@ -246,12 +246,6 @@ public class RecipeService {
                 .filter(c -> c.getId().equals(idCategory))
                 .toList().size()>0;
 
-        System.out.println(recipe.getCategories()
-                .stream()
-                .filter(c -> c.getId().equals(idCategory))
-                .toList().size());
-
-
         if(!hasCategory){
             recipe.getCategories().add(category);
         }else{
@@ -359,5 +353,18 @@ public class RecipeService {
         recipeRepository.save(recipe);
         stepRepository.save(step);
         return RecipeDetailsResponse.fromRecipe(recipe);
+    }
+
+    public Recipe createRecipe(RecipeRequest recipeRequest, User loggedUser) {
+        Type type = typeRepository.findFirstByName(recipeRequest.getType())
+                .orElseThrow(() -> new TypeNotFoundException());
+
+        return Recipe.builder()
+                .name(recipeRequest.getName())
+                .description(recipeRequest.getDescription())
+                .author(loggedUser)
+                .prepTime(recipeRequest.getPrepTime())
+                .type(type)
+                .build();
     }
 }

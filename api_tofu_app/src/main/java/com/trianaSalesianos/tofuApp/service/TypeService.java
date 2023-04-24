@@ -69,4 +69,8 @@ public class TypeService {
 
         typeRepository.delete(t);
     }
+
+    public boolean typeExists(String s) {
+        return typeRepository.existsByName(s);
+    }
 }

@@ -1,5 +1,6 @@
 package com.trianaSalesianos.tofuApp.model.dto.type;
 
+import com.trianaSalesianos.tofuApp.validation.annotation.UniqueType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class TypeRequest {
-//TODO UNIQUE Type name
+    @UniqueType
     private String name;
 
 }

@@ -86,7 +86,7 @@ public class RecipeController {
                     description = "Recipe Not found",
                     content = @Content),
     })
-    @GetMapping("/")
+    @GetMapping("")
     public PageDto<RecipeResponse> getAll(
             @Parameter(description = "Can be used to search recipes by their variables")
             @RequestParam(value = "search", defaultValue = "") String search,
@@ -153,21 +153,14 @@ public class RecipeController {
                     description = "There was an error with the data provided",
                     content = @Content),
     })
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<RecipeResponse> create(
             @AuthenticationPrincipal User loggedUser,
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Values required to create a recipe")
             @Valid @RequestBody RecipeRequest recipeRequest
     ){
 
-        //TODO En vez de construir un type, buscar un type con el nombre que se le pase y asociarlo
-        Recipe created = Recipe.builder()
-                .name(recipeRequest.getName())
-                .description(recipeRequest.getDescription())
-                .author(loggedUser)
-                .prepTime(recipeRequest.getPrepTime())
-                .type(Type.builder().name(recipeRequest.getType()).build())
-                .build();
+        Recipe created = recipeService.createRecipe(recipeRequest, loggedUser);
 
         URI createdURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -547,7 +540,7 @@ public class RecipeController {
         return recipeService.removeIngredient(user, id_ingredient,id_recipe);
     }
 
-    @PostMapping("/{id_recipe}/category/{id_category}")
+    @DeleteMapping("/{id_recipe}/category/{id_category}")
     public RecipeResponse removeCategoryFromRecipe(
             @AuthenticationPrincipal User user,
             @PathVariable UUID id_recipe,

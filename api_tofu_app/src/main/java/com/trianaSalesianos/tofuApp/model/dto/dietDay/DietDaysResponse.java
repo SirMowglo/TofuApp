@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -23,15 +24,14 @@ public class DietDaysResponse {
 
     private UUID id;
     private String user;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private LocalDateTime day;
+    private String day;
     private List<RecipeResponse> listOfRecipes;
 
     public static DietDaysResponse fromDietDay(DietDays d){
         return DietDaysResponse.builder()
                 .id(d.getId())
                 .user(d.getUser().getUsername())
-                .day(d.getDay())
+                .day(d.getDay().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                 .listOfRecipes(d.getRecipes().stream().map(RecipeResponse::fromRecipe).collect(Collectors.toList()))
                 .build();
     }

@@ -33,6 +33,7 @@ import java.util.UUID;
 @Tag(name = "Ingredients", description = "Ingredients controller")
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/ingredient")
 public class IngredientController {
     final private IngredientService ingredientService;
 
@@ -79,7 +80,7 @@ public class IngredientController {
                     description = "Ingredient Not found",
                     content = @Content),
     })
-    @GetMapping("/")
+    @GetMapping("")
     public PageDto<IngredientResponse> getAll(
             @Parameter(description = "Can be used to search ingredients by their variables")
             @RequestParam(value = "search", defaultValue = "") String search,
@@ -134,7 +135,7 @@ public class IngredientController {
                     description = "There was an error with the data provided",
                     content = @Content),
     })
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<IngredientResponse> create(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Data required to create an ingredient")
             @Valid @RequestBody IngredientRequest ingredientRequest,

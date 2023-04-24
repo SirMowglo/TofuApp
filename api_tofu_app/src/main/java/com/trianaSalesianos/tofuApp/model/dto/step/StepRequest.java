@@ -12,8 +12,6 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Builder
 public class StepRequest {
-    private Integer stepNumber;
-
     @Size(max = 254, message = "{stepRequest.description.sizemax}")
 
     private String description;

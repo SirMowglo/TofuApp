@@ -31,21 +31,21 @@ import java.util.UUID;
 @RequestMapping("/type")
 public class TypeController {
     private final TypeService typeService;
-
+    @GetMapping("")
     public PageDto<TypeResponse> getAll(
             @RequestParam(value = "search", defaultValue = "") String search,
             @PageableDefault(size = 10, page = 0) Pageable pageable
     ){
         return typeService.getAllBySearch(search, pageable);
     }
-
+    @GetMapping("/{id}")
     public TypeResponse getById(
             @Parameter(description = "Id of the type to get")
             @PathVariable UUID id) {
         return TypeResponse.fromType(typeService.findById(id));
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<TypeResponse> create(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Data required to create a type")
             @Valid @RequestBody TypeRequest typeRequest
@@ -65,7 +65,7 @@ public class TypeController {
                 .created(createdURI)
                 .body(TypeResponse.fromType(created));
     }
-
+    @PutMapping("/{id}")
     public TypeResponse update(
             @Parameter(description = "Id of the type to edit")
             @PathVariable UUID id,

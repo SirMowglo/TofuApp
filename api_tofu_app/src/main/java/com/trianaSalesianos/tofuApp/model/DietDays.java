@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class DietDays {
             }
     )
     private UUID id;
-    private LocalDateTime day;
+    private LocalDate day;
 
     @ManyToMany
     @JoinTable(

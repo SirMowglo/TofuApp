@@ -33,12 +33,14 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
+    @GetMapping("")
     public PageDto<CategoryResponse> getAll(
             @RequestParam(value = "search", defaultValue = "") String search,
             @PageableDefault(size = 10, page = 0) Pageable pageable
     ){
         return categoryService.getAllBySearch(search, pageable);
     }
+    @GetMapping("/{id}")
 
     public CategoryResponse getById(
             @Parameter(description = "Id of the category to get")
@@ -46,7 +48,7 @@ public class CategoryController {
         return CategoryResponse.fromCategory(categoryService.findById(id));
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<CategoryResponse> create(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Data required to create a category")
             @Valid @RequestBody CategoryRequest categoryRequest,
@@ -69,6 +71,7 @@ public class CategoryController {
                 .body(CategoryResponse.fromCategory(created));
     }
 
+    @PutMapping("/{id}")
     public CategoryResponse update(
             @Parameter(description = "Id of the category to edit")
             @PathVariable UUID id,

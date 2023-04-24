@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -67,7 +68,7 @@ public class DietDaysService {
         if (!dietDaysRequest.getDay().isEmpty()) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String dayStr =dietDaysRequest.getDay();
-            LocalDateTime dateTime = LocalDateTime.parse(dayStr, formatter);
+            LocalDate dateTime = LocalDate.parse(dayStr, formatter);
 
             d.setDay(dateTime);
         }
@@ -92,7 +93,7 @@ public class DietDaysService {
         if(!diet.getUser().getId().equals(user.getId()))
             throw new RecipeAuthorNotValidException();
 
-        if(diet.getRecipes().stream().anyMatch( r ->
+        if(!diet.getRecipes().stream().anyMatch( r ->
                 r.getType().getName().equals
                         (recipe.getType().getName())))
             diet.getRecipes().add(recipe);

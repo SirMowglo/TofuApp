@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
@@ -30,33 +31,34 @@ import java.util.UUID;
 @Tag(name = "DietDays", description = "Diet days controllers")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/dietdays")
+@RequestMapping("/dietday")
 
 public class DietDaysController {
     private final DietDaysService dietDaysService;
-
+    @GetMapping("")
     public PageDto<DietDaysResponse> getAll(
             @RequestParam(value = "search", defaultValue = "") String search,
             @PageableDefault(size = 10, page = 0) Pageable pageable
     ) {
         return dietDaysService.getAllBySearch(search, pageable);
     }
-
+    @GetMapping("/{id}")
     public DietDaysResponse getById(
             @Parameter(description = "Id of the diet day to get")
             @PathVariable UUID id) {
         return DietDaysResponse.fromDietDay(dietDaysService.findById(id));
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<DietDaysResponse> create(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Data required to create a diet day")
             @Valid @RequestBody DietDaysRequest dietDaysRequest,
             @AuthenticationPrincipal User user
     ) {
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String dayStr = dietDaysRequest.getDay();
-        LocalDateTime dateTime = LocalDateTime.parse(dayStr, formatter);
+        LocalDate dateTime = LocalDate.parse(dayStr, formatter);
 
         DietDays created = DietDays.builder()
                 .day(dateTime)
@@ -74,7 +76,7 @@ public class DietDaysController {
                 .created(createdURI)
                 .body(DietDaysResponse.fromDietDay(created));
     }
-
+    @PutMapping("/{id}")
     public DietDaysResponse update(
             @Parameter(description = "Id of the diet day to edit")
             @PathVariable UUID id,
