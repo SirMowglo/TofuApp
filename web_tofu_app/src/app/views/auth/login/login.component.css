@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  column-gap: 5%;
+  height: 84vh;
+}
+
+.login_box {
+  display: flex;
+  flex-direction: column;
+  height: 476px;
+  width: 600px;
+  background-color: #e8dcbf;
+}
+
+.title {
+  margin: 48px 48px 48px 64px;
+  font-size: 43px;
+}
+
+@media screen and (max-width: 1270px) {
+  .logo {
+    visibility: collapse;
+  }
+}
+
