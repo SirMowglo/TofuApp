@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -7,4 +8,16 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
 
+  formGroup = new FormGroup({
+    username: new FormControl("", [Validators.required]),
+    password: new FormControl("", [Validators.required]),
+  })
+
+  constructor(){
+    this.formGroup.valueChanges.subscribe((val) => console.log(val));
+  }
+
+  login(){
+    console.log("yeeee")
+  }
 }

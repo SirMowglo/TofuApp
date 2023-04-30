@@ -1,7 +1,24 @@
 <div class="container">
-    <img src="/assets/Original.png" alt="Logo" class="logo">
-    <div class="login_box outlined_box_4px">
-        <p class="title outlined_text_2px montserrat">Login</p>
-
-    </div>
+  <img src="/assets/Original.png" alt="Logo" class="logo" />
+  <div class="login_box outlined_box_4px">
+    <p class="title outlined_text_2px montserrat">Login</p>
+    <app-custom-input
+      class="input"
+      [control]="formGroup.controls.username"
+      inputId="username"
+      label="Username"
+    ></app-custom-input>
+    <app-custom-input
+      class="input"
+      [control]="formGroup.controls.password"
+      inputId="password"
+      label="Password"
+    ></app-custom-input>
+    <app-green-button
+      label="Login"
+      class="login_button"
+      btnStyle="green"
+      (OnClick)="login()" 
+    ></app-green-button>
+  </div>
 </div>
