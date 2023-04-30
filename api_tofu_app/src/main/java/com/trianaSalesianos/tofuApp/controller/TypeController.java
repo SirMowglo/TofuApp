@@ -29,6 +29,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/type")
+@CrossOrigin("http://localhost:4200")
 public class TypeController {
     private final TypeService typeService;
     @GetMapping("")

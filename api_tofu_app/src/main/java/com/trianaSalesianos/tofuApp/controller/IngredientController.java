@@ -34,6 +34,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/ingredient")
+@CrossOrigin("http://localhost:4200")
 public class IngredientController {
     final private IngredientService ingredientService;
 

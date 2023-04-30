@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { LoginRequest } from 'src/app/models/user.interface';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,11 +16,24 @@ export class LoginComponent {
     password: new FormControl("", [Validators.required]),
   })
 
-  constructor(){
+  constructor(private authService: AuthService, private router: Router){
     this.formGroup.valueChanges.subscribe((val) => console.log(val));
   }
 
   login(){
-    console.log("yeeee")
+    this.formGroup.untouched
+    const formValue = this.formGroup.value
+    const userRequest: LoginRequest = {
+      username: formValue.username ?? "",
+      password: formValue.password ?? ""
+    }
+
+    this.authService.login(userRequest).subscribe( res => {
+      if(res){
+        this.router.navigate(['home'])
+      }
+    })
+
+
   }
 }

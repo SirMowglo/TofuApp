@@ -39,3 +39,10 @@ button {
 
   transform: translateY(4px);
 }
+.disabled {
+  background-color: #D9D9D9;
+}
+
+.disabled:hover {
+  background-color: #b8b8b8;
+}

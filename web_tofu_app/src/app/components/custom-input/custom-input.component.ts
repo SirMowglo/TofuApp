@@ -10,7 +10,14 @@ export class CustomInputComponent  {
 @Input() inputId = "";
 @Input() control = new FormControl;
 @Input() label = "";
+@Input() inputType = "";
+@Input() enableVisibility = false;
+visibilityIcon = "fa-eye"
 
+toggleVisibility(){
+  this.inputType = this.inputType === 'password' ? "text" : "password"
+  this.visibilityIcon = this.inputType === 'password' ? "fa-eye" : "fa-eye-slash"
+}
 
 errorMessages: Record<string,string> = {
   required: "The field is required",

@@ -1,7 +1,9 @@
 <button
   class="open-sans outlined_text_2px"
-  [ngClass]="btnStyle"
+  [ngClass]="isDisabled ? 'disabled': btnStyle"
   (click)="emitEvent()"
+  [disabled]="isDisabled"
+
 >
   {{ label }}
 </button>

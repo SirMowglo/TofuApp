@@ -41,6 +41,7 @@ import java.util.UUID;
 @Tag(name= "Users", description = "Users controllers")
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:4200")
 public class UserController {
     private final UserService userService;
     private final AuthenticationManager authManager;

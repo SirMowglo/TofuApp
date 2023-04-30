@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CheckLoginGuard } from './guards/check-login.guard';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () =>
       import('./views/auth/login/login.module').then((m) => m.LoginModule),
+      canActivate:[CheckLoginGuard],
   },
   { path: "", redirectTo: "login", pathMatch: "full" },
   { path: "**", redirectTo: "", pathMatch: "full" },
