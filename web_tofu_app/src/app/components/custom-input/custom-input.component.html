@@ -11,7 +11,12 @@
       class="base_input open-sans"
     />
 
-    <mat-icon (click)="toggleVisibility()" fontSet="far" fontIcon="{{visibilityIcon}}" *ngIf="enableVisibility" ></mat-icon>
+    <mat-icon
+      (click)="toggleVisibility()"
+      fontSet="far"
+      fontIcon="{{ visibilityIcon }}"
+      *ngIf="enableVisibility"
+    ></mat-icon>
   </div>
   <ng-container *ngIf="control.invalid && control.dirty && control.touched">
     <div class="error" *ngFor="let err of control.errors | keyvalue">

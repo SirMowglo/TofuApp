@@ -14,12 +14,12 @@ export class CustomInputComponent  {
 @Input() enableVisibility = false;
 visibilityIcon = "fa-eye"
 
+@Input() errorMessages: Record<string,string> = {
+  required: "The field is required",
+}
 toggleVisibility(){
   this.inputType = this.inputType === 'password' ? "text" : "password"
   this.visibilityIcon = this.inputType === 'password' ? "fa-eye" : "fa-eye-slash"
 }
 
-errorMessages: Record<string,string> = {
-  required: "The field is required",
-}
 }

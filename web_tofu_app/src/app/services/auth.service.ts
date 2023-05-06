@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { JwtUserResponse, LoginRequest } from '../models/user.interface';
 import { environment } from 'src/environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -29,14 +29,13 @@ export class AuthService {
           this.saveToken(res.token);
           this.loggedIn.next(true);
           return res;
-        }),
-        catchError((err) => this.handleError(err))
+        })
       );
   }
   logout(): void {
     localStorage.removeItem('token');
     this.loggedIn.next(false);
-    this.router.navigate(['login'])
+    this.router.navigate(['login']);
   }
   private checkToken(): void {
     const userToken = localStorage.getItem('token');
@@ -47,14 +46,5 @@ export class AuthService {
 
   private saveToken(token: string): void {
     localStorage.setItem('token', token);
-  }
-
-  private handleError(err: any): Observable<never> {
-    let errorMessage = 'An error has occured';
-    if (err) {
-      errorMessage = `Error: code ${err.message}`;
-    }
-    window.alert(errorMessage);
-    return throwError(() => err);
   }
 }

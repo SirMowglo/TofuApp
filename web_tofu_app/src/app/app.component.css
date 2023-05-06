@@ -4,6 +4,12 @@
     min-height: 100vh;
     /* margin: 0; */
 }
+.horizontal_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+}
 .content{
     flex: 1;
 }

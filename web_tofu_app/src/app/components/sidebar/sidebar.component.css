@@ -1,0 +1,26 @@
+::ng-deep button {
+  font-size: 24px !important;
+  text-align: start;
+  padding-left: 20px;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    min-width: 270px;
+    min-height: 100%;
+}
+.overview_button{
+    margin: 0 20px 30px 20px
+
+}
+
+.sidebar_header{
+    padding: 1.8em 1.5em;
+    background-color: #C3A26F;
+
+    border-radius: 0px;
+    margin-top: 35px;
+    margin-bottom: 30px;
+
+}

@@ -57,7 +57,7 @@ public class StrongPasswordValidator implements ConstraintValidator<StrongPasswo
             return true;
 
         List<String> messages = passwordValidator.getMessages(result);
-        String template = messages.stream().collect(Collectors.joining(","));
+        String template = messages.stream().collect(Collectors.joining(", "));
         constraintValidatorContext.buildConstraintViolationWithTemplate(template)
                 .addConstraintViolation()
                 .disableDefaultConstraintViolation();

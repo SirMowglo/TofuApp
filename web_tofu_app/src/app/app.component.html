@@ -1,5 +1,10 @@
 <div class="container">
   <app-header></app-header>
-  <router-outlet class="content"></router-outlet>
-  <app-footer class="footer"></app-footer>
+  <div class="horizontal_container">
+    <span *ngIf="isLoggedIn" class="content">
+      <app-sidebar></app-sidebar>
+    </span>
+    <router-outlet ></router-outlet>
+  </div>
+  <app-footer></app-footer>
 </div>

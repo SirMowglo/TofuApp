@@ -10,6 +10,7 @@
         [control]="formGroup.controls.username"
         inputId="username"
         label="Username"
+        [errorMessages]="usernameErrors"
       ></app-custom-input>
       <app-custom-input
         inputType="password"
@@ -17,6 +18,7 @@
         inputId="password"
         label="Password"
         [enableVisibility]='true'
+        [errorMessages]="passwordErrors"
       ></app-custom-input>
     </form>
     <app-custom-button
