@@ -1,15 +1,31 @@
 .container{
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    /* margin: 0; */
+    height: 84vh;
+    justify-content: space-between;
 }
 .horizontal_container{
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-content: center;
+justify-content: flex-start;
+align-items: center;
 }
-.content{
+
+.box{
+    display: flex;
+    /* max-width: fit-content; */
+    height: 100%;
+    min-height: 660px;
+    max-height: 80vh;
+    background-color: #DFCBAD;
+    flex: 4;
+    margin-right: 16px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+
+
+}
+.side{
     flex: 1;
+    max-width: 400px;
 }

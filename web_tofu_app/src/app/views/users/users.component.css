@@ -1,0 +1,19 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.main_panel{
+    flex: 3;
+    height: 96%;
+    background-color: #E8DCBF;
+    margin: 1% 1.2% 1% 1.2%;
+}
+.selected_panel{
+    flex: 1;
+    height: 96%;
+    margin: 1% 1.2% 1% 0%;
+    background-color: #E8DCBF;
+}

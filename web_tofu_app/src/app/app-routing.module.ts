@@ -19,10 +19,27 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () =>
       import('./views/auth/login/login.module').then((m) => m.LoginModule),
-      canActivate:[CheckLoginGuard],
+    canActivate: [CheckLoginGuard],
   },
-  { path: "", redirectTo: "login", pathMatch: "full" },
-  { path: "**", redirectTo: "", pathMatch: "full" },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  {
+    path: 'users',
+    loadChildren: () =>
+      import('./views/users/users.module').then((m) => m.UsersModule),
+  },
+  {
+    path: 'recipes',
+    loadChildren: () =>
+      import('./views/recipes/recipes.module').then((m) => m.RecipesModule),
+  },
+  {
+    path: 'ingredients',
+    loadChildren: () =>
+      import('./views/ingredients/ingredients.module').then(
+        (m) => m.IngredientsModule
+      ),
+  },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

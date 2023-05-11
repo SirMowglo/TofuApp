@@ -9,6 +9,9 @@ import { CustomButtonComponent } from 'src/app/components/custom-button/custom-b
 import { CustomInputComponent } from 'src/app/components/custom-input/custom-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
+import { RecipeCardComponent } from 'src/app/components/cards/recipe-card/recipe-card.component';
+import { IngredientCardComponent } from 'src/app/components/cards/ingredient-card/ingredient-card.component';
+import { UserDetailsComponent } from 'src/app/components/details/user-details/user-details.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +20,9 @@ import { MaterialModule } from '../material.module';
     SidebarComponent,
     CustomButtonComponent,
     CustomInputComponent,
+    RecipeCardComponent,
+    IngredientCardComponent,
+    UserDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -30,6 +36,9 @@ import { MaterialModule } from '../material.module';
     SidebarComponent,
     CustomButtonComponent,
     CustomInputComponent,
+    RecipeCardComponent,
+    IngredientCardComponent,
+    UserDetailsComponent,
   ],
 })
 export class SharedModule {}

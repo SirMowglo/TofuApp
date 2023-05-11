@@ -9,6 +9,12 @@ export class CustomButtonComponent {
   @Input() label = "";
   @Input() btnStyle = "";
   @Input() isDisabled = false;
+  @Input() fontSize = 30;
+  @Input() verticalPadding = 18;
+
+  @Input() btnTextAlign = "center";
+  @Input() isActive = false;
+
 
   @Output() OnClick = new EventEmitter()
 

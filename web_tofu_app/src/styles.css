@@ -29,6 +29,12 @@ body {
 
   text-shadow: 0px 4px 0px #000, 2px 4px 0px #000, -2px 4px 0px #000;
 }
+.outlined_text_2px_no_shadow {
+  color: white;
+  -webkit-text-stroke: 4px black;
+  paint-order: stroke fill;
+
+}
 
 .outlined_box_4px {
   border: 2px solid black;

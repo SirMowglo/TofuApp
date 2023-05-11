@@ -8,9 +8,14 @@ import { LoginModule } from './views/auth/login/login.module';
 
 import { SharedModule } from './modules/shared/shared.module';
 import { HttpErrorInterceptor } from './services/http-error.interceptor';
+import { AutofocusDirective } from './directives/autofocus.directive';
+import { UserDetailsComponent } from './components/details/user-details/user-details.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+     AutofocusDirective,
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,

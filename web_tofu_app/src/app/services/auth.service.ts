@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, mergeMap, timer } from 'rxjs';
 import { JwtUserResponse, LoginRequest } from '../models/user.interface';
 import { environment } from 'src/environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -15,6 +15,8 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {
     this.checkToken();
+
+    setInterval(()=> { this.checkToken() }, 60 * 1000);
   }
 
   get isLogged(): Observable<boolean> {
@@ -37,7 +39,7 @@ export class AuthService {
     this.loggedIn.next(false);
     this.router.navigate(['login']);
   }
-  private checkToken(): void {
+  checkToken(): void {
     const userToken = localStorage.getItem('token');
     const isExpired = helper.isTokenExpired(userToken);
 
