@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-user-details',
@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./user-details.component.css']
 })
 export class UserDetailsComponent {
-
+  @Input() name = "Prueba";
+  @Input() description = "Prueba";
+  @Input() birthday ="Prueba";
+  @Input() registerDate = "Prueba";
 }

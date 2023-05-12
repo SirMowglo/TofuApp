@@ -20,20 +20,20 @@ body {
 }
 /* STYLING */
 
-
-
 .outlined_text_2px {
   color: white;
-  -webkit-text-stroke: 4px black;
   paint-order: stroke fill;
-
-  text-shadow: 0px 4px 0px #000, 2px 4px 0px #000, -2px 4px 0px #000;
+  text-shadow: 2px 2px 0 black, 2px -2px 0 black, -2px 2px 0 black,
+    -2px -2px 0 black, 2px 0px 0 black, 0px 2px 0 black,
+    -2px 0px 0 black, 0px -2px 0 black, 0px 4px 0px black,
+    1px 4px 0px black, -2px 4px 0px black, 2px 4px 0px black,
+    2px 2px 0px black;
 }
 .outlined_text_2px_no_shadow {
   color: white;
-  -webkit-text-stroke: 4px black;
-  paint-order: stroke fill;
-
+  text-shadow: 2px 2px 0 black, 2px -2px 0 black, -2px 2px 0 black,
+    -2px -2px 0 black, 2px 0px 0 black, 0px 2px 0 black,
+    -2px 0px 0 black, 0px -2px 0 black;
 }
 
 .outlined_box_4px {

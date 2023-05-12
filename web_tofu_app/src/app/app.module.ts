@@ -7,9 +7,11 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginModule } from './views/auth/login/login.module';
 
 import { SharedModule } from './modules/shared/shared.module';
-import { HttpErrorInterceptor } from './services/http-error.interceptor';
+import { HttpErrorInterceptor } from './services/interceptors/http-error.interceptor';
 import { AutofocusDirective } from './directives/autofocus.directive';
 import { UserDetailsComponent } from './components/details/user-details/user-details.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { AuthInterceptor } from './services/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -22,8 +24,14 @@ import { UserDetailsComponent } from './components/details/user-details/user-det
     LoginModule,
     SharedModule,
     HttpClientModule,
+    InfiniteScrollModule,
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass:AuthInterceptor,
+      multi: true,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
