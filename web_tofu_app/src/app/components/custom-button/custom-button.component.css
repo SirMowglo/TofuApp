@@ -9,15 +9,15 @@ button {
   border-radius: 8px;
   box-shadow: 0px 4px 0px 0px black;
 }
-.green {
+.green, .green_active {
   background-color: #91dd54;
 }
 
-.green:hover {
+.green:hover, .green_active:hover {
   background-color: #639a37;
 }
 
-.green:focus, .green_focus {
+.green:focus, .green_focus, .green_active:active {
   background-color: #639a37;
   box-shadow: 0px 0px 0px 0px black;
 

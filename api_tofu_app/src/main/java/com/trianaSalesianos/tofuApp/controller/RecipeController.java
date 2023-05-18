@@ -39,7 +39,7 @@ import java.util.UUID;
 @Tag(name = "Recipes", description = "Recipes controller")
 @RestController
 @RequestMapping("/recipe")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 public class RecipeController {
     final private RecipeService recipeService;

@@ -1,4 +1,5 @@
 <div class="container">
+  <div class="container_home">
   <div class="main_panel outlined_box_0px">
     <div class="main_content">
       <span class="home montserrat outlined_text_2px">Home</span>
@@ -36,7 +37,14 @@
   </div>
   <div class="selected_panel outlined_box_0px">
     <app-user-details 
+    *ngIf="currentUser"
     [name]="currentUser.fullname"
+    [username]="currentUser.username"
+    [description]="currentUser.description"
+    [birthday]="currentUser.birthday"
+    [registerDate]="currentUser.createdAt"
+    [avatar]="currentUser.avatar"
     style="width: 100%;"></app-user-details>
   </div>
+</div>
 </div>

@@ -29,7 +29,7 @@ import java.util.List;
 @Tag(name = "Files", description = "Files controller")
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class FileController {
 
     private final StorageService storageService;

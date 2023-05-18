@@ -10,9 +10,14 @@ import { RecipeResponse } from '../models/recipe.interface';
 export class RecipeService {
   constructor(private http: HttpClient) {}
 
-  public getRecipesBySearch(search: string, page: number): Observable<RecipeResponse[]> {
-    return this.http.get<RecipeResponse[]>(
-      `${environment.API_URL}/recipe?search=${search}&page=${page}`
-    );
+  public getRecipesBySearch(search: string, page =1): Observable<RecipeResponse[]> {
+    if(search !=null){
+      return this.http.get<RecipeResponse[]>(
+        `${environment.API_URL}/recipe?search=${search}&page=${page}`
+      );
+    }else{
+      return this.http.get<RecipeResponse[]>(
+        `${environment.API_URL}/recipe?page=${page}`)
+    }
   }
 }

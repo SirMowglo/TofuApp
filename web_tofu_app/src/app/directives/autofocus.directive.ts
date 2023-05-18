@@ -11,11 +11,10 @@ export class AutofocusDirective {
   ngOnInit() {
       of(this.el)
       .pipe(
-        map(elementRef => elementRef.nativeElement), // getting the el 
-        filter(nativeElement => !!nativeElement), // filtering
-        take(1) // avoid memory leak, it will unsubscribe automatically
+        map(elementRef => elementRef.nativeElement), 
+        filter(nativeElement => !!nativeElement), 
+        take(1) 
       )
-      // our side effect
       .subscribe(input => {
         input.focus();
       })

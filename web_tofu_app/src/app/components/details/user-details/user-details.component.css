@@ -12,10 +12,12 @@
   background-color: aqua;
   border-radius: 100px;
   align-self: center;
+  object-fit: cover;
 }
 .fullname {
     text-align: center;
     align-self: center;
+    width: 100%;
     margin: 15px;
     line-height: 1;
 }
