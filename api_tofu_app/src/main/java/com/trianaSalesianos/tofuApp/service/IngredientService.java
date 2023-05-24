@@ -1,16 +1,17 @@
 package com.trianaSalesianos.tofuApp.service;
 
-import com.trianaSalesianos.tofuApp.exception.IngredientAuthorNotValidException;
-import com.trianaSalesianos.tofuApp.exception.IngredientNotFoundException;
-import com.trianaSalesianos.tofuApp.exception.RecipeAuthorNotValidException;
-import com.trianaSalesianos.tofuApp.exception.UserNotFoundException;
+import com.trianaSalesianos.tofuApp.exception.*;
 import com.trianaSalesianos.tofuApp.model.Ingredient;
+import com.trianaSalesianos.tofuApp.model.Recipe;
 import com.trianaSalesianos.tofuApp.model.User;
 import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientRequest;
 import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientResponse;
 import com.trianaSalesianos.tofuApp.model.dto.page.PageDto;
+import com.trianaSalesianos.tofuApp.model.dto.recipe.RecipeResponse;
 import com.trianaSalesianos.tofuApp.model.dto.user.UserResponse;
 import com.trianaSalesianos.tofuApp.repository.IngredientRepository;
+import com.trianaSalesianos.tofuApp.repository.RecipeRepository;
+import com.trianaSalesianos.tofuApp.repository.UserRepository;
 import com.trianaSalesianos.tofuApp.search.spec.GenericSpecificationBuilder;
 import com.trianaSalesianos.tofuApp.search.util.SearchCriteria;
 import com.trianaSalesianos.tofuApp.search.util.SearchCriteriaExtractor;
@@ -30,6 +31,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class IngredientService {
     final private IngredientRepository ingredientRepository;
+    private final UserRepository userRepository;
+    private final RecipeRepository recipeRepository;
+
+
     private final StorageService storageService;
 
     public PageDto<IngredientResponse> search(List<SearchCriteria> params, Pageable pageable){
@@ -89,5 +94,22 @@ public class IngredientService {
             throw new IngredientAuthorNotValidException();
 
         ingredientRepository.delete(ing);
+    }
+
+    public PageDto<IngredientResponse> getIngredientsByAuthor(String username, Pageable pageable) {
+        User user = userRepository.findFirstByUsername(username)
+                .orElseThrow(() -> new RecipeAuthorNotValidException());
+
+        Page<IngredientResponse> ingredientResponsePage = ingredientRepository.findByAuthor(user, pageable).map(IngredientResponse::fromIngredient);
+
+        return new PageDto<>(ingredientResponsePage);
+    }
+
+    public PageDto<IngredientResponse> getIngredientsOfRecipe(UUID recipeId, Pageable pageable) {
+        Recipe recipe = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new RecipeNotFoundException());
+        Page<IngredientResponse> ingredientResponsePage = recipeRepository.findIngredientsOfRecipe(recipeId, pageable).map(IngredientResponse::fromIngredient);
+
+        return new PageDto<>(ingredientResponsePage);
     }
 }

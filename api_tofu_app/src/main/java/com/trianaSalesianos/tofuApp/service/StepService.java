@@ -9,6 +9,7 @@ import com.trianaSalesianos.tofuApp.model.Step;
 import com.trianaSalesianos.tofuApp.model.User;
 import com.trianaSalesianos.tofuApp.model.dto.category.CategoryRequest;
 import com.trianaSalesianos.tofuApp.model.dto.category.CategoryResponse;
+import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientResponse;
 import com.trianaSalesianos.tofuApp.model.dto.page.PageDto;
 import com.trianaSalesianos.tofuApp.model.dto.step.StepRequest;
 import com.trianaSalesianos.tofuApp.model.dto.step.StepResponse;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -88,9 +90,19 @@ public class StepService {
                 .build();
 
         recipe.getSteps().add(step);
-        recipe.getSteps().forEach(s -> s.setStepNumber(recipe.getSteps().indexOf(s)+1));
+        recipe.getSteps().forEach(s -> s.setStepNumber(recipe.getSteps().indexOf(s) + 1));
 
 
         return step;
+    }
+
+    public List<StepResponse> getStepsByRecipe(UUID idRecipe) {
+        Recipe recipe = recipeRepository.findById(idRecipe)
+                .orElseThrow(() -> new RecipeNotFoundException());
+
+        return recipeRepository.findFavoritesByUser(idRecipe)
+                .stream()
+                .map(StepResponse::fromStep)
+                .toList();
     }
 }

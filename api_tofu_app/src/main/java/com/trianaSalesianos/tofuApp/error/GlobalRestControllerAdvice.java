@@ -3,6 +3,7 @@ package com.trianaSalesianos.tofuApp.error;
 import com.trianaSalesianos.tofuApp.error.model.impl.ApiErrorImpl;
 import com.trianaSalesianos.tofuApp.error.model.impl.ApiValidationSubError;
 import com.trianaSalesianos.tofuApp.exception.*;
+import com.trianaSalesianos.tofuApp.security.errorhandling.JwtTokenException;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -57,6 +58,8 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleForbiddenException(RuntimeException exception, WebRequest request) {
         return buildApiError(exception.getMessage(), request, HttpStatus.FORBIDDEN);
     }
+
+
     @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException exception, WebRequest request) {
         return ResponseEntity

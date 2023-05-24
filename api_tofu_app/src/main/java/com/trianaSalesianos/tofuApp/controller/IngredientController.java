@@ -35,6 +35,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/ingredient")
 @CrossOrigin(origins = "http://localhost:4200")
+
 public class IngredientController {
     final private IngredientService ingredientService;
 
@@ -89,6 +90,20 @@ public class IngredientController {
         return ingredientService.getAllBySearch(search, pageable);
     }
 
+    @GetMapping("/recipe/{recipeId}")
+    public PageDto<IngredientResponse> getIngredientsOfRecipe(
+            @PathVariable UUID recipeId,
+            @PageableDefault(size = 10, page = 0) Pageable pageable
+    ){
+        return ingredientService.getIngredientsOfRecipe(recipeId, pageable);
+    }
+    @GetMapping("/author/{username}")
+    public PageDto<IngredientResponse> getIngredientsByAuthor(
+            @PathVariable String username,
+            @PageableDefault(size = 10, page = 0) Pageable pageable
+    ){
+        return ingredientService.getIngredientsByAuthor(username,pageable);
+    }
 
     @Operation(summary = "Get an ingredient by its ID")
     @ApiResponses(value = {

@@ -109,22 +109,6 @@ public class UserService {
     }
 
     public UserResponse changePassword(ChangePasswordRequest changePasswordRequest, User loggedUser){
-        //TODO comprobar que funciona la nueva implementacion
-        /*try {
-            if (passwordMatch(loggedUser, changePasswordRequest.getOldPassword())) {
-                Optional<User> modified = editPassword(loggedUser.getId(), changePasswordRequest.getNewPassword());
-                if (modified.isPresent())
-                    return UserResponse.fromUser(modified.get());
-            }else{
-                // Lo ideal es que esto se gestionara de forma centralizada
-                // Se puede ver cómo hacerlo en la formación sobre Validación con Spring Boot
-                // y la formación sobre Gestión de Errores con Spring Boot
-                throw new RuntimeException();
-            }
-        }catch (RuntimeException ex){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password Data Error");
-        }*/
-
         if (passwordMatch(loggedUser, changePasswordRequest.getOldPassword())) {
             Optional<User> modified = editPassword(loggedUser.getId(), changePasswordRequest.getNewPassword());
             if (modified.isPresent())

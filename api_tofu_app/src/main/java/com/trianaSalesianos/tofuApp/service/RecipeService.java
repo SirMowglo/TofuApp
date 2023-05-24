@@ -74,7 +74,7 @@ public class RecipeService {
         Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new RecipeNotFoundException());
 
-        if(!recipe.getAuthor().getId().equals(user.getId()))
+        if (!recipe.getAuthor().getId().equals(user.getId()))
             throw new RecipeAuthorNotValidException();
 
         String filename = storageService.store(file);
@@ -98,7 +98,6 @@ public class RecipeService {
             rec.setPrepTime(recipeRequest.getPrepTime());
         }
 
-        //TODO En vez de crear un type, buscar uno ya existente y asociarlo
         if (!recipeRequest.getType().equals(0)) {
             rec.setType(Type.builder().name(recipeRequest.getType()).build());
         }
@@ -107,11 +106,10 @@ public class RecipeService {
     }
 
 
-    //TODO FIXEO da EntityExistsException
     public RecipeIngredientResponse addIngredient(UUID id_recipe,
-                                               UUID id_ingredient,
-                                               IngredientAmountRequest recipeIngredientRequest,
-                                               User user) {
+                                                  UUID id_ingredient,
+                                                  IngredientAmountRequest recipeIngredientRequest,
+                                                  User user) {
 
         Recipe recipe = recipeRepository.findById(id_recipe)
                 .orElseThrow(() -> new RecipeNotFoundException());
@@ -229,7 +227,6 @@ public class RecipeService {
         recipeRepository.deleteById(id);
     }
 
-    //TODO Falta testeo (necesita crear categoria para testear)
     public RecipeResponse addCategoryToRecipe(User user, UUID idCategory, UUID idRecipe) {
         Recipe recipe = recipeRepository.findById(idRecipe)
                 .orElseThrow(() -> new RecipeNotFoundException());
@@ -244,11 +241,11 @@ public class RecipeService {
         boolean hasCategory = recipe.getCategories()
                 .stream()
                 .filter(c -> c.getId().equals(idCategory))
-                .toList().size()>0;
+                .toList().size() > 0;
 
-        if(!hasCategory){
+        if (!hasCategory) {
             recipe.getCategories().add(category);
-        }else{
+        } else {
             recipe.getCategories().remove(category);
         }
         recipeRepository.save(recipe);
@@ -257,7 +254,7 @@ public class RecipeService {
         return RecipeResponse.fromRecipe(recipe);
     }
 
-    //TODO Falta testeo (necesita crear type para testear)
+
     public RecipeResponse changeType(User user, UUID idType, UUID idRecipe) {
         Recipe recipe = recipeRepository.findById(idRecipe)
                 .orElseThrow(() -> new RecipeNotFoundException());
@@ -274,7 +271,6 @@ public class RecipeService {
         return RecipeResponse.fromRecipe(recipe);
     }
 
-    //TODO Falta testeo
     public RecipeDetailsResponse removeIngredient(User user, UUID idIngredient, UUID idRecipe) {
         Recipe recipe = recipeRepository.findById(idRecipe)
                 .orElseThrow(() -> new RecipeNotFoundException());
@@ -298,12 +294,11 @@ public class RecipeService {
 
             recipeRepository.save(recipe);
             ingredientRepository.save(ingredient);
-        }else throw new IngredientNotFoundInRecipeException();
+        } else throw new IngredientNotFoundInRecipeException();
 
         return RecipeDetailsResponse.fromRecipe(recipe);
     }
 
-    //TODO Falta testeo
     public RecipeResponse removeCategoryFromRecipe(User user, UUID idCategory, UUID idRecipe) {
         Recipe recipe = recipeRepository.findById(idRecipe)
                 .orElseThrow(() -> new RecipeNotFoundException());
@@ -312,7 +307,7 @@ public class RecipeService {
         if (!recipe.getAuthor().getId().equals(user.getId()))
             throw new RecipeAuthorNotValidException();
 
-        if(categoryRepository.existsById(idCategory))
+        if (categoryRepository.existsById(idCategory))
             recipe.getCategories().removeIf(c -> c.getId().equals(idCategory));
         else throw new CategoryNotFoundException();
 
@@ -328,11 +323,10 @@ public class RecipeService {
         if (!recipe.getAuthor().getId().equals(user.getId()))
             throw new RecipeAuthorNotValidException();
 
-        if(stepRepository.existsById(idStep)) {
+        if (stepRepository.existsById(idStep)) {
             recipe.getSteps().removeIf(s -> s.getId().equals(idStep));
-            recipe.getSteps().forEach(s -> s.setStepNumber(recipe.getSteps().indexOf(s)+1));
-        }
-        else throw new StepNotFoundException();
+            recipe.getSteps().forEach(s -> s.setStepNumber(recipe.getSteps().indexOf(s) + 1));
+        } else throw new StepNotFoundException();
 
         recipeRepository.save(recipe);
         return RecipeDetailsResponse.fromRecipe(recipe);
@@ -348,7 +342,7 @@ public class RecipeService {
             throw new RecipeAuthorNotValidException();
 
         recipe.getSteps().add(step);
-        recipe.getSteps().forEach(s -> s.setStepNumber(recipe.getSteps().indexOf(s)+1));
+        recipe.getSteps().forEach(s -> s.setStepNumber(recipe.getSteps().indexOf(s) + 1));
 
         recipeRepository.save(recipe);
         stepRepository.save(step);
@@ -366,5 +360,20 @@ public class RecipeService {
                 .prepTime(recipeRequest.getPrepTime())
                 .type(type)
                 .build();
+    }
+
+    public PageDto<RecipeResponse> getRecipesByUsername(String username, Pageable pageable) {
+        User user = userRepository.findFirstByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException());
+        Page<RecipeResponse> recipeResponsePage = recipeRepository.findByAuthor(user, pageable).map(RecipeResponse::fromRecipe);
+        return new PageDto<>(recipeResponsePage);
+    }
+
+    public PageDto<RecipeResponse> getLikesByUsername(String username, Pageable pageable) {
+        User user = userRepository.findFirstByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException());
+
+        Page<RecipeResponse> likeResponsePage = userRepository.findFavoritesByUser(username, pageable).map(RecipeResponse::fromRecipe);
+        return new PageDto<>(likeResponsePage);
     }
 }

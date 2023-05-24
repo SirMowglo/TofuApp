@@ -19,6 +19,7 @@ import java.util.Arrays;
 @AllArgsConstructor
 public class GenericSpecification<T> implements Specification<T> {
 
+    //TODO Crear especificaciones para cada clase, teniendo en cuenta las necesidades
     private SearchCriteria searchCriteria;
 
     @Override
