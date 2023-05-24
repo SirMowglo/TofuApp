@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -9,13 +9,10 @@ import { LoginModule } from './views/auth/login/login.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { HttpErrorInterceptor } from './services/interceptors/http-error.interceptor';
 import { AutofocusDirective } from './directives/autofocus.directive';
-import { UserDetailsComponent } from './components/details/user-details/user-details.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AuthInterceptor } from './services/interceptors/auth.interceptor';
 import { MaterialModule } from './modules/material.module';
 import { LoadingInterceptor } from './services/interceptors/loading.interceptor';
-import { AuthService } from './services/auth.service';
-import { appInitializer } from './utils/app.initializer';
 
 @NgModule({
   declarations: [AppComponent, AutofocusDirective],
@@ -30,18 +27,6 @@ import { appInitializer } from './utils/app.initializer';
   ],
   providers: [
     {
-      provide: APP_INITIALIZER,
-      useFactory: appInitializer,
-      multi: true,
-      deps: [AuthService],
-    },
-
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
-    {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
       multi: true,
@@ -49,6 +34,12 @@ import { appInitializer } from './utils/app.initializer';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
+      multi: true,
+    },
+
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
       multi: true,
     },
   ],

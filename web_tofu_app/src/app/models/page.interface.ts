@@ -1,5 +1,5 @@
-export interface Page {
-    content:       unknown[];
+export interface Page<T> {
+    content:       T[];
     last:          boolean;
     first:         boolean;
     totalPages:    number;

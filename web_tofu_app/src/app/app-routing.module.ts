@@ -5,13 +5,6 @@ import { CheckNotLoggedGuard } from './utils/guards/check-not-logged.guard';
 
 const routes: Routes = [
   {
-    path: 'notFound',
-    loadChildren: () =>
-      import('./views/not-found/not-found.module').then(
-        (m) => m.NotFoundModule
-      ),
-  },
-  {
     path: 'home',
     loadChildren: () =>
       import('./views/home/home.module').then((m) => m.HomeModule),
@@ -21,7 +14,7 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () =>
       import('./views/auth/login/login.module').then((m) => m.LoginModule),
-      canActivate: [CheckNotLoggedGuard],
+    canActivate: [CheckNotLoggedGuard],
   },
   {
     path: 'users',
@@ -42,6 +35,11 @@ const routes: Routes = [
         (m) => m.IngredientsModule
       ),
     canActivate: [CheckLoginGuard],
+  },
+  {
+    path: 'error',
+    loadChildren: () =>
+      import('./views/error/error.module').then((m) => m.ErrorModule),
   },
   {
     path: '',

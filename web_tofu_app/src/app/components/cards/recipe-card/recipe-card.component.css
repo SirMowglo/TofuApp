@@ -2,12 +2,14 @@
   display: flex;
   flex-direction: column;
   height: 180px;
-  min-width: 310px;
   width: auto;
+  min-width: 310px;
   max-width: 500px;
   background-color: aqua;
   filter: brightness(0.85);
   margin-bottom: 24px;
+  background-size: cover;
+
 }
 .container:hover {
   filter: brightness(1);
@@ -45,13 +47,15 @@
 }
 .duration {
   transform: translate(2px,-2px);
-
+  display: flex;
+  flex-direction: column;
   height: 64px;
   width: 50px;
   background-color: #639a37;
   margin-left: auto;
 }
-.duration p {
+.duration p , .duration span{
+
   font-size: 18px;
   text-align: center;
   line-height: 160%;
@@ -76,8 +80,8 @@
 .recipe_name {
   font-weight: 800;
   font-size: 24px;
-  transform: translateY(12px);
   margin-right: 15px;
+  align-self: flex-end;
 }
 .fa-heart {
   font-size: 24px;

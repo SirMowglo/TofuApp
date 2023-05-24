@@ -13,9 +13,17 @@ export class UserDetailsComponent implements OnInit {
   @Input() description = 'Prueba';
   @Input() birthday = 'Prueba';
   @Input() registerDate = 'Prueba';
-  private _avatar = new BehaviorSubject<string>('koalaSad.jpg');
 
-  data = '';
+  //** AVATAR OBSERVABLE
+  private _avatar = new BehaviorSubject<string>('koalaSad.jpg');
+  @Input() set avatar(value: string) {
+    this._avatar.next(value);
+  }
+  get avatar() {
+    return this._avatar.getValue();
+  }
+
+  avatarData = '';
 
   constructor(private fileService: FileService) {}
 
@@ -25,16 +33,11 @@ export class UserDetailsComponent implements OnInit {
     });
   }
 
-  @Input() set avatar(value: string) {
-    this._avatar.next(value);
-  }
-  get avatar() {
-    return this._avatar.getValue();
-  }
 
   getImage(avatar: string) {
     if (avatar != null) {
-      this.fileService.getData(avatar).subscribe((res) => (this.data = res));
+      this.fileService.getData(avatar)
+      .subscribe((res) => (this.avatarData = res));
     }
   }
 }

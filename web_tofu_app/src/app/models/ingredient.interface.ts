@@ -1,7 +1,9 @@
+import { UserResponse } from "./user.interface";
+
 export interface RecipeIngredientResponse {
     ingredient: IngredientResponse;
     amount:     number;
-    unit:       string;
+    unit:       string; 
     recipeName: string;
 }
 

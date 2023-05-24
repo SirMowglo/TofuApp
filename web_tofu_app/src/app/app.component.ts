@@ -21,7 +21,9 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private loadingService: LoadingService,
     private changeDetector: ChangeDetectorRef
-  ) {}
+  ) {
+    this.authService.checkToken()
+  }
 
   ngOnInit(): void {
     this.loadingService.getLoader().subscribe((res) => {

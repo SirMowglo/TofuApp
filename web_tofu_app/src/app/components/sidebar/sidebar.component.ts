@@ -42,4 +42,9 @@ export class SidebarComponent {
     this.router.navigate(['ingredients'])
 
   }
+  navigateError(){
+    this.setActive('btnError')
+    this.router.navigate(['error'])
+
+  }
 }

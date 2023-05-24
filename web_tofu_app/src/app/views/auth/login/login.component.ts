@@ -25,7 +25,6 @@ export class LoginComponent {
   }
 
   constructor(private authService: AuthService, private router: Router){
-    this.formGroup.valueChanges.subscribe((val) => console.log(val));
   }
 
   login(){
