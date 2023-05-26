@@ -2,6 +2,9 @@ package com.trianaSalesianos.tofuApp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 public class TofuAppApplication {
@@ -10,4 +13,18 @@ public class TofuAppApplication {
 		SpringApplication.run(TofuAppApplication.class, args);
 	}
 
+//	@Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurer() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/**")
+//                        .allowedOrigins("http://localhost:4200", "http://localhost:8080")
+//                        .allowedMethods("*")
+//                        .allowedHeaders("Origin,Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers", "Authorization")
+//                        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "content-type")
+//                        .maxAge(3600);
+//            }
+//        };
+//    }
 }

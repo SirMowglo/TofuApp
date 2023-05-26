@@ -13,6 +13,8 @@ import { AuthService } from '../auth.service';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService : AuthService){}
+  private isRefreshing = false;
+
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
@@ -48,16 +50,24 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+
     return this.authService.refreshToken().pipe(
       switchMap((res) => {
+        this.isRefreshing = false;
+
         this.authService.saveToken(res.token, res.refreshToken);
         const newRequest = this.addTokenToRequest(request, res.token);
         return next.handle(newRequest);
       }),
       catchError((error) => {
-        this.authService.logout();
+        this.isRefreshing = false;
+        this.authService.logout()
         return throwError(() => error);
       })
     );
+    }
+    return next.handle(request);
   }
 }

@@ -97,7 +97,7 @@ export class AuthService {
     };
     return this.http.post<JwtResponse>(
       `${environment.API_URL}/refreshtoken`,
-      rt
+      rt, httpOptions
     );
   }
 }

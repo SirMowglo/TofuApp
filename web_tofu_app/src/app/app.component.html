@@ -12,26 +12,28 @@
     <div class="outlined_box_4px box">
       <router-outlet></router-outlet>
     </div>
-    <span class="buttons">
-      <app-custom-button
-        btnStyle="green_active"
-        label="+"
-        [verticalPadding]="20"
-        [fontSize]="50"
-      ></app-custom-button>
-      <app-custom-button
-        btnStyle="green_active"
-        label="✏️"
-        [verticalPadding]="20"
-        [fontSize]="40"
-      ></app-custom-button>
-      <app-custom-button
-        btnStyle="green_active"
-        label="-"
-        [verticalPadding]="20"
-        [fontSize]="50"
-      ></app-custom-button>
-    </span>
+    <ng-container *ngIf="!checkHome()">
+      <span class="buttons">
+        <app-custom-button
+          btnStyle="green_active"
+          label="+"
+          [verticalPadding]="20"
+          [fontSize]="50"
+        ></app-custom-button>
+        <app-custom-button
+          btnStyle="green_active"
+          label="✏️"
+          [verticalPadding]="20"
+          [fontSize]="40"
+        ></app-custom-button>
+        <app-custom-button
+          btnStyle="green_active"
+          label="-"
+          [verticalPadding]="20"
+          [fontSize]="50"
+        ></app-custom-button>
+      </span>
+    </ng-container>
   </div>
   <router-outlet *ngIf="!isLoggedIn"></router-outlet>
   <app-footer></app-footer>

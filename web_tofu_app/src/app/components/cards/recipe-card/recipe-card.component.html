@@ -1,6 +1,7 @@
 <div
   class="container outlined_box_4px"
   [ngStyle]="{ backgroundImage: 'url(' + recipeImgData + ')' }"
+  (click)="emitEvent()"
 >
   <div class="user_row">
     <img class="outlined_box_4px avatar" src="{{ authorAvatarData }}" alt="" />

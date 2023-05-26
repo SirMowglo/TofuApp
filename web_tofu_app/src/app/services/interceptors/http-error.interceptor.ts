@@ -24,18 +24,17 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    // const req = request.clone({
-    //   withCredentials: true,
-    // });
+    const req = request.clone({
+      withCredentials: true,
+    });
 
-    return next.handle(request).pipe(
+    return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
           switch (error.status) {
-            case 403:
-              this.authService.logout();
+            case 404:
               break;
-            case 500:
-              this.showAlertError(error)
+            case 403:
+              this.authService.logout()
               break;
             default:
               this.showAlertError(error)

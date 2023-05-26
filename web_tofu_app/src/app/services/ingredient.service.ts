@@ -20,4 +20,10 @@ export class IngredientService {
       `${environment.API_URL}/ingredient/author/${username}?page=${page}`
     );
   }
+
+  public getRecipeIngredients(recipe: RecipeResponse, page = 0) {
+    return this.http.get<Page<IngredientResponse>>(
+      `${environment.API_URL}/ingredient/recipe/${recipe.id}?page=${page}`
+    );
+  }
 }
