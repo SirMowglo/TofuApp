@@ -14,8 +14,7 @@
     android:src="@mipmap/ic_logo_tofu_foreground"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    />
+    app:layout_constraintEnd_toEndOf="parent" />
 
   <TextView
     android:id="@+id/loginLabelEslogan"
@@ -28,8 +27,7 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintVertical_bias="0.42"
-    />
+    app:layout_constraintVertical_bias="0.42" />
 
   <com.google.android.material.textfield.TextInputLayout
     android:id="@+id/loginTextInputLayoutUsername"
@@ -44,8 +42,7 @@
     app:layout_constraintTop_toBottomOf="@id/loginLabelEslogan"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:boxBackgroundColor="@color/white"
-    >
+    app:boxBackgroundColor="@color/white">
     <com.google.android.material.textfield.TextInputEditText
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
