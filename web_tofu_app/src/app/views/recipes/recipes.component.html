@@ -1,4 +1,4 @@
-<div class="container">
+<ng-container class="container">
   <div class="container_home">
     <div class="main_panel outlined_box_0px">
       <div class="main_content">
@@ -15,6 +15,7 @@
                 <app-recipe-card 
                 [recipe]="recipe"
                 (OnClick)="getRecipeIngredients(recipe)"
+                (OnClick)="getRecipeDetails(recipe)"
                 />
               </span>
             </div>
@@ -36,8 +37,11 @@
         </div>
       </div>
     </div>
-    <div class="selected_panel outlined_box_0px">
-      <div style="width: 100%">buenas</div>
+    <div class="selected_panel outlined_box_0px"  *ngIf="recipeDetails.name != null">
+      <app-recipe-details
+      style="width: 100%"
+      [recipe]="recipeDetails"
+      [author]="recipeDetails.author" />
     </div>
   </div>
-</div>
+</ng-container>

@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
 
 const helper = new JwtHelperService();
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  headers: new HttpHeaders({ 'Content-Type': 'application/json'}),
 };
 @Injectable({
   providedIn: 'root',
@@ -91,13 +91,15 @@ export class AuthService {
     localStorage.setItem('refresh_token', refreshToken);
   }
 
+  //TODO Solucionar problemas con el refreshToken/Cors de la api
+  //? Parece que el problema viene de algo del preflight del navegador
   refreshToken(): Observable<JwtResponse> {
     const rt: RefreshTokenRequest = {
-      refreshToken: localStorage.getItem('refresh_token') ?? '',
+      refreshToken: localStorage.getItem('refresh_token') ?? "",
     };
     return this.http.post<JwtResponse>(
       `${environment.API_URL}/refreshtoken`,
-      rt, httpOptions
+      rt
     );
   }
 }

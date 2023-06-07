@@ -20,9 +20,8 @@ public class TofuAppApplication {
 //            public void addCorsMappings(CorsRegistry registry) {
 //                registry.addMapping("/**")
 //                        .allowedOrigins("http://localhost:4200", "http://localhost:8080")
-//                        .allowedMethods("*")
-//                        .allowedHeaders("Origin,Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers", "Authorization")
-//                        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "content-type")
+//                        .allowedMethods("GET","POST", "PUT", "DELETE", "HEAD")
+//                        .allowedHeaders("*")
 //                        .maxAge(3600);
 //            }
 //        };

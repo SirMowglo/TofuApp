@@ -12,6 +12,8 @@ import { MaterialModule } from '../material.module';
 import { RecipeCardComponent } from 'src/app/components/cards/recipe-card/recipe-card.component';
 import { IngredientCardComponent } from 'src/app/components/cards/ingredient-card/ingredient-card.component';
 import { UserDetailsComponent } from 'src/app/components/details/user-details/user-details.component';
+import { RecipeDetailsComponent } from 'src/app/components/details/recipe-details/recipe-details.component';
+import { StepCardComponent } from 'src/app/components/cards/step-card/step-card.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { UserDetailsComponent } from 'src/app/components/details/user-details/us
     RecipeCardComponent,
     IngredientCardComponent,
     UserDetailsComponent,
+    RecipeDetailsComponent,
+    StepCardComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +43,9 @@ import { UserDetailsComponent } from 'src/app/components/details/user-details/us
     RecipeCardComponent,
     IngredientCardComponent,
     UserDetailsComponent,
+    RecipeDetailsComponent,
+    StepCardComponent,
+
   ],
 })
 export class SharedModule {}

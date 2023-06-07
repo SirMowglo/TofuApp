@@ -18,20 +18,27 @@ import { AuthService } from '../auth.service';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    const req = request.clone({
-      withCredentials: true,
-    });
+    // const req = request.clone({
+    //   withCredentials: true,
+    // });
 
-    return next.handle(req).pipe(
+    return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
           switch (error.status) {
+            case 401:
+              
+              if(error.error.message == "Bad credentials"){
+                alert("Usuario o contraseña incorrectos")
+              }
+              break;
             case 404:
+              this.showAlertError(error)
               break;
             case 403:
               this.authService.logout()

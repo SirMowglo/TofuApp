@@ -8,11 +8,12 @@
   .container_home {
     display: flex;
     flex-direction: row;
+    flex-grow: 100%;
     justify-content: space-around;
     align-items: center;
     gap: 12px;
     height: 100%;
-    width: auto;
+    width: 100%;
     flex: 1;
   }
   .main_panel {

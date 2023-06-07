@@ -36,20 +36,21 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private addTokenToRequest(
-    request: HttpRequest<any>,
+    request: HttpRequest<unknown>,
     token: string
-  ): HttpRequest<any> {
+  ): HttpRequest<unknown> {
     return request.clone({
       setHeaders: {
-        Authorization: `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
       },
     });
   }
 
   private handleAuthError(
-    request: HttpRequest<any>,
+    request: HttpRequest<unknown>,
     next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  ): Observable<HttpEvent<unknown>> {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
 
