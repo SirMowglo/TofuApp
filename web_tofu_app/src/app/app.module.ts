@@ -13,7 +13,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AuthInterceptor } from './services/interceptors/auth.interceptor';
 import { MaterialModule } from './modules/material.module';
 import { LoadingInterceptor } from './services/interceptors/loading.interceptor';
-import { UserCardComponent } from './components/cards/user-card/user-card.component';
 
 @NgModule({
   declarations: [AppComponent, AutofocusDirective],

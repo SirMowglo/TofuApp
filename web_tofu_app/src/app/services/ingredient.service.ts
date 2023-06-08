@@ -26,4 +26,14 @@ export class IngredientService {
       `${environment.API_URL}/ingredient/recipe/${recipe.id}?page=${page}`
     );
   }
+
+  public getIngredientBySearch(
+    search: string,
+    page = 0
+  ): Observable<Page<IngredientResponse>> {
+    return this.http.get<Page<IngredientResponse>>(
+      `${environment.API_URL}/ingredient?search=${search}&page=${page}`
+    );
+  }
+
 }

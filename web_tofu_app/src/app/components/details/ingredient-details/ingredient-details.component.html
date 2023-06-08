@@ -1,0 +1,18 @@
+<div class="container">
+    <div
+      class="img_container outlined_box_4px"
+      [ngStyle]="{ backgroundImage: 'url(' + ingredientImgData + ')' }"
+    >
+      <p class="ingredient_name montserrat outlined_text_2px">{{ ingredient.name }}</p>
+    </div>
+    <div class="user_row">
+      <img class="outlined_box_4px avatar" src="{{authorAvatarData}}" alt="" />
+      <div class="fullname montserrat outlined_text_2px" style="font-size: 18px">
+        {{author.fullname}}
+      </div>
+    </div>
+    <div class="description open-sans">
+      {{ ingredient.description }}
+    </div>
+  </div>
+  

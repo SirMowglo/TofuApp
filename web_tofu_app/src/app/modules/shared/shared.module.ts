@@ -15,6 +15,7 @@ import { UserDetailsComponent } from 'src/app/components/details/user-details/us
 import { RecipeDetailsComponent } from 'src/app/components/details/recipe-details/recipe-details.component';
 import { StepCardComponent } from 'src/app/components/cards/step-card/step-card.component';
 import { UserCardComponent } from 'src/app/components/cards/user-card/user-card.component';
+import { IngredientDetailsComponent } from 'src/app/components/details/ingredient-details/ingredient-details.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { UserCardComponent } from 'src/app/components/cards/user-card/user-card.
     IngredientCardComponent,
     UserDetailsComponent,
     RecipeDetailsComponent,
+    IngredientDetailsComponent,
     StepCardComponent,
     UserCardComponent,
   ],
@@ -46,6 +48,7 @@ import { UserCardComponent } from 'src/app/components/cards/user-card/user-card.
     IngredientCardComponent,
     UserDetailsComponent,
     RecipeDetailsComponent,
+    IngredientDetailsComponent,
     StepCardComponent,
     UserCardComponent,
   ],
