@@ -3,26 +3,26 @@
     <div class="main_panel outlined_box_0px">
       <div class="main_content">
         <span class="home montserrat outlined_text_2px">Users</span>
-        <div class="columns">
-          <div class="recipes_column">
-            <span
-              class="montserrat outlined_text_2px_no_shadow"
-              style="font-size: 18px; margin-bottom: 8px"
-              >Recipes</span
-            >
-          </div>
-          <div class="ingredients_column">
-            <span
-              class="montserrat outlined_text_2px_no_shadow"
-              style="font-size: 18px; margin-bottom: 8px"
-              >Ingredients</span
-            >
-          </div>
+        <div class="user_list">
+          <ng-container *ngFor="let user of userList">
+            <app-user-card
+            [user]="user"
+            (OnClick)="getUserDetails(user)"
+            />
+          </ng-container>
         </div>
       </div>
     </div>
-    <div class="selected_panel outlined_box_0px">
-      <div style="width: 100%">buenas</div>
+    <div class="selected_panel outlined_box_0px" *ngIf="selectedUser.username != null">
+      <app-user-details
+        [name]="selectedUser.fullname"
+        [username]="selectedUser.username"
+        [description]="selectedUser.description"
+        [birthday]="selectedUser.birthday"
+        [registerDate]="selectedUser.createdAt"
+        [avatar]="selectedUser.avatar"
+        style="width: 100%"
+      ></app-user-details>
     </div>
   </div>
 </div>

@@ -14,6 +14,7 @@ import { IngredientCardComponent } from 'src/app/components/cards/ingredient-car
 import { UserDetailsComponent } from 'src/app/components/details/user-details/user-details.component';
 import { RecipeDetailsComponent } from 'src/app/components/details/recipe-details/recipe-details.component';
 import { StepCardComponent } from 'src/app/components/cards/step-card/step-card.component';
+import { UserCardComponent } from 'src/app/components/cards/user-card/user-card.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { StepCardComponent } from 'src/app/components/cards/step-card/step-card.
     UserDetailsComponent,
     RecipeDetailsComponent,
     StepCardComponent,
+    UserCardComponent,
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,7 @@ import { StepCardComponent } from 'src/app/components/cards/step-card/step-card.
     UserDetailsComponent,
     RecipeDetailsComponent,
     StepCardComponent,
-
+    UserCardComponent,
   ],
 })
 export class SharedModule {}

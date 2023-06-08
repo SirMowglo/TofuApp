@@ -1,16 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  catchError,
-  map,
-  mergeMap,
-  switchMap,
-  tap,
-  throwError,
-  timer,
-} from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
 import {
   JwtResponse,
   JwtUserResponse,
@@ -23,16 +13,15 @@ import { Router } from '@angular/router';
 
 const helper = new JwtHelperService();
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json'}),
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
-
-  constructor(private http: HttpClient, private router: Router) {
-  }
+  
+  constructor(private http: HttpClient, private router: Router) {}
 
   get isLogged(): Observable<boolean> {
     return this.loggedIn.asObservable();
@@ -65,41 +54,47 @@ export class AuthService {
   }
   checkToken(): void {
     const userToken = localStorage.getItem('token');
-    const isExpired = helper.isTokenExpired(userToken);
+    const refreshToken = localStorage.getItem('refresh_token');
 
-    isExpired
-      ? this.refreshToken()
-          .pipe(
-            map((res) => {
-              this.saveToken(res.token, res.refreshToken);
-              return res;
-            }),
-            catchError((error) => {
-              return throwError(() => error);
+    const isExpired = helper.isTokenExpired(userToken);
+    if (refreshToken) {
+      isExpired
+        ? this.refreshToken(refreshToken)
+            .pipe(
+              map((res) => {
+                this.saveToken(res.token, res.refreshToken);
+                return res;
+              }),
+              catchError((error) => {
+                return throwError(() => error);
+              })
+            )
+            .subscribe((res) => {
+              if (res) {
+                this.autologin();
+              }
             })
-          )
-          .subscribe((res) => {
-            if (res) {
-              this.autologin()
-            }
-          })
-      : this.autologin();
+        : this.autologin();
+    } else this.logout();
   }
 
   saveToken(token: string, refreshToken: string): void {
+    localStorage.clear();
     localStorage.setItem('token', token);
     localStorage.setItem('refresh_token', refreshToken);
   }
 
   //TODO Solucionar problemas con el refreshToken/Cors de la api
   //? Parece que el problema viene de algo del preflight del navegador
-  refreshToken(): Observable<JwtResponse> {
+  refreshToken(reft: string): Observable<JwtResponse> {
     const rt: RefreshTokenRequest = {
-      refreshToken: localStorage.getItem('refresh_token') ?? "",
+      refreshToken: reft,
     };
+    console.log("Lmao")
     return this.http.post<JwtResponse>(
       `${environment.API_URL}/refreshtoken`,
-      rt
+      rt,
+      httpOptions
     );
   }
 }

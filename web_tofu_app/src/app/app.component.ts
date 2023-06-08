@@ -40,9 +40,11 @@ export class AppComponent implements OnInit {
     this.changeDetector.detectChanges();
   }
 
-  checkHome(): boolean{
+  isHomePanel(): boolean{
     return this.router.url === '/home'
   }
-
+  isUsersPanel(): boolean{
+    return this.router.url === '/users'
+  }
   title = 'web_tofu_app';
 }

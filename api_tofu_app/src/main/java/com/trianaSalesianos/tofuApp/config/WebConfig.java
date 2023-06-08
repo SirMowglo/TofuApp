@@ -16,10 +16,10 @@ public class WebConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("http://localhost:4200", "http://localhost:8080")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "DELETE", "HEAD")
-                        .allowedHeaders("*")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "DELETE", "HEAD", "OPTIONS")
+                        .allowedHeaders("X-Requested-With", "Content-Type", "Content-Length", "Authorization", "Access-Control-Allow-Headers", "Accept", "Access-Control-Allow-Methods", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
+                        .exposedHeaders("X-Requested-With", "Content-Type", "Content-Length", "Authorization", "Access-Control-Allow-Headers", "Accept", "Access-Control-Allow-Methods", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
                         .allowCredentials(true)
-                        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "content-type")
                         .maxAge(3600);
             }
         };

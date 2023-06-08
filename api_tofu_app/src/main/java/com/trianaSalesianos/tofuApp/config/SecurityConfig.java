@@ -118,7 +118,8 @@ public class SecurityConfig {
                         "/user/changeavatar",
                         "/download/{filename:.+}"
                         ).hasAnyRole("ADMIN", "USER")
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and().httpBasic();
 
 
 

@@ -12,26 +12,31 @@
     <div class="outlined_box_4px box">
       <router-outlet></router-outlet>
     </div>
-    <ng-container *ngIf="!checkHome()">
+    <ng-container *ngIf="!isHomePanel() && !isUsersPanel()">
       <span class="buttons">
         <app-custom-button
           btnStyle="green_active"
           label="+"
           [verticalPadding]="20"
           [fontSize]="50"
-        ></app-custom-button>
+          [isDisabled]="true"
+
+        />
         <app-custom-button
           btnStyle="green_active"
           label="✏️"
           [verticalPadding]="20"
           [fontSize]="40"
-        ></app-custom-button>
+          [isDisabled]="true"
+          />
         <app-custom-button
           btnStyle="green_active"
           label="-"
           [verticalPadding]="20"
           [fontSize]="50"
-        ></app-custom-button>
+          [isDisabled]="true"
+
+        />
       </span>
     </ng-container>
   </div>

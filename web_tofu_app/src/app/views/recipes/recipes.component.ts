@@ -24,10 +24,8 @@ export class RecipesComponent implements OnInit {
   //TODO Posibilidad de editar una receta seleccionada
   //TODO Hacer las listas de recetas con ingredientes infinitas
 
-  constructor(
-    private recipeService: RecipeService,
-    private ingredientService: IngredientService
-  ) {}
+  constructor(private recipeService: RecipeService,
+    private ingredientService: IngredientService) {}
 
   ngOnInit(): void {
     this.getRecipes();

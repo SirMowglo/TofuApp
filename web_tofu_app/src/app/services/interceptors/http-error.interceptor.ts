@@ -6,11 +6,7 @@ import {
   HttpInterceptor,
   HttpErrorResponse,
 } from '@angular/common/http';
-import {
-  Observable,
-  catchError,
-  throwError,
-} from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 
 import { ServerError } from 'src/app/models/error.interface';
 import { NavigationExtras, Router } from '@angular/router';
@@ -24,29 +20,27 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    // const req = request.clone({
-    //   withCredentials: true,
-    // });
-
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-          switch (error.status) {
-            case 401:
-              
-              if(error.error.message == "Bad credentials"){
-                alert("Usuario o contraseña incorrectos")
-              }
-              break;
-            case 404:
-              this.showAlertError(error)
-              break;
-            case 403:
-              this.authService.logout()
-              break;
-            default:
-              this.showAlertError(error)
-              break;
-          }            
+        switch (error.status) {
+          case 401:
+            if (error.error.message == 'Bad credentials') {
+              alert('Usuario o contraseña incorrectos');
+            }
+            break;
+          case 404:
+            this.showAlertError(error);
+            break;
+          case 403:
+            this.authService.logout();
+            break;
+          case 0:
+            this.authService.logout();
+            break;
+          default:
+            this.showAlertError(error);
+            break;
+        }
         return throwError(() => error);
       })
     );
