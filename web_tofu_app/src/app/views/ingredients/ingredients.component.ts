@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { IngredientResponse } from 'src/app/models/ingredient.interface';
 import { IngredientService } from 'src/app/services/ingredient.service';
 
@@ -11,7 +12,8 @@ export class IngredientsComponent {
   ingredientList: IngredientResponse[] = [];
   indexIngredients = 0;
   selectedIngredient = {} as IngredientResponse;
-  constructor(private ingredientService: IngredientService) {}
+  constructor(private ingredientService: IngredientService,
+    public dialog: MatDialog) {}
   ngOnInit(): void {
     this.getIngredients()
   }
@@ -24,8 +26,6 @@ export class IngredientsComponent {
       }
     })
   }
-  //TODO Crear listado de ingredientes (Ocupan toda la pantalla)
-  //TODO Al seleccionar un ingrediente mostrar los detaññes
   //TODO Posibilidad de crear un ingrediente
   //TODO Posibilidad de borrar el ingrediente seleccionado
   //TODO Posibilidad de cambiar el ingrediente seleccionado
@@ -33,5 +33,18 @@ export class IngredientsComponent {
 
   getSelectedIngredient(ingredient: IngredientResponse){
     this.selectedIngredient = ingredient
+  }
+
+  openDialog(): void {
+    //TODO Crear dialog y tal
+  //   const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+  //     data: {name: this.name, animal: this.animal},
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //     this.animal = result;
+  //   });
+  // }
   }
 }

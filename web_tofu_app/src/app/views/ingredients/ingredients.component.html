@@ -6,18 +6,26 @@
         <div class="ingredient_list">
           <ng-container *ngFor="let ingredient of ingredientList">
             <app-ingredient-card
-            style="width: 340px;"
-            (OnClick)="getSelectedIngredient(ingredient)"
-            [ingredient]="ingredient"/>
+              style="width: 340px"
+              (OnClick)="getSelectedIngredient(ingredient)"
+              [ingredient]="ingredient"
+            />
           </ng-container>
+          <div class="add_button outlined_box_4px"
+          >
+            <span class="add outlined_text_2px_no_shadow">+</span>
+          </div>
         </div>
       </div>
     </div>
-    <div class="selected_panel outlined_box_0px"  *ngIf="selectedIngredient.name != null">
+    <div
+      class="selected_panel outlined_box_0px"
+      *ngIf="selectedIngredient.name != null" >
       <app-ingredient-details
-      style="width: 100%"
-      [ingredient]="selectedIngredient"
-      [author]="selectedIngredient.author" />
+        style="width: 100%"
+        [ingredient]="selectedIngredient"
+        [author]="selectedIngredient.author"
+      />
     </div>
   </div>
 </div>

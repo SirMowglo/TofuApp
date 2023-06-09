@@ -20,6 +20,7 @@ export class UsersComponent {
   ngOnInit(): void {
     this.getUsers();
   }
+  //TODO Posibilidad de registrar un usuario
   //TODO Posibilidad de borrar el usuario seleccionado
 
 

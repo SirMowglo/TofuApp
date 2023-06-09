@@ -1,8 +1,10 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { IngredientResponse } from 'src/app/models/ingredient.interface';
 import { UserResponse } from 'src/app/models/user.interface';
 import { FileService } from 'src/app/services/file.service';
+import { IngredientService } from 'src/app/services/ingredient.service';
 
 @Component({
   selector: 'app-ingredient-details',
@@ -23,7 +25,7 @@ export class IngredientDetailsComponent {
   ingredientImgData = '';
   authorAvatarData = ''
 
-  constructor(private fileService: FileService) {}
+  constructor(private fileService: FileService, private ingredientService: IngredientService, private router: Router) {}
 
   ngOnInit(): void {
     this._author.subscribe((val) => {
@@ -45,4 +47,17 @@ export class IngredientDetailsComponent {
       .subscribe((res) => (this.ingredientImgData = res));
     }
   }
+
+  deleteCurrentIngredient(){
+    this.ingredientService.deleteIngredientById(this.ingredient.id).subscribe( res=>{
+      this.reloadCurrentRoute()
+    })
+  }
+
+  reloadCurrentRoute() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate([currentUrl]);
+    });
+}
 }

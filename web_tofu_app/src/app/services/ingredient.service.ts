@@ -36,4 +36,7 @@ export class IngredientService {
     );
   }
 
+  public deleteIngredientById(id:string): Observable<any>{
+   return this.http.delete<any>(`${environment.API_URL}/ingredient/${id}`)
+  }
 }

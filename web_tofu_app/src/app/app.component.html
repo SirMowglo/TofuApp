@@ -12,15 +12,15 @@
     <div class="outlined_box_4px box">
       <router-outlet></router-outlet>
     </div>
-    <ng-container *ngIf="!isHomePanel() && !isUsersPanel()">
+    <!-- TODO Borrar en caso de no uso -->
+    <ng-container *ngIf="">
       <span class="buttons">
         <app-custom-button
           btnStyle="green_active"
           label="+"
           [verticalPadding]="20"
           [fontSize]="50"
-          [isDisabled]="true"
-
+          [isDisabled]="!isIngredientPanel()"
         />
         <app-custom-button
           btnStyle="green_active"

@@ -85,7 +85,7 @@ export class AuthService {
   }
 
   //TODO Solucionar problemas con el refreshToken/Cors de la api
-  //? Parece que el problema viene de algo del preflight del navegador
+  //! No hay solucion (creo), lo damos por muerto
   refreshToken(reft: string): Observable<JwtResponse> {
     const rt: RefreshTokenRequest = {
       refreshToken: reft,

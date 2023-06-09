@@ -63,3 +63,28 @@
     margin-bottom: 10px;
     gap: 10px;
   }
+  .add_button{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 180px;
+      width: 340px;
+      min-width: 310px;
+      max-width: 500px;
+      background-color: #91dd54;
+      margin-bottom: 24px;
+  }
+  .add_button:hover{
+    background-color: #639a37;
+  }
+  .add_button:active {
+    background-color: #639a37;
+    box-shadow: 0px 0px 0px 0px black;
+  
+    transform: translateY(4px);
+  }
+  .add{
+    font-size: 128px;
+    align-self: center;
+  }

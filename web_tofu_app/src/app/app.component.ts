@@ -46,5 +46,15 @@ export class AppComponent implements OnInit {
   isUsersPanel(): boolean{
     return this.router.url === '/users'
   }
+  isRecipePanel(): boolean{
+    return this.router.url === '/recipes'
+  }
+  isIngredientPanel(): boolean{
+    return this.router.url === '/ingredients'
+  }
+
+  
+
+
   title = 'web_tofu_app';
 }
