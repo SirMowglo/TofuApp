@@ -14,3 +14,8 @@ export interface IngredientResponse {
     description: string;
     author:      UserResponse;
 }
+
+export interface IngredientRequest{
+    name: string;
+    description: string;
+}

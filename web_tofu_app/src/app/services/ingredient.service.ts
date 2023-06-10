@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IngredientResponse } from '../models/ingredient.interface';
+import { IngredientRequest, IngredientResponse } from '../models/ingredient.interface';
 import { Page } from '../models/page.interface';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -39,4 +39,8 @@ export class IngredientService {
   public deleteIngredientById(id:string): Observable<any>{
    return this.http.delete<any>(`${environment.API_URL}/ingredient/${id}`)
   }
-}
+
+  public createIngredient(ingredientRequest: IngredientRequest): Observable<IngredientResponse> {
+    return this.http
+      .post<IngredientResponse>(`${environment.API_URL}/ingredient`, ingredientRequest)
+}}

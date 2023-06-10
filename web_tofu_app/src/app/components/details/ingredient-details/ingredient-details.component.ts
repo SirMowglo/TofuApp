@@ -49,7 +49,7 @@ export class IngredientDetailsComponent {
   }
 
   deleteCurrentIngredient(){
-    this.ingredientService.deleteIngredientById(this.ingredient.id).subscribe( res=>{
+    this.ingredientService.deleteIngredientById(this.ingredient.id).subscribe( ()=>{
       this.reloadCurrentRoute()
     })
   }

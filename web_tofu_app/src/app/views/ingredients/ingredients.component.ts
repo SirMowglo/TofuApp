@@ -1,5 +1,7 @@
+import { DialogConfig } from '@angular/cdk/dialog';
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AddIngredientDialogComponent } from 'src/app/components/dialogs/add-ingredient-dialog/add-ingredient-dialog.component';
 import { IngredientResponse } from 'src/app/models/ingredient.interface';
 import { IngredientService } from 'src/app/services/ingredient.service';
 
@@ -11,40 +13,53 @@ import { IngredientService } from 'src/app/services/ingredient.service';
 export class IngredientsComponent {
   ingredientList: IngredientResponse[] = [];
   indexIngredients = 0;
+  totalPages = 0;
   selectedIngredient = {} as IngredientResponse;
-  constructor(private ingredientService: IngredientService,
-    public dialog: MatDialog) {}
+
+  constructor(
+    private ingredientService: IngredientService,
+    public dialog: MatDialog
+  ) {}
+
   ngOnInit(): void {
-    this.getIngredients()
+    this.getIngredients();
   }
 
-  getIngredients(){
-    this.ingredientService.getIngredientBySearch('', this.indexIngredients)
-    .subscribe(res =>{
-      if(res.totalPages>= this.indexIngredients){
-        this.ingredientList = res.content
-      }
-    })
+  getIngredients() {
+    this.ingredientService
+      .getIngredientBySearch('', this.indexIngredients)
+      .subscribe((res) => {
+        if (res.totalPages >= this.indexIngredients) {
+          this.ingredientList = res.content;
+          this.totalPages = res.totalPages -1;
+        }
+      });
   }
-  //TODO Posibilidad de crear un ingrediente
-  //TODO Posibilidad de borrar el ingrediente seleccionado
+
+  onScroll() {
+    if (this.totalPages > this.indexIngredients) {
+      this.indexIngredients++;
+      this.ingredientService
+        .getIngredientBySearch('', this.indexIngredients)
+        .subscribe((res) => {
+          this.ingredientList.push(...res.content);
+        });
+    }
+  }
+
   //TODO Posibilidad de cambiar el ingrediente seleccionado
-  //TODO Hacer la lista de ingredientes infinita
 
-  getSelectedIngredient(ingredient: IngredientResponse){
-    this.selectedIngredient = ingredient
+  getSelectedIngredient(ingredient: IngredientResponse) {
+    this.selectedIngredient = ingredient;
   }
 
   openDialog(): void {
     //TODO Crear dialog y tal
-  //   const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-  //     data: {name: this.name, animal: this.animal},
-  //   });
+    const dialogConfig = new MatDialogConfig();
 
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed');
-  //     this.animal = result;
-  //   });
-  // }
+    dialogConfig.autoFocus = true;
+    dialogConfig.panelClass = 'outlined_box_4px';
+
+    this.dialog.open(AddIngredientDialogComponent, dialogConfig);
   }
 }

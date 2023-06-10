@@ -16,6 +16,8 @@ import { RecipeDetailsComponent } from 'src/app/components/details/recipe-detail
 import { StepCardComponent } from 'src/app/components/cards/step-card/step-card.component';
 import { UserCardComponent } from 'src/app/components/cards/user-card/user-card.component';
 import { IngredientDetailsComponent } from 'src/app/components/details/ingredient-details/ingredient-details.component';
+import { AddIngredientDialogComponent } from 'src/app/components/dialogs/add-ingredient-dialog/add-ingredient-dialog.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { IngredientDetailsComponent } from 'src/app/components/details/ingredien
     UserDetailsComponent,
     RecipeDetailsComponent,
     IngredientDetailsComponent,
+    AddIngredientDialogComponent,
     StepCardComponent,
     UserCardComponent,
   ],
@@ -36,7 +39,9 @@ import { IngredientDetailsComponent } from 'src/app/components/details/ingredien
     CommonModule,
     SharedRoutingModule,
     ReactiveFormsModule,
-    MaterialModule,
+    MaterialModule,   
+    InfiniteScrollModule,
+
   ],
   exports: [
     HeaderComponent,
@@ -49,8 +54,14 @@ import { IngredientDetailsComponent } from 'src/app/components/details/ingredien
     UserDetailsComponent,
     RecipeDetailsComponent,
     IngredientDetailsComponent,
+    AddIngredientDialogComponent,
     StepCardComponent,
     UserCardComponent,
+    CommonModule,
+    SharedRoutingModule,
+    ReactiveFormsModule,
+    MaterialModule,   
+    InfiniteScrollModule,
   ],
 })
 export class SharedModule {}
