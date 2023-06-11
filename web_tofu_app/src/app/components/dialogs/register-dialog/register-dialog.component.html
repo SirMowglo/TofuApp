@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="inner_container outlined_box_0px">
+    <h1 class="title montserrat outlined_text_2px">Register User</h1>
+    <form [formGroup]="formGroup" class="form">
+      <app-custom-input
+        label="Username"
+        [control]="formGroup.controls.username"
+        [errorMessages]="usernameErrors"
+      />
+      <app-custom-input
+        label="Fullname"
+        [control]="formGroup.controls.fullname"
+        [errorMessages]="fullnameErrors"
+      />
+      <app-custom-input
+        label="Password"
+        [control]="formGroup.controls.password"
+        [errorMessages]="passwordErrors"
+      />
+      <app-custom-input
+        label="Verify password"
+        [control]="formGroup.controls.verifyPassword"
+        [errorMessages]="passwordErrors"
+      />
+      <app-custom-input 
+      label="Email" 
+      [control]="formGroup.controls.email"
+      [errorMessages]="emailErrors" />
+      <app-custom-input
+        label="Verify email"
+        [control]="formGroup.controls.verifyEmail"
+        [errorMessages]="emailErrors"
+      />
+      <mat-checkbox color="primary" [formControl]="formGroup.controls.isAdmin">
+        <span class="open-sans check">Admin</span>
+      </mat-checkbox>
+    </form>
+    
+    <app-custom-button
+      label="Accept"
+      btnStyle="green"
+      [isDisabled]="formGroup.untouched || formGroup.invalid"
+      (OnClick)="register()"
+    />
+  </div>
+</div>

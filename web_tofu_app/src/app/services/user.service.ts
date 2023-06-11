@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UserDetailsResponse, UserResponse } from '../models/user.interface';
 import { Page } from '../models/page.interface';
@@ -29,5 +29,9 @@ export class UserService {
     return this.http.get<UserDetailsResponse>(
       `${environment.API_URL}/user/${username}`
     );
+  }
+
+    public deleteUserByUsername(username:string):Observable<unknown>{
+      return this.http.delete<unknown>(`${environment.API_URL}/user/${username}`)
   }
 }

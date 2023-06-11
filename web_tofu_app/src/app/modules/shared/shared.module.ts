@@ -18,6 +18,8 @@ import { UserCardComponent } from 'src/app/components/cards/user-card/user-card.
 import { IngredientDetailsComponent } from 'src/app/components/details/ingredient-details/ingredient-details.component';
 import { AddIngredientDialogComponent } from 'src/app/components/dialogs/add-ingredient-dialog/add-ingredient-dialog.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { RegisterDialogComponent } from 'src/app/components/dialogs/register-dialog/register-dialog.component';
+import { EditIngredientDialogComponent } from 'src/app/components/dialogs/edit-ingredient-dialog/edit-ingredient-dialog.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     RecipeDetailsComponent,
     IngredientDetailsComponent,
     AddIngredientDialogComponent,
+    EditIngredientDialogComponent,
+    RegisterDialogComponent,
     StepCardComponent,
     UserCardComponent,
   ],
@@ -55,6 +59,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     RecipeDetailsComponent,
     IngredientDetailsComponent,
     AddIngredientDialogComponent,
+    RegisterDialogComponent,
+    EditIngredientDialogComponent,
     StepCardComponent,
     UserCardComponent,
     CommonModule,

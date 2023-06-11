@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { IngredientRequest, IngredientResponse } from '../models/ingredient.interface';
+import {
+  IngredientRequest,
+  IngredientResponse,
+} from '../models/ingredient.interface';
 import { Page } from '../models/page.interface';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -36,11 +39,27 @@ export class IngredientService {
     );
   }
 
-  public deleteIngredientById(id:string): Observable<any>{
-   return this.http.delete<any>(`${environment.API_URL}/ingredient/${id}`)
+  public deleteIngredientById(id: string): Observable<unknown> {
+    return this.http.delete<unknown>(`${environment.API_URL}/ingredient/${id}`);
   }
 
-  public createIngredient(ingredientRequest: IngredientRequest): Observable<IngredientResponse> {
-    return this.http
-      .post<IngredientResponse>(`${environment.API_URL}/ingredient`, ingredientRequest)
-}}
+  public createIngredient(
+    ingredientRequest: IngredientRequest
+  ): Observable<IngredientResponse> {
+    return this.http.post<IngredientResponse>(
+      `${environment.API_URL}/ingredient`,
+      ingredientRequest
+    );
+  }
+
+  public updateIngredient(
+    ingredientRequest: IngredientRequest,
+    ingredientId: string
+  ): Observable<IngredientResponse> {
+    return this.http.put<IngredientResponse>(
+      `${environment.API_URL}/ingredient/${ingredientId}`,
+      ingredientRequest
+    );
+  }
+
+}

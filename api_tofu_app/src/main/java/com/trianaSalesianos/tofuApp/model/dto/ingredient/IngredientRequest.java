@@ -15,7 +15,6 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Builder
 public class IngredientRequest {
-    @NotEmpty(message = "{ingredientRequest.name.notempty}")
     private String name;
     @Size(max = 254, message = "{ingredientRequest.description.sizemax}")
     private String description;

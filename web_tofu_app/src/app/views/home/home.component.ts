@@ -18,6 +18,12 @@ export class HomeComponent implements OnInit {
   recipeList: RecipeResponse[] = [];
   ingredientList: IngredientResponse[] = [];
 
+  indexRecipe = 0;
+  indexIngredient = 0;
+
+  totalPagesRecipe = 0;
+  totalPagesIngredient = 0;
+
   constructor(
     private userService: UserService,
     private recipeService: RecipeService,
@@ -42,15 +48,40 @@ export class HomeComponent implements OnInit {
         mergeMap((res) => {
           //* SAVE RECIPES AND GET INGREDIENTS
           this.recipeList = res.content;
+          this.totalPagesRecipe = res.totalPages -1;
+
           return this.ingredientService.getIngredientsByAuthor(
             this.currentUser.username
           );
         })
       )
-      .subscribe((res) => (this.ingredientList = res.content));
+      .subscribe((res) => {
+        this.ingredientList = res.content;
+        this.totalPagesIngredient = res.totalPages -1;
+      });
   }
 
-  ingredientClick(){
-    console.log("pito")
+  onScrollRecipes() {
+    if (this.totalPagesRecipe > this.indexRecipe) {
+      this.indexRecipe++
+      this.recipeService.getRecipesByAuthor(
+        this.currentUser.username,
+        this.indexRecipe
+      ).subscribe(res => {
+        this.recipeList.push(...res.content)
+      });
+    }
+  }
+
+  onScrollIngredients() {
+    if (this.totalPagesIngredient > this.indexIngredient) {
+      this.indexIngredient++
+      this.ingredientService.getIngredientsByAuthor(
+        this.currentUser.username,
+        this.indexIngredient
+      ).subscribe(res => {
+        this.ingredientList.push(...res.content)
+      });
+    }
   }
 }

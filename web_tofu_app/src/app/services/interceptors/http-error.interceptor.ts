@@ -23,19 +23,22 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         switch (error.status) {
+          case 0:
+            this.authService.logout();
+            break;
           case 401:
             if (error.error.message == 'Bad credentials') {
               alert('Usuario o contraseña incorrectos');
             }
             break;
-          case 404:
-            this.showAlertError(error);
-            break;
           case 403:
             this.authService.logout();
             break;
-          case 0:
-            this.authService.logout();
+          case 404:
+            this.showAlertError(error);
+            break;
+          case 500:
+            alert('Error del servidor')
             break;
           default:
             this.showAlertError(error);

@@ -12,33 +12,6 @@
     <div class="outlined_box_4px box">
       <router-outlet></router-outlet>
     </div>
-    <!-- TODO Borrar en caso de no uso -->
-    <ng-container *ngIf="">
-      <span class="buttons">
-        <app-custom-button
-          btnStyle="green_active"
-          label="+"
-          [verticalPadding]="20"
-          [fontSize]="50"
-          [isDisabled]="!isIngredientPanel()"
-        />
-        <app-custom-button
-          btnStyle="green_active"
-          label="✏️"
-          [verticalPadding]="20"
-          [fontSize]="40"
-          [isDisabled]="true"
-          />
-        <app-custom-button
-          btnStyle="green_active"
-          label="-"
-          [verticalPadding]="20"
-          [fontSize]="50"
-          [isDisabled]="true"
-
-        />
-      </span>
-    </ng-container>
   </div>
   <router-outlet *ngIf="!isLoggedIn"></router-outlet>
   <app-footer></app-footer>

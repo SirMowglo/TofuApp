@@ -2,10 +2,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
 import {
+  CreateUserRequest,
   JwtResponse,
   JwtUserResponse,
   LoginRequest,
   RefreshTokenRequest,
+  UserResponse,
 } from '../models/user.interface';
 import { environment } from 'src/environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -20,7 +22,12 @@ const httpOptions = {
 })
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
-  
+  private loggedUsername =""
+
+  get authUser(): string{
+    return this.loggedUsername
+  }
+
   constructor(private http: HttpClient, private router: Router) {}
 
   get isLogged(): Observable<boolean> {
@@ -34,6 +41,7 @@ export class AuthService {
         map((res: JwtUserResponse) => {
           this.saveToken(res.token, res.refreshToken);
           this.loggedIn.next(true);
+          this.loggedUsername = res.username
           return res;
         }),
         catchError((error) => {
@@ -84,17 +92,28 @@ export class AuthService {
     localStorage.setItem('refresh_token', refreshToken);
   }
 
-  //TODO Solucionar problemas con el refreshToken/Cors de la api
-  //! No hay solucion (creo), lo damos por muerto
   refreshToken(reft: string): Observable<JwtResponse> {
     const rt: RefreshTokenRequest = {
       refreshToken: reft,
     };
-    console.log("Lmao")
+    console.log('Lmao');
     return this.http.post<JwtResponse>(
       `${environment.API_URL}/refreshtoken`,
       rt,
       httpOptions
+    );
+  }
+
+  registerUser(request: CreateUserRequest): Observable<UserResponse> {
+    return this.http.post<UserResponse>(
+      `${environment.API_URL}/auth/register`,
+      request
+    );
+  }
+  registerAdmin(request: CreateUserRequest): Observable<UserResponse> {
+    return this.http.post<UserResponse>(
+      `${environment.API_URL}/auth/register/admin`,
+      request
     );
   }
 }

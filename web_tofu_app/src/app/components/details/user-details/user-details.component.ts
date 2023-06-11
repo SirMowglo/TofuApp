@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { FileService } from 'src/app/services/file.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-details',
@@ -25,7 +28,12 @@ export class UserDetailsComponent implements OnInit {
 
   avatarData = '';
 
-  constructor(private fileService: FileService) {}
+  constructor(
+    private fileService: FileService,
+    private authService: AuthService,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this._avatar.subscribe((val) => {
@@ -33,11 +41,30 @@ export class UserDetailsComponent implements OnInit {
     });
   }
 
-
   getImage(avatar: string) {
     if (avatar != null) {
-      this.fileService.getData(avatar)
-      .subscribe((res) => (this.avatarData = res));
+      this.fileService
+        .getData(avatar)
+        .subscribe((res) => (this.avatarData = res));
     }
+  }
+
+  deleteSelectedUser() {
+    if (this.authService.authUser == this.username) {
+      this.userService.deleteUserByUsername("me").subscribe(() => {
+        this.authService.logout()
+      });
+    }else{
+      this.userService.deleteUserByUsername(this.username).subscribe(() => {
+        this.reloadCurrentRoute();
+      });
+    }
+  }
+
+  reloadCurrentRoute() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 }

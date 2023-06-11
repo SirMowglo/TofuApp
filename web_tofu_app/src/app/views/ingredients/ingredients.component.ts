@@ -47,14 +47,11 @@ export class IngredientsComponent {
     }
   }
 
-  //TODO Posibilidad de cambiar el ingrediente seleccionado
-
   getSelectedIngredient(ingredient: IngredientResponse) {
     this.selectedIngredient = ingredient;
   }
 
   openDialog(): void {
-    //TODO Crear dialog y tal
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.autoFocus = true;

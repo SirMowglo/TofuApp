@@ -18,14 +18,19 @@ export class RecipesComponent implements OnInit {
   ingredientList: IngredientResponse[] = [];
   recipeDetails = {} as RecipeDetailsResponse;
   indexRecipes = 0;
+  indexIngredient = 0;
 
+  totalPagesRecipes = 0;
+  totalPagesIngredient = 0;
+  
   //TODO Posibilidad de añadir una receta
   //TODO Posibilidad de borrar una receta seleccionada
   //TODO Posibilidad de editar una receta seleccionada
-  //TODO Hacer las listas de recetas con ingredientes infinitas
 
-  constructor(private recipeService: RecipeService,
-    private ingredientService: IngredientService) {}
+  constructor(
+    private recipeService: RecipeService,
+    private ingredientService: IngredientService
+  ) {}
 
   ngOnInit(): void {
     this.getRecipes();
@@ -37,16 +42,40 @@ export class RecipesComponent implements OnInit {
       .subscribe((res) => {
         if (res.totalPages >= this.indexRecipes) {
           this.recipeList = res.content;
+          this.totalPagesRecipes = res.totalPages - 1;
         }
       });
   }
 
+  onScrollRecipe() {
+    if (this.totalPagesRecipes > this.indexRecipes) {
+      this.indexRecipes++;
+      this.recipeService
+        .getRecipesBySearch('', this.indexRecipes)
+        .subscribe((res) => {
+          this.recipeList.push(...res.content);
+        });
+    }
+  }
   getRecipeIngredients(recipe: RecipeResponse) {
     this.ingredientService.getRecipeIngredients(recipe).subscribe((res) => {
-      this.ingredientList = res.content;
+      if (res.totalPages >= this.indexRecipes) {
+        this.ingredientList = res.content;
+        this.totalPagesIngredient = res.totalPages - 1
+      }
     });
   }
 
+  onScrollRecipeIngredient() {
+    if (this.totalPagesIngredient > this.indexIngredient) {
+      this.indexIngredient++;
+      this.ingredientService
+        .getIngredientBySearch('', this.indexIngredient)
+        .subscribe((res) => {
+          this.ingredientList.push(...res.content);
+        });
+    }
+  }
   getRecipeDetails(recipe: RecipeResponse) {
     this.recipeService.getRecipeDetailsById(recipe.id).subscribe((res) => {
       this.recipeDetails = res;

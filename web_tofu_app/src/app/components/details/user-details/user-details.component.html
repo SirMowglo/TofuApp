@@ -1,9 +1,5 @@
 <div class="container">
-  <img
-    class="avatar outlined_box_4px"
-    src="{{avatarData}}"
-    alt=""
-  />
+  <img class="avatar outlined_box_4px" src="{{ avatarData }}" alt="" />
   <div class="fullname">
     <div class="montserrat outlined_text_2px" style="font-size: 30px">
       {{ name }}
@@ -23,4 +19,12 @@
       {{ registerDate }}
     </div>
   </div>
+  <app-custom-button
+    style="margin: 12px"
+    btnStyle="red"
+    label="Delete"
+    [verticalPadding]="4"
+    [fontSize]="20"
+    (OnClick)="deleteSelectedUser()"
+  ></app-custom-button>
 </div>

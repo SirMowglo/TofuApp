@@ -12,7 +12,6 @@ import { AutofocusDirective } from './directives/autofocus.directive';
 import { AuthInterceptor } from './services/interceptors/auth.interceptor';
 import { MaterialModule } from './modules/material.module';
 import { LoadingInterceptor } from './services/interceptors/loading.interceptor';
-
 @NgModule({
   declarations: [AppComponent, AutofocusDirective],
   imports: [
