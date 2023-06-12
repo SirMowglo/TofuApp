@@ -1,21 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
 import {
-  BehaviorSubject,
-  Observable,
-  catchError,
-  map,
-  mergeMap,
-  switchMap,
-  tap,
-  throwError,
-  timer,
-} from 'rxjs';
-import {
+  CreateUserRequest,
   JwtResponse,
   JwtUserResponse,
   LoginRequest,
   RefreshTokenRequest,
+  UserResponse,
 } from '../models/user.interface';
 import { environment } from 'src/environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -30,9 +22,13 @@ const httpOptions = {
 })
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
+  private loggedUsername =""
 
-  constructor(private http: HttpClient, private router: Router) {
+  get authUser(): string{
+    return this.loggedUsername
   }
+
+  constructor(private http: HttpClient, private router: Router) {}
 
   get isLogged(): Observable<boolean> {
     return this.loggedIn.asObservable();
@@ -45,6 +41,7 @@ export class AuthService {
         map((res: JwtUserResponse) => {
           this.saveToken(res.token, res.refreshToken);
           this.loggedIn.next(true);
+          this.loggedUsername = res.username
           return res;
         }),
         catchError((error) => {
@@ -65,39 +62,58 @@ export class AuthService {
   }
   checkToken(): void {
     const userToken = localStorage.getItem('token');
-    const isExpired = helper.isTokenExpired(userToken);
+    const refreshToken = localStorage.getItem('refresh_token');
 
-    isExpired
-      ? this.refreshToken()
-          .pipe(
-            map((res) => {
-              this.saveToken(res.token, res.refreshToken);
-              return res;
-            }),
-            catchError((error) => {
-              return throwError(() => error);
+    const isExpired = helper.isTokenExpired(userToken);
+    if (refreshToken) {
+      isExpired
+        ? this.refreshToken(refreshToken)
+            .pipe(
+              map((res) => {
+                this.saveToken(res.token, res.refreshToken);
+                return res;
+              }),
+              catchError((error) => {
+                return throwError(() => error);
+              })
+            )
+            .subscribe((res) => {
+              if (res) {
+                this.autologin();
+              }
             })
-          )
-          .subscribe((res) => {
-            if (res) {
-              this.autologin()
-            }
-          })
-      : this.autologin();
+        : this.autologin();
+    } else this.logout();
   }
 
   saveToken(token: string, refreshToken: string): void {
+    localStorage.clear();
     localStorage.setItem('token', token);
     localStorage.setItem('refresh_token', refreshToken);
   }
 
-  refreshToken(): Observable<JwtResponse> {
+  refreshToken(reft: string): Observable<JwtResponse> {
     const rt: RefreshTokenRequest = {
-      refreshToken: localStorage.getItem('refresh_token') ?? '',
+      refreshToken: reft,
     };
+    console.log('Lmao');
     return this.http.post<JwtResponse>(
       `${environment.API_URL}/refreshtoken`,
-      rt
+      rt,
+      httpOptions
+    );
+  }
+
+  registerUser(request: CreateUserRequest): Observable<UserResponse> {
+    return this.http.post<UserResponse>(
+      `${environment.API_URL}/auth/register`,
+      request
+    );
+  }
+  registerAdmin(request: CreateUserRequest): Observable<UserResponse> {
+    return this.http.post<UserResponse>(
+      `${environment.API_URL}/auth/register/admin`,
+      request
     );
   }
 }

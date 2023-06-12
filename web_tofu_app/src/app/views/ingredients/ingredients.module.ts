@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { IngredientsRoutingModule } from './ingredients-routing.module';
 import { IngredientsComponent } from './ingredients.component';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 
 
 @NgModule({
@@ -10,8 +10,8 @@ import { IngredientsComponent } from './ingredients.component';
     IngredientsComponent
   ],
   imports: [
-    CommonModule,
-    IngredientsRoutingModule
+    IngredientsRoutingModule,
+    SharedModule,
   ]
 })
 export class IngredientsModule { }

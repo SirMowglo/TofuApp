@@ -10,7 +10,13 @@
               style="font-size: 18px; margin-bottom: 8px"
               >Recipes</span
             >
-            <div class="recipes">
+            <div class="recipes"
+            infinite-scroll
+            [infiniteScrollDistance]="2"
+            [infiniteScrollThrottle]="200"
+            (scrolled)="onScrollRecipes()"
+            [scrollWindow]="false"
+            >
               <span *ngFor="let recipe of recipeList">
                 <app-recipe-card 
                 [recipe]="recipe"
@@ -24,11 +30,16 @@
               style="font-size: 18px; margin-bottom: 8px"
               >Ingredients</span
             >
-            <div class="ingredients">
+            <div class="ingredients"
+            infinite-scroll
+            [infiniteScrollDistance]="2"
+            [infiniteScrollThrottle]="200"
+            (scrolled)="onScrollIngredients()"
+            [scrollWindow]="false"
+            >
               <span *ngFor="let ingredient of ingredientList">
                 <app-ingredient-card 
                 [ingredient]="ingredient"
-                (OnClick)="ingredientClick"
                 />
               </span>
             </div>

@@ -46,6 +46,7 @@ public class UserService {
                 .fullname(createUserRequest.getFullname())
                 .email(createUserRequest.getEmail())
                 .roles(roles)
+                .description("New User")
                 .build();
 
         return userRepository.save(user);

@@ -1,0 +1,13 @@
+<div class="container"
+(click)="emitEvent()" >
+    <div class="avatar outlined_box_4px"
+    [ngStyle]="{ backgroundImage: 'url(' + userAvatarData + ')' }"
+>
+        <div class="fullname outlined_text_2px_no_shadow open-sans" >
+            {{user.fullname}}
+        </div>
+        <div class="username open-sans">
+            @{{user.username}}
+        </div>
+    </div>
+</div>

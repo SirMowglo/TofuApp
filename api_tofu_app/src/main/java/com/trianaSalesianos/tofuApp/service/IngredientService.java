@@ -27,6 +27,8 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+import static com.trianaSalesianos.tofuApp.model.UserRole.ADMIN;
+
 @Service
 @RequiredArgsConstructor
 public class IngredientService {
@@ -90,7 +92,7 @@ public class IngredientService {
     public void delete(UUID id, User user) {
         Ingredient ing = findById(id);
 
-        if (!ing.getAuthor().getId().equals(user.getId()))
+        if (!ing.getAuthor().getId().equals(user.getId()) && !user.getRoles().contains(ADMIN))
             throw new IngredientAuthorNotValidException();
 
         ingredientRepository.delete(ing);

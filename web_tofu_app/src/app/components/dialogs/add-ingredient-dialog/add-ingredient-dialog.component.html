@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="inner_container outlined_box_0px">
+    <h1 class="title montserrat outlined_text_2px">Add Ingredient</h1>
+    <form [formGroup]="formGroup" class="form">
+      <app-custom-input
+        label="Ingredient name"
+        [control]="formGroup.controls.name"
+      />
+      <app-custom-input 
+      label="Description" 
+      [control]="formGroup.controls.description"
+      />
+    </form>
+    <app-custom-button
+      label="Accept"
+      btnStyle="green"
+      [isDisabled]="formGroup.untouched || formGroup.invalid"
+      (OnClick)="createIngredient()"
+    />
+  </div>
+</div>

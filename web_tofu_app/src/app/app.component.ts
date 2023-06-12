@@ -7,6 +7,7 @@ import {
 import { AuthService } from './services/auth.service';
 import { LoadingService } from './services/loading.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,8 @@ export class AppComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private loadingService: LoadingService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private router : Router,
   ) {
     this.authService.checkToken()
   }
@@ -37,5 +39,22 @@ export class AppComponent implements OnInit {
   ngAfterContentChecked(): void {
     this.changeDetector.detectChanges();
   }
+
+  isHomePanel(): boolean{
+    return this.router.url === '/home'
+  }
+  isUsersPanel(): boolean{
+    return this.router.url === '/users'
+  }
+  isRecipePanel(): boolean{
+    return this.router.url === '/recipes'
+  }
+  isIngredientPanel(): boolean{
+    return this.router.url === '/ingredients'
+  }
+
+  
+
+
   title = 'web_tofu_app';
 }

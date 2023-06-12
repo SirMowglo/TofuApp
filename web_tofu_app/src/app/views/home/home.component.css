@@ -28,7 +28,7 @@
 .main_content {
   margin: 20px;
   height: 97%;
-  flex-basis: 75%;
+  flex-basis: 66%;
 }
 .selected_panel {
   flex-basis: 33%;

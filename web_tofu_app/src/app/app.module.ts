@@ -9,11 +9,9 @@ import { LoginModule } from './views/auth/login/login.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { HttpErrorInterceptor } from './services/interceptors/http-error.interceptor';
 import { AutofocusDirective } from './directives/autofocus.directive';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AuthInterceptor } from './services/interceptors/auth.interceptor';
 import { MaterialModule } from './modules/material.module';
 import { LoadingInterceptor } from './services/interceptors/loading.interceptor';
-
 @NgModule({
   declarations: [AppComponent, AutofocusDirective],
   imports: [
@@ -22,8 +20,8 @@ import { LoadingInterceptor } from './services/interceptors/loading.interceptor'
     LoginModule,
     SharedModule,
     HttpClientModule,
-    InfiniteScrollModule,
     MaterialModule,
+    
   ],
   providers: [
     {
@@ -33,13 +31,13 @@ import { LoadingInterceptor } from './services/interceptors/loading.interceptor'
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: HttpErrorInterceptor,
+      useClass: AuthInterceptor,
       multi: true,
     },
-
+    
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
+      useClass: HttpErrorInterceptor,
       multi: true,
     },
   ],

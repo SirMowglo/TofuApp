@@ -36,8 +36,8 @@ public class TokenControllerAdvice  {
 
     @ExceptionHandler({JwtTokenException.class})
     public ResponseEntity<?> handleTokenException(JwtTokenException ex, HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .body(ErrorMessage.of(HttpStatus.FORBIDDEN, ex.getMessage(), request.getRequestURI()));
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ErrorMessage.of(HttpStatus.UNAUTHORIZED, ex.getMessage(), request.getRequestURI()));
     }
 
     @Getter

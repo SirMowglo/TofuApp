@@ -18,6 +18,8 @@ export class LoadingInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+
+    
     this.loadingService.show();
     this.totalRequests++;
     return next.handle(request).pipe(
