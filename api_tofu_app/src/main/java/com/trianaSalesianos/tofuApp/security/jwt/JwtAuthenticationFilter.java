@@ -65,7 +65,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         } catch (JwtTokenException ex) {
             log.info("Authentication error using token JWT: " + ex.getMessage());
-            throw ex;
+            resolver.resolveException(request, response, null, ex);
+
         }
 
     }

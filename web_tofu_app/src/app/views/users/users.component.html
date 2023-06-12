@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="container_home">
+    <div class="main_panel outlined_box_0px">
+      <div class="main_content">
+        <span class="home montserrat outlined_text_2px">Users</span>
+        <div 
+        class="user_list"
+        infinite-scroll
+            [infiniteScrollDistance]="2"
+            [infiniteScrollThrottle]="200"
+            (scrolled)="onScroll()"
+            [scrollWindow]="false"
+        >
+        <div class="container_add">
+          <div class="add_button outlined_box_4px" (click)="openDialog()">
+            <span class="add outlined_text_2px_no_shadow">+</span>
+          </div>
+        </div>
+          <ng-container *ngFor="let user of userList">
+            <app-user-card
+            [user]="user"
+            (OnClick)="getUserDetails(user)"
+            />
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="selected_panel outlined_box_0px" *ngIf="selectedUser.username != null">
+      <app-user-details
+        [name]="selectedUser.fullname"
+        [username]="selectedUser.username"
+        [description]="selectedUser.description"
+        [birthday]="selectedUser.birthday"
+        [registerDate]="selectedUser.createdAt"
+        [avatar]="selectedUser.avatar"
+        style="width: 100%"
+      ></app-user-details>
+    </div>
+  </div>
+</div>

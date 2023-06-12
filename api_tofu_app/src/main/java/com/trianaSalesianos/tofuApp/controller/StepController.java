@@ -6,6 +6,7 @@ import com.trianaSalesianos.tofuApp.model.Step;
 import com.trianaSalesianos.tofuApp.model.User;
 import com.trianaSalesianos.tofuApp.model.dto.category.CategoryRequest;
 import com.trianaSalesianos.tofuApp.model.dto.category.CategoryResponse;
+import com.trianaSalesianos.tofuApp.model.dto.ingredient.IngredientResponse;
 import com.trianaSalesianos.tofuApp.model.dto.page.PageDto;
 import com.trianaSalesianos.tofuApp.model.dto.step.StepRequest;
 import com.trianaSalesianos.tofuApp.model.dto.step.StepResponse;
@@ -24,12 +25,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @Tag(name= "Step", description = "Steps controllers")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/step")
+//@CrossOrigin(origins = "http://localhost:4200")
+
 public class StepController {
     private final StepService stepService;
 
@@ -40,6 +44,13 @@ public class StepController {
     ){
         return stepService.getAllBySearch(search, pageable);
     }
+    @GetMapping("/recipe/{idRecipe}")
+    public List<StepResponse> getStepsFromRecipe(
+            @PathVariable UUID idRecipe
+    ){
+        return stepService.getStepsByRecipe(idRecipe);
+    }
+
     @GetMapping("/{id}")
     public StepResponse getById(
             @Parameter(description = "Id of the step to get")

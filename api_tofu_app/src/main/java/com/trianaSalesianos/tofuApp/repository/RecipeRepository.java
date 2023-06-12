@@ -1,9 +1,8 @@
 package com.trianaSalesianos.tofuApp.repository;
 
-import com.trianaSalesianos.tofuApp.model.Ingredient;
-import com.trianaSalesianos.tofuApp.model.Recipe;
-import com.trianaSalesianos.tofuApp.model.RecipeIngredient;
-import com.trianaSalesianos.tofuApp.model.User;
+import com.trianaSalesianos.tofuApp.model.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -26,4 +25,11 @@ public interface RecipeRepository extends JpaRepository<Recipe, UUID>, JpaSpecif
     void updateAmount(@Param("unit") String unit, @Param("amount") double amount, @Param("ingredient") Ingredient ingredient, @Param("recipe") Recipe recipe);
 
 
+    Page<Recipe> findByAuthor(User author, Pageable pageable);
+
+    @Query("SELECT ri.ingredient FROM RecipeIngredient ri WHERE ri.recipe.id = :recipeId")
+    Page<Ingredient> findIngredientsOfRecipe(@Param("recipeId") UUID recipeId, Pageable pageable);
+
+    @Query("SELECT r.steps FROM Recipe r Where r.id =:idRecipe")
+    List<Step> findFavoritesByUser(@Param("idRecipe") UUID idRecipe);
 }

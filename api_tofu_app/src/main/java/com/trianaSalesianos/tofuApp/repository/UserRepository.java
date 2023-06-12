@@ -26,4 +26,7 @@ public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificat
     @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM User u JOIN u.followers r WHERE u.id = :followId AND r.id = :userId")
     public boolean isFollowingUser(@Param("followId") UUID followId, @Param("userId") UUID userId);
 
+    @Query("SELECT u.favorites FROM User u Where u.username =:username")
+    Page<Recipe> findFavoritesByUser(@Param("username") String username, Pageable pageable);
+
 }

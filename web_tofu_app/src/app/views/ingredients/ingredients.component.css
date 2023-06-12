@@ -1,0 +1,90 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+  .container_home {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 12px;
+    height: 100%;
+    width: auto;
+    flex: 1;
+  }
+  .main_panel {
+    margin-left: 12px;
+    flex: 4;
+    flex-basis: 75%;
+    height: 96%;
+    width: auto;
+    min-width: 800px;
+    max-width: 1000px;
+    background-color: #e8dcbf;
+  }
+  .main_content {
+    margin: 20px;
+    height: 97%;
+    flex-basis: 75%;
+  }
+  .selected_panel {
+    flex-basis: 33%;
+  
+    margin-right: 12px;
+    display: flex;
+    flex-grow: 1;
+    height: 96%;
+    background-color: #e8dcbf;
+    width: 100%;
+    min-width: 200px;
+    max-width: 600px;
+  }
+  
+  .home {
+    font-size: 48px;
+  }
+  
+  .ingredient_list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    max-height: 660px;
+    height: 100%;
+    justify-content: space-around;
+    flex-basis: 100%;
+    flex: 21;
+    overflow: hidden;
+    overflow-y: scroll;
+    margin-top: 16px;
+    margin-bottom: 10px;
+    gap: 10px;
+  }
+  .add_button{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 180px;
+      width: 340px;
+      min-width: 310px;
+      max-width: 500px;
+      background-color: #91dd54;
+      margin-bottom: 24px;
+  }
+  .add_button:hover{
+    background-color: #639a37;
+  }
+  .add_button:active {
+    background-color: #639a37;
+    box-shadow: 0px 0px 0px 0px black;
+  
+    transform: translateY(4px);
+  }
+  .add{
+    font-size: 128px;
+    align-self: center;
+  }

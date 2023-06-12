@@ -55,8 +55,7 @@ public class User implements UserDetails {
     @Builder.Default
     private String description = "";
 
-    //TODO Gestion de fetch type lazy con subgraphos y seteo por defecto de las listas en vacia
-    //TODO Gestion del borrado de recetas
+
     @ToString.Exclude
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default

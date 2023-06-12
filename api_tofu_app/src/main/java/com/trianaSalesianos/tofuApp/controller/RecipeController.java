@@ -40,6 +40,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/recipe")
 @RequiredArgsConstructor
+//@CrossOrigin(origins = "http://localhost:4200")
+
 public class RecipeController {
     final private RecipeService recipeService;
 
@@ -94,6 +96,21 @@ public class RecipeController {
         return recipeService.getAllBySearch(search, pageable);
     }
 
+    @GetMapping("/author/{username}")
+    public PageDto<RecipeResponse>getByUsername(
+            @PathVariable String username,
+            @PageableDefault(size = 10, page = 0) Pageable pageable
+    ){
+        return recipeService.getRecipesByUsername(username, pageable);
+    }
+
+    @GetMapping("/likes/{username}")
+    public PageDto<RecipeResponse>getLikesByUsername(
+            @PathVariable String username,
+            @PageableDefault(size = 10, page = 0) Pageable pageable
+    ){
+        return recipeService.getLikesByUsername(username, pageable);
+    }
     @Operation(summary = "Get an recipe by its ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
