@@ -22,7 +22,7 @@ class RecipeCard extends StatelessWidget {
               image: DecorationImage(
                   fit: BoxFit.cover,
                   image: NetworkImage(
-                      'https://raw.githubusercontent.com/SirMowglo/TofuApp/main/spring_tofu_app/uploads/${recipe.img}'))),
+                      'https://raw.githubusercontent.com/SirMowglo/TofuApp/develop_web/api_tofu_app/uploads/${recipe.img}'))),
           child: Container(
             decoration: BoxDecoration(
               gradient: RadialGradient(
@@ -58,7 +58,7 @@ class RecipeCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
-                    recipe.category!,
+                    recipe.categories.first.name,
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.white,
@@ -78,7 +78,7 @@ class RecipeCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
-                    'Author: ${recipe.author!}',
+                    'Author: ${recipe.author.fullname}',
                     style: TextStyle(
                       fontSize: 15,
                       color: Color.fromARGB(200, 255, 255, 255),

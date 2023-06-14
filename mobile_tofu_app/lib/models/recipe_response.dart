@@ -1,99 +1,163 @@
-class RecipeResponse {
-  final String? id;
-  final String? name;
-  final String? description;
-  final String? category;
-  final String? img;
-  final String? author;
-  final int? prepTime;
-  final String? createdAt;
-  const RecipeResponse(
-      {this.id,
-      this.name,
-      this.description,
-      this.category,
-      this.img,
-      this.author,
-      this.prepTime,
-      this.createdAt});
-  RecipeResponse copyWith(
-      {String? id,
-      String? name,
-      String? description,
-      String? category,
-      String? img,
-      String? author,
-      int? prepTime,
-      String? createdAt}) {
-    return RecipeResponse(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        description: description ?? this.description,
-        category: category ?? this.category,
-        img: img ?? this.img,
-        author: author ?? this.author,
-        prepTime: prepTime ?? this.prepTime,
-        createdAt: createdAt ?? this.createdAt);
-  }
+// To parse this JSON data, do
+//
+//     final page = pageFromJson(jsonString);
 
-  Map<String, Object?> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'description': description,
-      'category': category,
-      'img': img,
-      'author': author,
-      'prepTime': prepTime,
-      'createdAt': createdAt
+import 'dart:convert';
+
+import 'package:flutter_tofu_app/models/user.dart';
+
+RecipePage pageFromJson(String str) => RecipePage.fromJson(json.decode(str));
+
+String pageToJson(RecipePage data) => json.encode(data.toJson());
+
+class RecipePage {
+    List<RecipeResponse> content;
+    bool last;
+    bool first;
+    int totalPages;
+    int totalElements;
+
+    RecipePage({
+        required this.content,
+        required this.last,
+        required this.first,
+        required this.totalPages,
+        required this.totalElements,
+    });
+
+    RecipePage copyWith({
+        List<RecipeResponse>? content,
+        bool? last,
+        bool? first,
+        int? totalPages,
+        int? totalElements,
+    }) => 
+        RecipePage(
+            content: content ?? this.content,
+            last: last ?? this.last,
+            first: first ?? this.first,
+            totalPages: totalPages ?? this.totalPages,
+            totalElements: totalElements ?? this.totalElements,
+        );
+
+    factory RecipePage.fromJson(Map<String, dynamic> json) => RecipePage(
+        content: List<RecipeResponse>.from(json["content"].map((x) => RecipeResponse.fromJson(x))),
+        last: json["last"],
+        first: json["first"],
+        totalPages: json["totalPages"],
+        totalElements: json["totalElements"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "content": List<dynamic>.from(content.map((x) => x.toJson())),
+        "last": last,
+        "first": first,
+        "totalPages": totalPages,
+        "totalElements": totalElements,
     };
-  }
+}
 
-  static RecipeResponse fromJson(Map<String, Object?> json) {
-    return RecipeResponse(
-        id: json['id'] == null ? null : json['id'] as String,
-        name: json['name'] == null ? null : json['name'] as String,
-        description:
-            json['description'] == null ? null : json['description'] as String,
-        category: json['category'] == null ? null : json['category'] as String,
-        img: json['img'] == null ? null : json['img'] as String,
-        author: json['author'] == null ? null : json['author'] as String,
-        prepTime: json['prepTime'] == null ? null : json['prepTime'] as int,
-        createdAt:
-            json['createdAt'] == null ? null : json['createdAt'] as String);
-  }
+class RecipeResponse {
+    String id;
+    String name;
+    String img;
+    String type;
+    int prepTime;
+    UserResponse author;
+    List<Category> categories;
+    String createdAt;
+    int nlikes;
 
-  @override
-  String toString() {
-    return '''RecipeResponse(
-                id:$id,
-                name:$name,
-                description:$description,
-                category:$category,
-                img:$img,
-                author:$author,
-                prepTime:$prepTime,
-                createdAt:$createdAt
-    ) ''';
-  }
+    RecipeResponse({
+        required this.id,
+        required this.name,
+        required this.img,
+        required this.type,
+        required this.prepTime,
+        required this.author,
+        required this.categories,
+        required this.createdAt,
+        required this.nlikes,
+    });
 
-  @override
-  bool operator ==(Object other) {
-    return other is RecipeResponse &&
-        other.runtimeType == runtimeType &&
-        other.id == id &&
-        other.name == name &&
-        other.description == description &&
-        other.category == category &&
-        other.img == img &&
-        other.author == author &&
-        other.prepTime == prepTime &&
-        other.createdAt == createdAt;
-  }
+    RecipeResponse copyWith({
+        String? id,
+        String? name,
+        String? img,
+        String? type,
+        int? prepTime,
+        UserResponse? author,
+        List<Category>? categories,
+        String? createdAt,
+        int? nlikes,
+    }) => 
+        RecipeResponse(
+            id: id ?? this.id,
+            name: name ?? this.name,
+            img: img ?? this.img,
+            type: type ?? this.type,
+            prepTime: prepTime ?? this.prepTime,
+            author: author ?? this.author,
+            categories: categories ?? this.categories,
+            createdAt: createdAt ?? this.createdAt,
+            nlikes: nlikes ?? this.nlikes,
+        );
 
-  @override
-  int get hashCode {
-    return Object.hash(runtimeType, id, name, description, category, img,
-        author, prepTime, createdAt);
-  }
+    factory RecipeResponse.fromJson(Map<String, dynamic> json) => RecipeResponse(
+        id: json["id"],
+        name: json["name"],
+        img: json["img"],
+        type: json["type"],
+        prepTime: json["prepTime"],
+        author: UserResponse.fromJson(json["author"]),
+        categories: List<Category>.from(json["categories"].map((x) => Category.fromJson(x))),
+        createdAt: json["createdAt"],
+        nlikes: json["nlikes"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "img": img,
+        "type": type,
+        "prepTime": prepTime,
+        "author": author.toJson(),
+        "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
+        "createdAt": createdAt,
+        "nlikes": nlikes,
+    };
+}
+class Category {
+    String id;
+    String name;
+    String color;
+
+    Category({
+        required this.id,
+        required this.name,
+        required this.color,
+    });
+
+    Category copyWith({
+        String? id,
+        String? name,
+        String? color,
+    }) => 
+        Category(
+            id: id ?? this.id,
+            name: name ?? this.name,
+            color: color ?? this.color,
+        );
+
+    factory Category.fromJson(Map<String, dynamic> json) => Category(
+        id: json["id"],
+        name: json["name"],
+        color: json["color"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "color": color,
+    };
 }

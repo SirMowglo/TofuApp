@@ -189,7 +189,7 @@ class _ProfilePage extends StatelessWidget {
                     color: Colors.red,
                     image: DecorationImage(
                         image: NetworkImage(
-                            'https://raw.githubusercontent.com/SirMowglo/TofuApp/main/spring_tofu_app/uploads/${user.avatar}')),
+                            'https://raw.githubusercontent.com/SirMowglo/TofuApp/develop_web/api_tofu_app/uploads/${user.avatar}')),
                     borderRadius: BorderRadius.all(Radius.circular(50)),
                     border: Border.all(
                         style: BorderStyle.solid,
