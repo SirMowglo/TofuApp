@@ -86,6 +86,10 @@ En la opcion de Ayuda, se encontrara una descripcion de la empresa, e informacio
 
 Por ultimo, en la opcion de logout, o de cerrado de sesion, al pulsarlo se preguntara si estas seguro de que quieres cerrar la sesion, y al aceptar se cerrara, devolviendote al Login de la aplicacion.
 
+### Historias de usuario
+
+![](images/2023-06-15-16-56-26-image.png)
+
 # 4. Modelo y diseño
 
 ### 4.1.1 Prototipado figma Movil
@@ -114,6 +118,6 @@ Por ultimo, en la opcion de logout, o de cerrado de sesion, al pulsarlo se pregu
 
 ![](images/2023-03-30-22-07-07-image.png)
 
-# 5. Diseño
+# 
 
 
