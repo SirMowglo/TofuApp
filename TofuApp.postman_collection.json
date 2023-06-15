@@ -26,7 +26,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"{{$randomUserName}}\",\r\n    \"password\": \"{{randPW}}\",\r\n    \"verifyPassword\":\"{{randPW}}\",\r\n    \"email\": \"{{randEmail}}\",\r\n    \"verifyEmail\": \"{{randEmail}}\",\r\n    \"avatar\": \"{{$randomImageUrl}}\",\r\n    \"fullname\": \"{{$randomFullName}}\"\r\n}",
+							"raw": "{\r\n    \"username\": \"ADamas\",\r\n    \"password\": \"1234Asdf\",\r\n    \"verifyPassword\":\"1234Asdf\",\r\n    \"email\": \"ale@gmail.com\",\r\n    \"verifyEmail\": \"ale@gmail.com\",\r\n    \"fullname\": \"Alejandro Damas Villatoro\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -49,6 +49,18 @@
 				},
 				{
 					"name": "registerUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();\r",
+									"pm.collectionVariables.set(\"username\", json.username);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -57,7 +69,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"{{$randomUserName}}\",\r\n    \"password\": \"{{randPW}}\",\r\n    \"verifyPassword\":\"{{randPW}}\",\r\n    \"email\": \"{{randEmail}}\",\r\n    \"verifyEmail\": \"{{randEmail}}\",\r\n    \"fullname\": \"{{$randomFullName}}\"\r\n}",
+							"raw": "{\r\n    \"username\": \"Alejandro\",\r\n    \"password\": \"1234Asdf\",\r\n    \"verifyPassword\":\"1234Asdf\",\r\n    \"email\": \"ale@gmail.com\",\r\n    \"verifyEmail\": \"ale@gmail.com\",\r\n    \"fullname\": \"Alejandro Damas Villatoro\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -187,7 +199,7 @@
 								}
 							]
 						},
-						"method": "PUT",
+						"method": "POST",
 						"header": [],
 						"url": {
 							"raw": "{{BASE_URL}}/auth/logout",
@@ -246,6 +258,9 @@
 				},
 				{
 					"name": "getAllBySearch",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -259,6 +274,10 @@
 						},
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{BASE_URL}}/user",
 							"host": [
@@ -299,13 +318,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/user/ADamas",
+							"raw": "{{BASE_URL}}/user/{{username}}",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"user",
-								"ADamas"
+								"{{username}}"
 							]
 						}
 					},
@@ -373,14 +392,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/user/edit/AleUser",
+							"raw": "{{BASE_URL}}/user/edit/{{username}}",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"user",
 								"edit",
-								"AleUser"
+								"{{username}}"
 							]
 						}
 					},
@@ -451,6 +470,91 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "removeUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/user/{{username}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"{{username}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeAuthenticatedUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/user/me",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "followUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/user/follow/{{username}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"follow",
+								"{{username}}"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"auth": {
@@ -516,6 +620,83 @@
 									"key": "page",
 									"value": "6",
 									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "author:ADamas",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getRecipesByAuthor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/recipe/author/ADamas",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"recipe",
+								"author",
+								"ADamas"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getLikesOfUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/recipe/likes/ADamas",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"recipe",
+								"likes",
+								"ADamas"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "6",
+									"disabled": true
 								}
 							]
 						}
@@ -539,7 +720,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"{{$randomProductName}}\",\r\n    \"description\":\"{{$randomWords}}\",\r\n    \"category\":\"Vegetariano\",\r\n    \"steps\":\"{{$randomCatchPhrase}}\",\r\n    \"prepTime\":50\r\n}",
+							"raw": "{\r\n    \"name\":\"{{$randomProductName}}\",\r\n    \"description\":\"{{$randomWords}}\",\r\n    \"prepTime\":50,\r\n    \"type\":\"comida\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -547,13 +728,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/recipe/ac132001-865c-1a80-8186-5c9afcbe0000",
+							"raw": "{{BASE_URL}}/recipe/{{idRecipe}}",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"recipe",
-								"ac132001-865c-1a80-8186-5c9afcbe0000"
+								"{{idRecipe}}"
 							]
 						}
 					},
@@ -575,13 +756,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/recipe/ac132001-865c-1a80-8186-5c9b088d0001",
+							"raw": "{{BASE_URL}}/recipe/{{idRecipe}}",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"recipe",
-								"ac132001-865c-1a80-8186-5c9b088d0001"
+								"{{idRecipe}}"
 							]
 						}
 					},
@@ -589,6 +770,18 @@
 				},
 				{
 					"name": "createRecipe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();\r",
+									"pm.collectionVariables.set(\"idRecipe\", json.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -604,7 +797,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"{{$randomProductName}}\",\r\n    \"description\":\"{{$randomWords}}\",\r\n    \"category\":\"Vegan\",\r\n    \"steps\":\"{{$randomPhrase}}\",\r\n    \"img\":\"\",\r\n    \"prepTime\":30\r\n}",
+							"raw": "{\r\n    \"name\":\"Tortilla francesa\",\r\n    \"description\":\"Al igual que la tortilla de patatas, esta es una de las recetas que más se cocinan en las casas de nuestro país. Una receta muy sencilla, perfecta para una cena rápida cuando nos falta tiempo o ideas para algo más elaborado.\",\r\n    \"prepTime\":15,\r\n    \"type\": \"dinner\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -650,14 +843,14 @@
 							]
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/recipe/img/ac132001-865c-1a80-8186-5c9afcbe0000",
+							"raw": "{{BASE_URL}}/recipe/img/{{idRecipe}}",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"recipe",
 								"img",
-								"ac132001-865c-1a80-8186-5c9afcbe0000"
+								"{{idRecipe}}"
 							]
 						}
 					},
@@ -680,7 +873,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"amount\":250.0,\r\n    \"unit\": \"grams\"\r\n}",
+							"raw": "{\r\n    \"amount\":1.0,\r\n    \"unit\": \"pinch\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -688,15 +881,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/recipe/ac132001-865c-1a80-8186-5c9b088d0001/ingredient/ac132001-865c-10ce-8186-5c519de80004",
+							"raw": "{{BASE_URL}}/recipe/{{idRecipe}}/ingredient/{{idIngredient}}",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"recipe",
-								"ac132001-865c-1a80-8186-5c9b088d0001",
+								"{{idRecipe}}",
 								"ingredient",
-								"ac132001-865c-10ce-8186-5c519de80004"
+								"{{idIngredient}}"
 							]
 						}
 					},
@@ -718,54 +911,14 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/recipe/ac132001-865c-1a80-8186-5c9b088d0001/like",
+							"raw": "{{BASE_URL}}/recipe/{{idRecipe}}/like",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"recipe",
-								"ac132001-865c-1a80-8186-5c9b088d0001",
+								"{{idRecipe}}",
 								"like"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "updateAmount",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"amount\":2.0,\r\n    \"unit\": \"pieces\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/recipe/ac132001-865c-1a80-8186-5c9b088d0001/ingredient/ac132001-865c-10ce-8186-5c519de80004/changeamount",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"recipe",
-								"ac132001-865c-1a80-8186-5c9b088d0001",
-								"ingredient",
-								"ac132001-865c-10ce-8186-5c519de80004",
-								"changeamount"
 							]
 						}
 					},
@@ -788,7 +941,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"sausage\",\r\n    \"img\":\"oreo2.jpg\",\r\n    \"amount\":2.0,\r\n    \"unit\":\"pieces\"\r\n}",
+							"raw": "{\r\n    \"name\":\"{{$randomProduct}}\",\r\n    \"description\":\"oreo2.jpg\",\r\n    \"amount\":2.0,\r\n    \"unit\":\"pieces\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -796,15 +949,233 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/recipe/ac132001-865c-1a80-8186-5c9b088d0001/ingredient/",
+							"raw": "{{BASE_URL}}/recipe/{{idRecipe}}/ingredient/",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"recipe",
-								"ac132001-865c-1a80-8186-5c9b088d0001",
+								"{{idRecipe}}",
 								"ingredient",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/recipe/{{idRecipe}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"recipe",
+								"{{idRecipe}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changeAmount",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\":1.0,\r\n    \"unit\":\"Cucharas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/recipe/{{idRecipe}}}/ingredient/{{idIngredient}}}/changeamount",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"recipe",
+								"{{idRecipe}}}",
+								"ingredient",
+								"{{idIngredient}}}",
+								"changeamount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addCategoryToRecipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/recipe/{{idRecipe}}/category/{{idCategory}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"recipe",
+								"{{idRecipe}}",
+								"category",
+								"{{idCategory}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changeRecipeType",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/recipe/{{idRecipe}}/type/{{idType}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"recipe",
+								"{{idRecipe}}",
+								"type",
+								"{{idType}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeCategoryFromRecipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/recipe/{{idRecipe}}/category/{{idCategory}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"recipe",
+								"{{idRecipe}}",
+								"category",
+								"{{idCategory}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeIngredientFromRecipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/recipe/{{idRecipe}}/ingredient/{{idIngredient}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"recipe",
+								"{{idRecipe}}",
+								"ingredient",
+								"{{idIngredient}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeStepFromRecipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/recipe/{{idRecipe}}/step/{{idStep}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"recipe",
+								"{{idRecipe}}",
+								"step",
+								"{{idStep}}"
 							]
 						}
 					},
@@ -838,6 +1209,71 @@
 							"path": [
 								"ingredient",
 								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getIngredientsOfRecipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/ingredient/recipe/{{idRecipe}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"ingredient",
+								"recipe",
+								"{{idRecipe}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getIngredientsByAuthor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/ingredient/author/ADamas",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"ingredient",
+								"author",
+								"ADamas"
 							]
 						}
 					},
@@ -859,13 +1295,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/ingredient/ac132001-865c-10ce-8186-5c5182e50001",
+							"raw": "{{BASE_URL}}/ingredient/{{idIngredient}}",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"ingredient",
-								"ac132001-865c-10ce-8186-5c5182e50001"
+								"{{idIngredient}}"
 							]
 						}
 					},
@@ -873,6 +1309,18 @@
 				},
 				{
 					"name": "createIngredient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();\r",
+									"pm.collectionVariables.set(\"idIngredient\", json.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -888,7 +1336,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"{{$randomProduct}}\",\r\n    \"img\":\"{{$randomFoodImage}}\"\r\n}",
+							"raw": "{\r\n    \"name\":\"Mermelada de fresa\",\r\n    \"description\":\"Producto preparado por cocción de fresas, troceadas, trituradas, tamizadas o no, a las que se han incorporado azúcares hasta conseguir un producto semilíquido o espeso.\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -896,13 +1344,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/ingredient/",
+							"raw": "{{BASE_URL}}/ingredient",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"ingredient",
-								""
+								"ingredient"
 							]
 						}
 					},
@@ -937,14 +1384,14 @@
 							]
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/ingredient/img/ac132001-865c-10ce-8186-5c5182e50001",
+							"raw": "{{BASE_URL}}/ingredient/img/{{idIngredient}}",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"ingredient",
 								"img",
-								"ac132001-865c-10ce-8186-5c5182e50001"
+								"{{idIngredient}}"
 							]
 						}
 					},
@@ -967,7 +1414,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"{{$randomProduct}}\"\r\n}",
+							"raw": "{\r\n    \"name\":\"{{$randomProduct}}\",\r\n    \"description\": \"Descripcion nueva del ingrediente\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -975,13 +1422,825 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/ingredient/ac132001-865c-10ce-8186-5c5182e50001",
+							"raw": "{{BASE_URL}}/ingredient/{{idIngredient}}",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"ingredient",
-								"ac132001-865c-10ce-8186-5c5182e50001"
+								"{{idIngredient}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeIngredient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/ingredient/{{idIngredient}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"ingredient",
+								"{{idIngredient}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "getAllBySearch",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/category",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createCategory",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();\r",
+									"pm.collectionVariables.set(\"idCategory\", json.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"no lactose\",\r\n    \"color\": \"#FFFFFF\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/category/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"category",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCategory",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/category/{{idCategory}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"category",
+								"{{idCategory}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editCategory",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"vegan\",\r\n    \"color\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/category/{{idCategory}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"category",
+								"{{idCategory}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeCategory",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/category/{{idCategory}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"category",
+								"{{idCategory}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Type",
+			"item": [
+				{
+					"name": "getAllBySearch",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/type",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createType",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();\r",
+									"pm.collectionVariables.set(\"idType\", json.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"snacks\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/type",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getType",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/type/{{idType}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"type",
+								"{{idType}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editType",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"lunch\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/type/{{idType}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"type",
+								"{{idType}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeType",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/type/{{idType}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"type",
+								"{{idType}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Steps",
+			"item": [
+				{
+					"name": "getAllBySearch",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/step",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"step"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createStep",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();\r",
+									"pm.collectionVariables.set(\"idStep\", json.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Damos vuelta para que selle brevemente y servimos\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/step/recipe/{{idRecipe}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"step",
+								"recipe",
+								"{{idRecipe}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStep",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/step/{{idStep}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"step",
+								"{{idStep}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editStep",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"stepNumber\": 2,\r\n    \"description\": \"Descripcion cambiada\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/step/{{idStep}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"step",
+								"{{idStep}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeStep",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/step/{{idStep}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"step",
+								"{{idStep}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStepsOfRecipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/step/recipe/{{idRecipe}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"step",
+								"recipe",
+								"{{idRecipe}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Diet Day",
+			"item": [
+				{
+					"name": "getAllBySearch",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/dietday",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"dietday"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createDiet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();\r",
+									"pm.collectionVariables.set(\"idDiet\", json.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"day\":\"10/01/1998\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/dietday",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"dietday"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addRecipeToDiet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/dietday/{{idDiet}}/recipe/{{idRecipe}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"dietday",
+								"{{idDiet}}",
+								"recipe",
+								"{{idRecipe}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeRecipeFromDiet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/dietday/{{idDiet}}/recipe/{{idRecipe}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"dietday",
+								"{{idDiet}}",
+								"recipe",
+								"{{idRecipe}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDiet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/dietday/{{idDiet}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"dietday",
+								"{{idDiet}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeDiet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/dietday/{{idDiet}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"dietday",
+								"{{idDiet}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editDiet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"day\":\"09/05/2023\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/dietday/{{idDiet}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"dietday",
+								"{{idDiet}}"
 							]
 						}
 					},
@@ -1096,6 +2355,34 @@
 			"key": "refresh_token",
 			"value": "",
 			"type": "string"
+		},
+		{
+			"key": "username",
+			"value": ""
+		},
+		{
+			"key": "idRecipe",
+			"value": ""
+		},
+		{
+			"key": "idIngredient",
+			"value": ""
+		},
+		{
+			"key": "idCategory",
+			"value": ""
+		},
+		{
+			"key": "idType",
+			"value": ""
+		},
+		{
+			"key": "idStep",
+			"value": ""
+		},
+		{
+			"key": "idDiet",
+			"value": ""
 		}
 	]
 }
