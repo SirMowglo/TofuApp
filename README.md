@@ -1,4 +1,4 @@
-﻿# Tofu App v0.1 (Alpha)
+﻿# Tofu App v0.2 (Alpha)
 
 ## Description
 
