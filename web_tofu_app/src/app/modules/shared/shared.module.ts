@@ -20,6 +20,10 @@ import { AddIngredientDialogComponent } from 'src/app/components/dialogs/add-ing
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RegisterDialogComponent } from 'src/app/components/dialogs/register-dialog/register-dialog.component';
 import { EditIngredientDialogComponent } from 'src/app/components/dialogs/edit-ingredient-dialog/edit-ingredient-dialog.component';
+import { AddRecipeDialogComponent } from 'src/app/components/dialogs/add-recipe-dialog/add-recipe-dialog.component';
+import { AddIngredientTorecipeDialogComponent } from 'src/app/components/dialogs/add-ingredient-torecipe-dialog/add-ingredient-torecipe-dialog.component';
+import { AddStepToRecipeDialogComponent } from 'src/app/components/dialogs/add-step-to-recipe-dialog/add-step-to-recipe-dialog.component';
+import { EditStepDialogComponent } from 'src/app/components/dialogs/edit-step/edit-step-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,14 +42,17 @@ import { EditIngredientDialogComponent } from 'src/app/components/dialogs/edit-i
     RegisterDialogComponent,
     StepCardComponent,
     UserCardComponent,
+    AddRecipeDialogComponent,
+    AddIngredientTorecipeDialogComponent,
+    AddStepToRecipeDialogComponent,
+    EditStepDialogComponent,
   ],
   imports: [
     CommonModule,
     SharedRoutingModule,
     ReactiveFormsModule,
-    MaterialModule,   
+    MaterialModule,
     InfiniteScrollModule,
-
   ],
   exports: [
     HeaderComponent,
@@ -66,8 +73,12 @@ import { EditIngredientDialogComponent } from 'src/app/components/dialogs/edit-i
     CommonModule,
     SharedRoutingModule,
     ReactiveFormsModule,
-    MaterialModule,   
+    MaterialModule,
     InfiniteScrollModule,
+    AddRecipeDialogComponent,
+    AddIngredientTorecipeDialogComponent,
+    AddStepToRecipeDialogComponent,
+    EditStepDialogComponent,
   ],
 })
 export class SharedModule {}

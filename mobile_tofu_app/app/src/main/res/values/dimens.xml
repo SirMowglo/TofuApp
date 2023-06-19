@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="grow_to_constraint">0dp</dimen>
+
+<!--    LOGIN SCREEN    -->
+    <dimen name="login_input_layout_corner_radius">50dp</dimen>
+    <dimen name="login_input_layout_stroke_width">2dp</dimen>
+    <dimen name="login_input_layout_margin_top">6dp</dimen>
+    <dimen name="login_input_layout_vertical_bias">0</dimen>
+    <dimen name="login_input_layout_username_margin_top">16dp</dimen>
+    <dimen name="login_layout_padding">24dp</dimen>
+    <dimen name="login_label_register_text_size">16sp</dimen>
+    <dimen name="login_label_register_margin_start">8dp</dimen>
+    <dimen name="login_label_slogan_text_size">24sp</dimen>
+    <dimen name="login_label_register_horizontal_bias">0.4</dimen>
+    <dimen name="login_button_login_text_size">20sp</dimen>
+    <dimen name="login_button_login_padding_vertical">16dp</dimen>
+    <dimen name="login_button_login_stroke_width">2dp</dimen>
+    <dimen name="login_button_login_corner_radius">8dp</dimen>
+
+</resources>

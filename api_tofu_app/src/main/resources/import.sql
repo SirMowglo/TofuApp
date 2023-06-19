@@ -20,6 +20,7 @@ INSERT INTO type (id, name) VALUES ('ac1f6001-87f6-12bb-8187-f6c2e6b90000', 'bre
 INSERT INTO type (id, name) VALUES ('ac1f6001-87f6-12bb-8187-f6c2fb4d0001', 'dinner');
 INSERT INTO type (id, name) VALUES ('ac1f6001-87f6-12bb-8187-f6c3133e0002', 'lunch');
 INSERT INTO type (id, name) VALUES ('ac1f6001-87f6-12bb-8187-f6c943ab0003', 'snacks');
+INSERT INTO type (id, name) VALUES ('ac163001-88c9-1dc8-8188-c91e8af20000', 'meal');
 
 -- IMPORT CATEGORIES
 INSERT INTO category (id, color_code, name) VALUES ('250cf64d-ddb3-47d5-a146-773206da6f72', '#FFFFFF', 'vegetarian');

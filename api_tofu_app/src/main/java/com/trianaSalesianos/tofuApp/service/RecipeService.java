@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.trianaSalesianos.tofuApp.model.UserRole.ADMIN;
+
 @Service
 @RequiredArgsConstructor
 public class RecipeService {
@@ -118,7 +120,7 @@ public class RecipeService {
                 .orElseThrow(() -> new IngredientNotFoundException());
 
 
-        if (!recipe.getAuthor().getId().equals(user.getId()))
+        if (!recipe.getAuthor().getId().equals(user.getId()) && !user.getRoles().contains(ADMIN))
             throw new RecipeAuthorNotValidException();
         RecipeIngredient ri;
 
@@ -168,7 +170,7 @@ public class RecipeService {
         Ingredient ingredient = ingredientRepository.findById(id_ingredient)
                 .orElseThrow(() -> new IngredientNotFoundException());
 
-        if (!recipe.getAuthor().getId().equals(user.getId()))
+        if (!recipe.getAuthor().getId().equals(user.getId()) && !user.getRoles().contains(ADMIN))
             throw new RecipeAuthorNotValidException();
 
         if (!recipe.getRecipeIngredients()
@@ -193,7 +195,7 @@ public class RecipeService {
         Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new RecipeNotFoundException());
 
-        if (!recipe.getAuthor().getId().equals(userAuthenticated.getId()))
+        if (!recipe.getAuthor().getId().equals(userAuthenticated.getId()) && !user.getRoles().contains(ADMIN))
             throw new RecipeAuthorNotValidException();
 
         Ingredient ing = Ingredient.builder()
@@ -221,7 +223,7 @@ public class RecipeService {
         Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new RecipeNotFoundException());
 
-        if (!recipe.getAuthor().getId().equals(user.getId()))
+        if (!recipe.getAuthor().getId().equals(user.getId()) && !user.getRoles().contains(ADMIN))
             throw new RecipeAuthorNotValidException();
 
         recipeRepository.deleteById(id);
@@ -234,7 +236,7 @@ public class RecipeService {
         Category category = categoryRepository.findById(idCategory)
                 .orElseThrow(() -> new CategoryNotFoundException());
 
-        if (!recipe.getAuthor().getId().equals(user.getId()))
+        if (!recipe.getAuthor().getId().equals(user.getId())  && !user.getRoles().contains(ADMIN))
             throw new RecipeAuthorNotValidException();
 
         //OTra opcion seria probar con anymatch
@@ -262,7 +264,7 @@ public class RecipeService {
         Type type = typeRepository.findById(idType)
                 .orElseThrow(() -> new TypeNotFoundException());
 
-        if (!recipe.getAuthor().getId().equals(user.getId()))
+        if (!recipe.getAuthor().getId().equals(user.getId())  && !user.getRoles().contains(ADMIN))
             throw new RecipeAuthorNotValidException();
 
         recipe.setType(type);
@@ -278,7 +280,7 @@ public class RecipeService {
         Ingredient ingredient = ingredientRepository.findById(idIngredient)
                 .orElseThrow(() -> new IngredientNotFoundException());
 
-        if (!recipe.getAuthor().getId().equals(user.getId()))
+        if (!recipe.getAuthor().getId().equals(user.getId())  && !user.getRoles().contains(ADMIN))
             throw new RecipeAuthorNotValidException();
 
         RecipeIngredientPK idRI = new RecipeIngredientPK(idRecipe, idIngredient);
@@ -304,7 +306,7 @@ public class RecipeService {
                 .orElseThrow(() -> new RecipeNotFoundException());
 
 
-        if (!recipe.getAuthor().getId().equals(user.getId()))
+        if (!recipe.getAuthor().getId().equals(user.getId())  && !user.getRoles().contains(ADMIN))
             throw new RecipeAuthorNotValidException();
 
         if (categoryRepository.existsById(idCategory))
@@ -338,7 +340,7 @@ public class RecipeService {
         Step step = stepRepository.findById(idStep)
                 .orElseThrow(() -> new StepNotFoundException());
 
-        if (!recipe.getAuthor().getId().equals(user.getId()))
+        if (!recipe.getAuthor().getId().equals(user.getId()) && !user.getRoles().contains(ADMIN))
             throw new RecipeAuthorNotValidException();
 
         recipe.getSteps().add(step);

@@ -19,3 +19,8 @@ export interface IngredientRequest{
     name: string;
     description: string;
 }
+
+export interface IngredientAmountRequest{
+    amount: number,
+    unit: string
+}

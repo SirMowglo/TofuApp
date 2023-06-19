@@ -12,6 +12,10 @@ import { AutofocusDirective } from './directives/autofocus.directive';
 import { AuthInterceptor } from './services/interceptors/auth.interceptor';
 import { MaterialModule } from './modules/material.module';
 import { LoadingInterceptor } from './services/interceptors/loading.interceptor';
+import { AddRecipeDialogComponent } from './components/dialogs/add-recipe-dialog/add-recipe-dialog.component';
+import { AddIngredientTorecipeDialogComponent } from './components/dialogs/add-ingredient-torecipe-dialog/add-ingredient-torecipe-dialog.component';
+import { AddStepToRecipeDialogComponent } from './components/dialogs/add-step-to-recipe-dialog/add-step-to-recipe-dialog.component';
+import { EditStepDialogComponent } from './components/dialogs/edit-step/edit-step-dialog.component';
 @NgModule({
   declarations: [AppComponent, AutofocusDirective],
   imports: [

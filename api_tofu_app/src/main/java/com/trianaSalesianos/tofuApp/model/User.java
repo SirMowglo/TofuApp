@@ -166,7 +166,7 @@ public class User implements UserDetails {
     }
 
     public void removeFromFavorite(Recipe r) {
-        this.favorites.remove(r);
+//        this.favorites.remove(r);
         r.getFavoritedBy().remove(this);
     }
 

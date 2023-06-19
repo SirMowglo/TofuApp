@@ -81,7 +81,7 @@ public class Recipe implements Serializable {
     }
 
     public void removeFavorite(User u) {
-        this.favoritedBy.remove(u);
+//        this.favoritedBy.remove(u);
         u.getFavorites().remove(this);
     }
 

@@ -12,6 +12,8 @@ export class CustomInputComponent {
   @Input() label = '';
   @Input() inputType = '';
   @Input() enableVisibility = false;
+  @Input() maxValue = 0
+  @Input() minValue = 0
   visibilityIcon = 'fa-eye';
 
   @Input() errorMessages: Record<string, string> = {

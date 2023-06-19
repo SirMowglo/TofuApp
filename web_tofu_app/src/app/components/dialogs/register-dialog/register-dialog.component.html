@@ -14,12 +14,18 @@
       />
       <app-custom-input
         label="Password"
+        inputType="password"
+
         [control]="formGroup.controls.password"
+        [enableVisibility]="true"
         [errorMessages]="passwordErrors"
       />
       <app-custom-input
         label="Verify password"
+        inputType="password"
+
         [control]="formGroup.controls.verifyPassword"
+        [enableVisibility]="true"
         [errorMessages]="passwordErrors"
       />
       <app-custom-input 

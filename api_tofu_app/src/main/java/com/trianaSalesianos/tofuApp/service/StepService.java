@@ -25,6 +25,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -84,14 +85,16 @@ public class StepService {
 
         Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new RecipeNotFoundException());
+
         Step step = Step.builder()
                 .description(stepRequest.getDescription())
                 .recipe(recipe)
                 .build();
-
         recipe.getSteps().add(step);
         recipe.getSteps().forEach(s -> s.setStepNumber(recipe.getSteps().indexOf(s) + 1));
 
+        stepRepository.save(step);
+        recipeRepository.save(recipe);
 
         return step;
     }
@@ -102,6 +105,7 @@ public class StepService {
 
         return recipeRepository.findFavoritesByUser(idRecipe)
                 .stream()
+                .sorted(Comparator.comparingInt(s -> s.getStepNumber()))
                 .map(StepResponse::fromStep)
                 .toList();
     }

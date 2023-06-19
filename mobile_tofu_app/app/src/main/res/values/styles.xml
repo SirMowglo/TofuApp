@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="input_hint">
+        <item name="android:fontFamily">@font/open_sans_extrabold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/tofu_generic_dark</item>
+        <item name="android:height">60dp</item>
+        <item name="android:width">60dp</item>
+    </style>
+</resources>

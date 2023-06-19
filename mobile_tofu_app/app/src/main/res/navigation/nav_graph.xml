@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/launcherFragment">
+
+    <fragment
+        android:id="@+id/launcherFragment"
+        android:name="com.example.tofuapp.ui.view.fragment.LauncherFragment"
+        android:label="fragment_launcher"
+        tools:layout="@layout/fragment_launcher" >
+
+        <action
+            android:id="@+id/fromLauncherFragmentToLoginScreenFragment"
+            app:destination="@id/loginScreenFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginScreenFragment"
+        android:name="com.example.tofuapp.ui.view.fragment.LoginScreenFragment"
+        android:label="fragment_login_screen"
+        tools:layout="@layout/fragment_login_screen" >
+
+        <action
+            android:id="@+id/fromLoginScreenFragmentToUserScreenFragment"
+            app:destination="@id/userScreenFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userScreenFragment"
+        android:name="com.example.tofuapp.ui.view.fragment.UserScreenFragment"
+        android:label="fragment_user_screen"
+        tools:layout="@layout/fragment_user_screen" >
+        <action
+            android:id="@+id/fromUserScreenFragmentToLoginScreenFragment"
+            app:destination="@id/loginScreenFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipesScreenFragment"
+        android:name="com.example.tofuapp.ui.view.fragment.RecipesScreenFragment"
+        android:label="fragment_recipes_screen"
+        tools:layout="@layout/fragment_recipes_screen" >
+
+        <action
+            android:id="@+id/fromRecipesScreenFragmentToLoginScreenFragment"
+            app:destination="@id/loginScreenFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsScreenFragment"
+        android:name="com.example.tofuapp.ui.view.fragment.SettingsScreenFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings_screen" >
+
+        <action
+            android:id="@+id/fromSettingsScreenFragmentToLoginScreenFragment"
+            app:destination="@id/loginScreenFragment" />
+    </fragment>
+</navigation>

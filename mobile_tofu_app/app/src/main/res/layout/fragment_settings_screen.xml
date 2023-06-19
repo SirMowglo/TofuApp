@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.view.fragment.SettingsScreenFragment"
+    android:padding="16dp"
+    android:background="@color/tofu_background">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/settingsButtonLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/open_sans_extrabold"
+        android:textSize="@dimen/login_button_login_text_size"
+        android:paddingVertical="@dimen/login_button_login_padding_vertical"
+        android:text="Logout"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/tofu_accent_red_light"
+        app:strokeColor="@color/black"
+        app:strokeWidth="@dimen/login_button_login_stroke_width"
+        app:cornerRadius="@dimen/login_button_login_corner_radius" />
+
+</FrameLayout>

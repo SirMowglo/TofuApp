@@ -30,6 +30,10 @@ export interface RecipeDetailsResponse {
     nlikes:      number;
 }
 
-
-
+export interface RecipeRequest{
+    name: string,
+    description: string,
+    type: string,
+    prepTime: number
+}
 

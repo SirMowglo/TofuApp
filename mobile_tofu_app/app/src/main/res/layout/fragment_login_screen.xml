@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.view.fragment.LoginScreenFragment"
+    android:background="@color/tofu_background"
+    android:padding="@dimen/login_layout_padding">
+
+    <ImageView
+        android:id="@+id/loginImageTofuLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/loginInputLayoutUsername"
+        android:src="@drawable/ic_tofu_logo"
+        />
+
+    <TextView
+        android:id="@+id/loginLabelSlogan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_label_slogan"
+        android:textSize="@dimen/login_label_slogan_text_size"
+        android:fontFamily="@font/open_sans_extrabold"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/loginImageTofuLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/loginInputLayoutUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/loginLabelSlogan"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="@dimen/login_input_layout_vertical_bias"
+        android:hint="@string/login_input_username_hint"
+        app:boxBackgroundColor="@color/white"
+        android:layout_marginTop="@dimen/login_input_layout_username_margin_top"
+
+        app:boxCornerRadiusBottomEnd="@dimen/login_input_layout_corner_radius"
+        app:boxCornerRadiusBottomStart="@dimen/login_input_layout_corner_radius"
+        app:boxCornerRadiusTopEnd="@dimen/login_input_layout_corner_radius"
+        app:boxCornerRadiusTopStart="@dimen/login_input_layout_corner_radius"
+
+        app:boxStrokeColor="@drawable/selector_input_border_color"
+        app:boxStrokeWidth="@dimen/login_input_layout_stroke_width"
+        app:hintTextColor="@color/black"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/loginInputUsername"
+            android:inputType="text"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="@style/input_hint"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/loginInputLayoutPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/loginInputLayoutUsername"
+        app:layout_constraintVertical_bias="@dimen/login_input_layout_vertical_bias"
+        android:hint="@string/login_input_password_hint"
+        app:boxBackgroundColor="@color/white"
+        android:layout_marginTop="@dimen/login_input_layout_margin_top"
+
+        app:boxCornerRadiusBottomEnd="@dimen/login_input_layout_corner_radius"
+        app:boxCornerRadiusBottomStart="@dimen/login_input_layout_corner_radius"
+        app:boxCornerRadiusTopEnd="@dimen/login_input_layout_corner_radius"
+        app:boxCornerRadiusTopStart="@dimen/login_input_layout_corner_radius"
+
+        app:boxStrokeColor="@drawable/selector_input_border_color"
+        app:boxStrokeWidth="@dimen/login_input_layout_stroke_width"
+        app:hintTextColor="@color/black"
+        app:endIconMode="password_toggle"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/loginInputPassword"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="@style/input_hint"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/loginButtonLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/loginInputLayoutPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/open_sans_extrabold"
+        android:textSize="@dimen/login_button_login_text_size"
+        android:paddingVertical="@dimen/login_button_login_padding_vertical"
+        android:text="@string/login_button_login"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/tofu_accent_green_light"
+        app:strokeColor="@color/black"
+        android:enabled="false"
+        app:strokeWidth="@dimen/login_button_login_stroke_width"
+        app:cornerRadius="@dimen/login_button_login_corner_radius" />
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/loginCircularLoading"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/loginButtonLogin"/>
+
+
+    <TextView
+        android:id="@+id/loginLabelNotMember"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_label_not_member_text"
+        android:fontFamily="@font/open_sans_semibold"
+        android:textSize="@dimen/login_label_register_text_size"
+        android:textColor="@color/black"
+
+        android:layout_marginTop="@dimen/login_input_layout_margin_top"
+        app:layout_constraintHorizontal_bias="@dimen/login_label_register_horizontal_bias"
+        app:layout_constraintTop_toBottomOf="@id/loginButtonLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/loginLabelRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans_semibold"
+        android:textColor="@color/tofu_selectable_text"
+        android:textSize="@dimen/login_label_register_text_size"
+        android:text="@string/login_label_register_text"
+        android:layout_marginStart="@dimen/login_label_register_margin_start"
+        app:layout_constraintTop_toTopOf="@id/loginLabelNotMember"
+        app:layout_constraintStart_toEndOf="@id/loginLabelNotMember"
+
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

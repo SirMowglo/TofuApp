@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+<!--    TOFU PALETTE    -->
+    <color name="tofu_background">#FCF3DD</color>
+    <color name="tofu_generic_light">#E8DCBF</color>
+    <color name="tofu_generic_regular">#DFCBAD</color>
+    <color name="tofu_generic_dark">#C3A26F</color>
+    <color name="tofu_accent_green_light">#91DD54</color>
+    <color name="tofu_accent_red_light">#EE3B3B</color>
+    <color name="tofu_accent_green_dark">#639A37</color>
+    <color name="tofu_accent_red_dark">#A51111</color>
+    <color name="tofu_disabled_grey">#D9D9D9</color>
+    <color name="tofu_selectable_text">#44AEFB</color>
+
+</resources>

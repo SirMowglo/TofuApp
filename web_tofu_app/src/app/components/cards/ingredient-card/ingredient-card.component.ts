@@ -19,7 +19,9 @@ export class IngredientCardComponent implements OnInit {
   constructor(private fileService: FileService) {}
   ngOnInit(): void {
     this.getIngredientImage(this.ingredient.img);
-    this.getAuthorAvatar(this.ingredient.author.avatar)
+    if(this.ingredient.author !=null){
+      this.getAuthorAvatar(this.ingredient.author.avatar)
+    }
   }
 
   emitEvent() {

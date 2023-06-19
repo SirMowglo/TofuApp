@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="inner_container outlined_box_0px">
+    <h1 class="title montserrat outlined_text_2px">Add Recipe</h1>
+    <form [formGroup]="formGroup" class="form">
+
+      <app-custom-input
+        label="Recipe name"
+        [control]="formGroup.controls.name" />
+
+      <app-custom-input
+        label="Description"
+        [control]="formGroup.controls.description" />
+
+      <app-custom-input 
+      label="Preparation Time"
+      inputType="number"
+      [maxValue]="1000"
+      [minValue]="0" 
+      [control]="formGroup.controls.prepTime" />
+    </form>
+    <app-custom-button
+      label="Accept"
+      btnStyle="green"
+      [isDisabled]="formGroup.untouched || formGroup.invalid"
+      (OnClick)="createRecipe()" />
+  </div>
+</div>

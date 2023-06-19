@@ -5,3 +5,6 @@ export interface Step {
     description: string;
     recipeName:  string;
 }
+export interface StepRequest{
+    description:string
+}

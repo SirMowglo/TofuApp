@@ -20,11 +20,27 @@
   <div class="description open-sans">
     {{ recipe.description }}
   </div>
+  <app-custom-button
+    style="margin: 12px"
+    btnStyle="green"
+    label="Add step"
+    [verticalPadding]="4"
+    [fontSize]="16"
+    (OnClick)="openAddStepDialog()"
+  />
   <div class="steps">
-    <ng-container *ngFor="let step of recipe.steps">
+    <ng-container *ngFor="let step of stepList">
         <app-step-card
         [step]="step"
         />
     </ng-container>
   </div>
+    <app-custom-button
+    style="margin: 12px"
+    btnStyle="red"
+    label="Delete"
+    [verticalPadding]="4"
+    [fontSize]="16"
+    (OnClick)="deleteCurrentRecipe()"
+  />
 </div>

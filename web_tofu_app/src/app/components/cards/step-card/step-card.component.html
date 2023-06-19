@@ -1,6 +1,14 @@
 <div class="container outlined_box_4px">
     <div class="step_num outlined_text_2px_no_shadow open-sans" >
         Step {{step.stepNumber}}:
+        <i 
+        class="edit fa-solid fa-pen-to-square outlined_text_2px"
+        (click)="openEditStepDialog()"
+        ></i>
+        <i 
+        class="delete fa-solid fa-delete-left outlined_text_2px"
+        (click)="deleteStep()"
+        ></i>
     </div>
     <div class="step open-sans">
         {{step.description}}

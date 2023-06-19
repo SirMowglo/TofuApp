@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="inner_container outlined_box_0px">
+    <h1 class="title montserrat outlined_text_2px">Add Ingredient to Recipe</h1>
+
+    <div class="columns">
+      <div
+        class="ingredient_list"
+        infinite-scroll
+        [infiniteScrollDistance]="3"
+        [infiniteScrollThrottle]="200"
+        (scrolled)="onScrollIngredients()"
+        [scrollWindow]="false"
+      >
+        <ng-container *ngFor="let ingredient of ingredientList">
+          <app-ingredient-card
+            style="width: 340px"
+            [ingredient]="ingredient"
+            (OnClick)="getSelectedIngredient(ingredient)"
+          />
+        </ng-container>
+      </div>
+      <div class="selected_ingredient" *ngIf="selectedIngredient.name != null">
+        <app-ingredient-card [ingredient]="selectedIngredient" />
+        <form [formGroup]="formGroup">
+          <app-custom-input label="Unidad" [control]="formGroup.controls.unit"/>
+          <app-custom-input inputType="number" [control]="formGroup.controls.amount" label="Cantidad" />
+        </form>
+      </div>
+    </div>
+    <app-custom-button
+      label="Accept"
+      btnStyle="green"
+      (OnClick)="addIngredient()"
+      [isDisabled]="formGroup.untouched || formGroup.invalid"
+    />
+  </div>
+</div>

@@ -18,6 +18,9 @@
             (scrolled)="onScrollRecipe()"
             [scrollWindow]="false"
             >
+            <div class="add_button outlined_box_4px" (click)="openAddRecipeDialog()">
+              <span class="add outlined_text_2px_no_shadow">+</span>
+            </div>
               <span *ngFor="let recipe of recipeList">
                 <app-recipe-card 
                 [recipe]="recipe"
@@ -40,6 +43,9 @@
             [infiniteScrollThrottle]="200"
             (scrolled)="onScrollRecipeIngredient()"
             [scrollWindow]="false">
+            <div class="add_button outlined_box_4px"  *ngIf="recipeDetails.name != null" (click)="openAddIngredientToRecipeDialog()">
+              <span class="add outlined_text_2px_no_shadow">+</span>
+            </div>
               <span *ngFor="let ingredient of ingredientList">
                 <app-ingredient-card 
                 [ingredient]="ingredient"
@@ -54,7 +60,9 @@
       <app-recipe-details
       style="width: 100%"
       [recipe]="recipeDetails"
-      [author]="recipeDetails.author" />
+      [author]="recipeDetails.author"
+      [stepList]="stepList"
+       />
     </div>
   </div>
 </ng-container>

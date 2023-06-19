@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/recipesScreenFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_recipe_screen"
+        android:title=""/>
+    <item
+        android:id="@+id/userScreenFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_user_screen"
+        android:title=""/>
+    <item
+        android:id="@+id/settingsScreenFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_settings_screen"
+        android:title=""/>
+
+</menu>
