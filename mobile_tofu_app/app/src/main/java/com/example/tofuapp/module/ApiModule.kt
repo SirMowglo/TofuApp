@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.tofuapp.data.service.AuthService
+import com.example.tofuapp.data.service.RecipeService
 import com.example.tofuapp.data.service.UserService
 import com.example.tofuapp.util.API_BASE_URL
 import com.example.tofuapp.util.AuthAuthenticator
@@ -79,4 +80,11 @@ class ApiModule {
             .client(okHttpClient)
             .build()
             .create(UserService::class.java)
+    @Singleton
+    @Provides
+    fun provideRecipeApiService(okHttpClient: OkHttpClient ,retrofit: Builder): RecipeService =
+        retrofit
+            .client(okHttpClient)
+            .build()
+            .create(RecipeService::class.java)
 }

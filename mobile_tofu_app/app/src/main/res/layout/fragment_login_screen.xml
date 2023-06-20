@@ -47,6 +47,8 @@
         app:boxCornerRadiusTopEnd="@dimen/login_input_layout_corner_radius"
         app:boxCornerRadiusTopStart="@dimen/login_input_layout_corner_radius"
 
+        app:errorIconDrawable="@null"
+        app:boxStrokeErrorColor="@color/tofu_accent_red_light"
         app:boxStrokeColor="@drawable/selector_input_border_color"
         app:boxStrokeWidth="@dimen/login_input_layout_stroke_width"
         app:hintTextColor="@color/black"
@@ -62,6 +64,7 @@
             android:textColor="@color/black"
             android:textColorHint="@color/black"/>
     </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/loginInputLayoutPassword"
         android:layout_width="match_parent"
@@ -77,11 +80,13 @@
         app:boxCornerRadiusTopEnd="@dimen/login_input_layout_corner_radius"
         app:boxCornerRadiusTopStart="@dimen/login_input_layout_corner_radius"
 
+        app:errorIconDrawable="@null"
+        app:boxStrokeErrorColor="@color/tofu_accent_red_light"
+        app:errorEnabled="true"
         app:boxStrokeColor="@drawable/selector_input_border_color"
         app:boxStrokeWidth="@dimen/login_input_layout_stroke_width"
         app:hintTextColor="@color/black"
-        app:endIconMode="password_toggle"
-        >
+        app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/loginInputPassword"
@@ -106,7 +111,7 @@
         android:paddingVertical="@dimen/login_button_login_padding_vertical"
         android:text="@string/login_button_login"
         android:textColor="@color/white"
-        android:backgroundTint="@color/tofu_accent_green_light"
+        android:backgroundTint="@drawable/selector_button_green_disabled"
         app:strokeColor="@color/black"
         android:enabled="false"
         app:strokeWidth="@dimen/login_button_login_stroke_width"
@@ -149,7 +154,5 @@
         android:text="@string/login_label_register_text"
         android:layout_marginStart="@dimen/login_label_register_margin_start"
         app:layout_constraintTop_toTopOf="@id/loginLabelNotMember"
-        app:layout_constraintStart_toEndOf="@id/loginLabelNotMember"
-
-        />
+        app:layout_constraintStart_toEndOf="@id/loginLabelNotMember" />
 </androidx.constraintlayout.widget.ConstraintLayout>
