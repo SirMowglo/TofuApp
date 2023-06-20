@@ -17,6 +17,9 @@ import com.example.tofuapp.ui.viewmodel.AuthViewModel
 import com.example.tofuapp.ui.viewmodel.CoroutineErrorHandler
 import com.example.tofuapp.ui.viewmodel.TokenViewModel
 import com.example.tofuapp.util.ApiResponse
+import com.example.tofuapp.util.hasEnoughDigits
+import com.example.tofuapp.util.isLongEnough
+import com.example.tofuapp.util.isMixedCase
 import com.example.tofuapp.util.toggleVisibility
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Pattern
@@ -35,8 +38,20 @@ class LoginScreenFragment : Fragment() {
                 val usernameText: String = loginInputUsername.text.toString().trim()
                 val passwordText: String = loginInputPassword.text.toString().trim()
 
-                //TODO Validacion
-                loginButtonLogin.isEnabled = true
+                if(!passwordText.isLongEnough())
+                    loginInputLayoutPassword.error = "Password needs at least 8 characters"
+                else loginInputLayoutPassword.error = ""
+
+                if(!passwordText.isMixedCase())
+                    loginInputLayoutPassword.error = "Password needs at least one uppercase and one lowercase"
+                if(!passwordText.hasEnoughDigits())
+                    loginInputLayoutPassword.error = "Password needs at least one digit"
+
+                if(usernameText.isEmpty())
+                    loginInputLayoutUsername.error = "Username can't be empty"
+                else loginInputLayoutUsername.error = ""
+
+                loginButtonLogin.isEnabled = isValidPassword(passwordText) && usernameText.isNotEmpty()
             }
         }
 
@@ -100,15 +115,8 @@ class LoginScreenFragment : Fragment() {
 
     }
 
-    fun isValidPasswordFormat(password: String): Boolean {
-        if (password.length < 8) return false
-        if (password.filter { it.isDigit() }.firstOrNull() == null) return false
-        if (password.filter { it.isLetter() }.filter { it.isUpperCase() }
-                .firstOrNull() == null) return false
-        if (password.filter { it.isLetter() }.filter { it.isLowerCase() }
-                .firstOrNull() == null) return false
-        if (password.filter { !it.isLetterOrDigit() }.firstOrNull() == null) return false
-
-        return true
+    fun isValidPassword(password: String): Boolean {
+        val requirements = listOf(String::isLongEnough, String::hasEnoughDigits, String::isMixedCase)
+        return requirements.all { check -> check(password) }
     }
 }

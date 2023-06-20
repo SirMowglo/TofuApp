@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="black_alpha_40">#65000000</color>
+    <color name="grey_darker">#8B151515</color>
+    <color name="grey_dark">#8B333333</color>
+    <color name="grey_regular">#8B8E8E8E</color>
+    <color name="grey_light">#8BD1D1D1</color>
     <color name="white">#FFFFFFFF</color>
 
 <!--    TOFU PALETTE    -->
@@ -8,6 +13,7 @@
     <color name="tofu_generic_light">#E8DCBF</color>
     <color name="tofu_generic_regular">#DFCBAD</color>
     <color name="tofu_generic_dark">#C3A26F</color>
+    <color name="tofu_generic_darker">#8A6327</color>
     <color name="tofu_accent_green_light">#91DD54</color>
     <color name="tofu_accent_red_light">#EE3B3B</color>
     <color name="tofu_accent_green_dark">#639A37</color>

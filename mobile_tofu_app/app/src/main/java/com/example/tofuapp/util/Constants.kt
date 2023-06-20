@@ -14,6 +14,8 @@ const val networkIP = "192.168.1.131"
 //const val API_BASE_URL = "http://10.0.2.2:8080/" // EMULADOR
 const val API_BASE_URL = "http://$networkIP:8080/" // Localhost
 
+const val FIRST_POSITION = 0
+
 fun<T> apiRequestFlow(call: suspend() -> Response<T>): Flow<ApiResponse<T>> = flow {
     emit(ApiResponse.Loading)
 
