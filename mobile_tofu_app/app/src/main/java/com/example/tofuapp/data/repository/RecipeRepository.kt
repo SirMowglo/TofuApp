@@ -10,4 +10,7 @@ class RecipeRepository @Inject constructor(
     fun getRecipesByAuthor(username: String) = apiRequestFlow {
         recipeService.getRecipesByAuthor(username)
     }
+    fun getRecipes() = apiRequestFlow {
+        recipeService.getRecipes()
+    }
 }

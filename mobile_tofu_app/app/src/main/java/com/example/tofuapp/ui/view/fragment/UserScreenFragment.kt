@@ -60,8 +60,6 @@ class UserScreenFragment : Fragment() {
         viewModel.observeViewModel()
 
         binding.apply {
-
-
             setCollapsingToolbar()
         }
     }
