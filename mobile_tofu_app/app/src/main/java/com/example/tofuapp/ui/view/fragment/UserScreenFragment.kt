@@ -23,6 +23,7 @@ import com.example.tofuapp.util.API_BASE_URL
 import com.example.tofuapp.util.ApiResponse
 import com.example.tofuapp.util.FIRST_POSITION
 import com.example.tofuapp.util.renderUrl
+import com.example.tofuapp.util.toggleVisibility
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 
@@ -61,15 +62,28 @@ class UserScreenFragment : Fragment() {
 
         binding.apply {
             setCollapsingToolbar()
+
+            userFABAddRecipe.setOnClickListener {
+                findNavController().navigate(R.id.fromUserScreenFragmentToAddRecipeScreenFragment)
+            }
         }
     }
 
     private fun CurrentUserViewModel.observeViewModel() {
 
         userResponse.observe(viewLifecycleOwner) { userResponse ->
+            binding.profileAvatarCircularLoading.toggleVisibility(false)
             when (userResponse) {
-                is ApiResponse.Failure -> {}
-                ApiResponse.Loading -> {}
+                is ApiResponse.Failure -> {
+                    Toast.makeText(
+                        context,
+                        "Error! ${userResponse.errorMessage}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                ApiResponse.Loading -> {
+                    binding.profileAvatarCircularLoading.toggleVisibility(true)
+                }
                 is ApiResponse.Success -> {
                     saveUser(userResponse.data)
                 }
@@ -77,9 +91,18 @@ class UserScreenFragment : Fragment() {
         }
 
         recipeResponse.observe(viewLifecycleOwner) { recipeResponse ->
+            binding.userRecipesCircularLoading.toggleVisibility(false)
             when (recipeResponse) {
-                is ApiResponse.Failure -> {}
-                ApiResponse.Loading -> {}
+                is ApiResponse.Failure -> {
+                    Toast.makeText(
+                        context,
+                        "Error! ${recipeResponse.errorMessage}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                ApiResponse.Loading -> {
+                    binding.userRecipesCircularLoading.toggleVisibility(true)
+                }
                 is ApiResponse.Success -> {
                     saveRecipes(recipeResponse.data.content)
                 }

@@ -1,5 +1,6 @@
 package com.example.tofuapp.ui.view.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -89,39 +90,14 @@ class RegisterScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            registerInputEmail.addTextChangedListener(inputValidator)
-            registerInputUsername.addTextChangedListener(inputValidator)
-            registerInputFullname.addTextChangedListener(inputValidator)
-            registerInputPassword.addTextChangedListener(inputValidator)
-            registerInputVerifyPassword.addTextChangedListener(inputValidator)
-            registerInputVerifyEmail.addTextChangedListener(inputValidator)
 
-            registerButtonLogin.setOnClickListener {
-                viewModel.register(
-                    RegisterUserRequestDTO(
-                        registerInputEmail.text.toString().trim(),
-                        registerInputFullname.text.toString().trim(),
-                        registerInputPassword.text.toString().trim(),
-                        registerInputUsername.text.toString().trim(),
-                        registerInputVerifyEmail.text.toString().trim(),
-                        registerInputVerifyPassword.text.toString().trim(),
-                        ),
-                    object : CoroutineErrorHandler {
-                        override fun onError(message: String) {
-                            Toast.makeText(
-                                context,
-                                "Error! $message",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                )
-            }
+            validateButton(inputValidator, viewModel)
 
             registerToolbar.setNavigationOnClickListener {
                 findNavController().navigate(R.id.fromRegisterScreenFragmentToLoginScreenFragment)
             }
         }
+
         viewModel.registerResponse.observe(viewLifecycleOwner) { registerResponse ->
             binding.registerButtonLogin.toggleVisibility(true)
             binding.registerCircularLoading.toggleVisibility(false)
@@ -149,5 +125,36 @@ class RegisterScreenFragment : Fragment() {
     fun isValidPassword(password: String): Boolean {
         val requirements = listOf(String::isLongEnough, String::hasEnoughDigits, String::isMixedCase)
         return requirements.all { check -> check(password) }
+    }
+}
+
+private fun FragmentRegisterScreenBinding.validateButton(inputValidator: TextWatcher, viewModel: AuthViewModel) {
+    registerInputEmail.addTextChangedListener(inputValidator)
+    registerInputUsername.addTextChangedListener(inputValidator)
+    registerInputFullname.addTextChangedListener(inputValidator)
+    registerInputPassword.addTextChangedListener(inputValidator)
+    registerInputVerifyPassword.addTextChangedListener(inputValidator)
+    registerInputVerifyEmail.addTextChangedListener(inputValidator)
+
+    registerButtonLogin.setOnClickListener {
+        viewModel.register(
+            RegisterUserRequestDTO(
+                registerInputEmail.text.toString().trim(),
+                registerInputFullname.text.toString().trim(),
+                registerInputPassword.text.toString().trim(),
+                registerInputUsername.text.toString().trim(),
+                registerInputVerifyEmail.text.toString().trim(),
+                registerInputVerifyPassword.text.toString().trim(),
+            ),
+            object : CoroutineErrorHandler {
+                override fun onError(message: String) {
+                    Toast.makeText(
+                        registerButtonLogin.context,
+                        "Error! $message",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        )
     }
 }

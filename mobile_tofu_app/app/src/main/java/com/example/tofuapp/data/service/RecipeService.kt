@@ -1,9 +1,12 @@
 package com.example.tofuapp.data.service
 
 import com.example.tofuapp.data.model.dto.PageDTO
+import com.example.tofuapp.data.model.dto.recipe.RecipeRequestDTO
 import com.example.tofuapp.data.model.dto.recipe.RecipeResponseDTO
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface RecipeService {
@@ -11,4 +14,7 @@ interface RecipeService {
     suspend fun getRecipesByAuthor(@Path("username") username: String): Response<PageDTO<RecipeResponseDTO>>
     @GET("recipe")
     suspend fun getRecipes(): Response<PageDTO<RecipeResponseDTO>>
+
+    @POST("recipe")
+    suspend fun addRecipe(@Body recipeRequestDTO: RecipeRequestDTO): Response<RecipeResponseDTO>
 }

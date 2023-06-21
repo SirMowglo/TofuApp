@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tofu_background"
+    tools:context=".ui.view.fragment.AddRecipeScreenFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/addRecipeToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/tofu_generic_regular"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back_arrow"
+        app:navigationIconTint="@color/white"
+        app:title="Add recipe"
+        app:titleTextAppearance="@style/appbar_title"
+        app:titleTextColor="@color/white" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/addRecipeInputLayoutName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="@dimen/login_input_layout_username_margin_top"
+        android:hint="Recipe name"
+        app:boxBackgroundColor="@color/white"
+        app:boxCornerRadiusBottomEnd="@dimen/login_input_layout_corner_radius"
+        app:boxCornerRadiusBottomStart="@dimen/login_input_layout_corner_radius"
+        app:boxCornerRadiusTopEnd="@dimen/login_input_layout_corner_radius"
+
+        app:boxCornerRadiusTopStart="@dimen/login_input_layout_corner_radius"
+        app:boxStrokeColor="@drawable/selector_input_border_color"
+        app:boxStrokeErrorColor="@color/tofu_accent_red_light"
+        app:boxStrokeWidth="@dimen/login_input_layout_stroke_width"
+
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+        app:errorTextColor="@color/tofu_accent_red_light"
+        app:hintTextColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addRecipeScrollChipGroup"
+        app:layout_constraintVertical_bias="@dimen/login_input_layout_vertical_bias">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/addRecipeInputName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:maxLength="64"
+            android:maxLines="1"
+            android:textAppearance="@style/input_hint"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/addRecipeInputLayoutDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="4dp"
+        android:hint="Description"
+        app:boxBackgroundColor="@color/white"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+
+        app:boxCornerRadiusTopStart="20dp"
+        app:boxStrokeColor="@drawable/selector_input_border_color"
+        app:boxStrokeErrorColor="@color/tofu_accent_red_light"
+        app:boxStrokeWidth="@dimen/login_input_layout_stroke_width"
+
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+
+        app:errorTextColor="@color/tofu_accent_red_light"
+        app:hintTextColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addRecipeInputLayoutName"
+        app:layout_constraintVertical_bias="@dimen/login_input_layout_vertical_bias">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/addRecipeInputDescription"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textLongMessage|textMultiLine"
+            android:maxLength="254"
+            android:textAppearance="@style/input_hint"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/addRecipeInputLayoutPrepTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="4dp"
+        android:hint="Preparation time"
+        app:boxBackgroundColor="@color/white"
+        app:boxCornerRadiusBottomEnd="@dimen/login_input_layout_corner_radius"
+        app:boxCornerRadiusBottomStart="@dimen/login_input_layout_corner_radius"
+        app:boxCornerRadiusTopEnd="@dimen/login_input_layout_corner_radius"
+
+        app:boxCornerRadiusTopStart="@dimen/login_input_layout_corner_radius"
+        app:boxStrokeColor="@drawable/selector_input_border_color"
+        app:boxStrokeErrorColor="@color/tofu_accent_red_light"
+        app:boxStrokeWidth="@dimen/login_input_layout_stroke_width"
+
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+        app:errorTextColor="@color/tofu_accent_red_light"
+        app:hintTextColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addRecipeInputLayoutDescription"
+        app:layout_constraintVertical_bias="@dimen/login_input_layout_vertical_bias">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/addRecipeInputPrepTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textAppearance="@style/input_hint"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/addRecipeScrollChipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginVertical="8dp"
+        app:layout_constraintTop_toBottomOf="@id/addRecipeToolbar">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/addRecipeChipGroupType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleLine="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipMeal"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Meal"
+                android:textAppearance="@style/input_hint"
+                android:textColor="@drawable/selector_chip_color"
+                app:chipBackgroundColor="@drawable/selector_chip_background_color"
+                app:chipStrokeColor="@drawable/selector_chip_color"
+                app:rippleColor="@color/tofu_accent_green_light"
+                app:checkedIconTint="@drawable/selector_chip_color"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipBreakfast"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Breakfast"
+                android:textAppearance="@style/input_hint"
+                android:textColor="@drawable/selector_chip_color"
+                app:chipBackgroundColor="@drawable/selector_chip_background_color"
+                app:chipStrokeColor="@drawable/selector_chip_color"
+                app:rippleColor="@color/tofu_accent_green_light"
+                app:checkedIconTint="@drawable/selector_chip_color"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipDinner"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dinner"
+                android:textAppearance="@style/input_hint"
+                android:textColor="@drawable/selector_chip_color"
+                app:chipBackgroundColor="@drawable/selector_chip_background_color"
+                app:chipStrokeColor="@drawable/selector_chip_color"
+                app:rippleColor="@color/tofu_accent_green_light"
+                app:checkedIconTint="@drawable/selector_chip_color"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipLunch"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lunch"
+                android:textAppearance="@style/input_hint"
+                android:textColor="@drawable/selector_chip_color"
+                app:chipBackgroundColor="@drawable/selector_chip_background_color"
+                app:chipStrokeColor="@drawable/selector_chip_color"
+                app:rippleColor="@color/tofu_accent_green_light"
+                app:checkedIconTint="@drawable/selector_chip_color"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipSnacks"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Snacks"
+                android:textAppearance="@style/input_hint"
+                android:textColor="@drawable/selector_chip_color"
+                app:chipBackgroundColor="@drawable/selector_chip_background_color"
+                app:chipStrokeColor="@drawable/selector_chip_color"
+                app:rippleColor="@color/tofu_accent_green_light"
+                app:checkedIconTint="@drawable/selector_chip_color"/>
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/recipeButtonLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginVertical="16dp"
+        android:backgroundTint="@drawable/selector_button_green_disabled"
+        android:enabled="false"
+        android:fontFamily="@font/open_sans_extrabold"
+        android:paddingVertical="@dimen/login_button_login_padding_vertical"
+        android:text="Create Recipe"
+        android:textColor="@color/white"
+        android:textSize="@dimen/login_button_login_text_size"
+        app:cornerRadius="@dimen/login_button_login_corner_radius"
+        app:layout_constraintBaseline_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:strokeColor="@color/black"
+        app:strokeWidth="@dimen/login_button_login_stroke_width" />
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/recipeCircularLoading"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/recipeButtonLogin"
+        tools:visibility="visible" />
+</androidx.constraintlayout.widget.ConstraintLayout>

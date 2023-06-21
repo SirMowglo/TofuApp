@@ -37,10 +37,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/grow_to_constraint"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_launcher"
+                    android:backgroundTint="@color/grey_dark"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_collapseMode="parallax"
                     app:layout_constraintBottom_toTopOf="@id/profileCardInfo"/>
+
+                <androidx.core.widget.ContentLoadingProgressBar
+                    android:id="@+id/profileAvatarCircularLoading"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    style="@style/Widget.AppCompat.ProgressBar"
+                    android:visibility="invisible"
+                    tools:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/profileImageAvatar"
+                    app:layout_constraintBottom_toBottomOf="@id/profileImageAvatar"/>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/profileCardInfo"
@@ -112,4 +124,24 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/userRecipesCircularLoading"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:visibility="invisible"
+        android:layout_marginTop="356dp"
+        tools:visibility="visible"
+        android:layout_gravity="center"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/userFABAddRecipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="32dp"
+        android:backgroundTint="@color/tofu_accent_green_light"
+        android:src="@drawable/ic_add"
+        app:tint="@color/white"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

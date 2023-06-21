@@ -1,5 +1,6 @@
 package com.example.tofuapp.data.repository
 
+import com.example.tofuapp.data.model.dto.recipe.RecipeRequestDTO
 import com.example.tofuapp.data.service.RecipeService
 import com.example.tofuapp.util.apiRequestFlow
 import javax.inject.Inject
@@ -12,5 +13,9 @@ class RecipeRepository @Inject constructor(
     }
     fun getRecipes() = apiRequestFlow {
         recipeService.getRecipes()
+    }
+
+    fun addRecipe(recipeRequest: RecipeRequestDTO) = apiRequestFlow {
+        recipeService.addRecipe(recipeRequest)
     }
 }
