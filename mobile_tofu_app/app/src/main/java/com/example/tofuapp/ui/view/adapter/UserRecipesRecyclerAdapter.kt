@@ -15,6 +15,7 @@ class UserRecipesRecyclerAdapter(
 
     interface OnItemClickListener {
         fun onItemClick(recipe: RecipeResponseDTO) {}
+        fun onLongItemClick(recipe:RecipeResponseDTO): Boolean = true
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserRecipesViewHolder =

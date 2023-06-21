@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="4dp"
-    android:backgroundTint="@color/tofu_generic_light">
+    android:backgroundTint="@color/tofu_generic_light"
+    android:id="@+id/rowRecipeCard">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

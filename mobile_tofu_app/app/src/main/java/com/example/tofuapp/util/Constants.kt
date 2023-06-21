@@ -39,4 +39,3 @@ fun<T> apiRequestFlow(call: suspend() -> Response<T>): Flow<ApiResponse<T>> = fl
         }
     } ?: emit(ApiResponse.Failure("Timeout! Please try again", "UNAUTHORIZED"))
 }.flowOn(Dispatchers.IO)
-

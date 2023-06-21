@@ -40,6 +40,11 @@ class UserScreenFragment : Fragment() {
                 super.onItemClick(recipe)
                 //TODO Implementar detalles al pulsar
             }
+
+            override fun onLongItemClick(recipe: RecipeResponseDTO): Boolean {
+                viewModel.deleteRecipe(recipe.id)
+                return super.onLongItemClick(recipe)
+            }
         }
     }
     private var token: String? = null
@@ -105,6 +110,33 @@ class UserScreenFragment : Fragment() {
                 }
                 is ApiResponse.Success -> {
                     saveRecipes(recipeResponse.data.content)
+                }
+            }
+        }
+
+        deleteRecipeResponse.observe(viewLifecycleOwner){ response ->
+            when(response){
+                is ApiResponse.Failure -> {
+                    Toast.makeText(
+                        context,
+                        "Error! ${response.errorMessage}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    resetDeleteRecipe()
+                }
+                ApiResponse.Loading -> {}
+                is ApiResponse.Success -> {
+                    getRecipesUser(object : CoroutineErrorHandler {
+                        override fun onError(message: String) {
+                            Toast.makeText(context, "Error! $message", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                    Toast.makeText(
+                        context,
+                        "Recipe deleted succesfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    resetDeleteRecipe()
                 }
             }
         }

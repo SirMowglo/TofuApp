@@ -41,6 +41,13 @@ class UserRecipesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
             }else{
                 changeFavoriteIcon(R.drawable.ic_favorite_border, R.color.tofu_generic_darker)
             }
+
+            rowRecipeCard.setOnClickListener {
+                onItemClick.onItemClick(recipe)
+            }
+            rowRecipeCard.setOnLongClickListener{
+                onItemClick.onLongItemClick(recipe)
+            }
         }
     }
 
