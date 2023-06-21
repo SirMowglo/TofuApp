@@ -13,7 +13,7 @@
         android:layout_height="?actionBarSize"
         app:title="Recipes"
         app:titleTextAppearance="@style/appbar_title"
-        android:background="@color/tofu_generic_dark"
+        android:background="@color/tofu_generic_regular"
         app:titleTextColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"/>
 

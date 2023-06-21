@@ -48,6 +48,7 @@
         app:boxCornerRadiusTopStart="@dimen/login_input_layout_corner_radius"
 
         app:errorIconDrawable="@null"
+        app:errorTextColor="@color/tofu_accent_red_light"
         app:boxStrokeErrorColor="@color/tofu_accent_red_light"
         app:boxStrokeColor="@drawable/selector_input_border_color"
         app:boxStrokeWidth="@dimen/login_input_layout_stroke_width"
@@ -82,6 +83,7 @@
 
         app:errorIconDrawable="@null"
         app:boxStrokeErrorColor="@color/tofu_accent_red_light"
+        app:errorTextColor="@color/tofu_accent_red_light"
         app:errorEnabled="true"
         app:boxStrokeColor="@drawable/selector_input_border_color"
         app:boxStrokeWidth="@dimen/login_input_layout_stroke_width"

@@ -75,10 +75,10 @@ class LoginScreenFragment : Fragment() {
         }
 
         viewModel.loginResponse.observe(viewLifecycleOwner) { login ->
+            binding.loginButtonLogin.toggleVisibility(true)
+            binding.loginCircularLoading.toggleVisibility(false)
             when (login) {
                 is ApiResponse.Failure -> {
-                    binding.loginButtonLogin.toggleVisibility(true)
-                    binding.loginCircularLoading.toggleVisibility(false)
                     binding.loginLabelSlogan.text = login.errorMessage
                 }
                 ApiResponse.Loading -> {
@@ -87,8 +87,6 @@ class LoginScreenFragment : Fragment() {
                 }
 
                 is ApiResponse.Success -> {
-                    binding.loginButtonLogin.toggleVisibility(true)
-                    binding.loginCircularLoading.toggleVisibility(false)
                     tokenViewModel.saveToken(login.data.token)
                 }
             }
@@ -97,6 +95,10 @@ class LoginScreenFragment : Fragment() {
         with(binding) {
             loginInputUsername.addTextChangedListener(inputValidator)
             loginInputPassword.addTextChangedListener(inputValidator)
+
+            loginLabelRegister.setOnClickListener {
+                findNavController().navigate(R.id.fromLoginScreenFragmentToRegisterScreenFragment)
+            }
 
             loginButtonLogin.setOnClickListener {
                 viewModel.login(

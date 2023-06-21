@@ -29,6 +29,7 @@ class NavigationActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.launcherFragment -> binding.navBar.isVisible = false
+                R.id.registerScreenFragment -> binding.navBar.isVisible = false
                 R.id.loginScreenFragment -> binding.navBar.isVisible = false
                 else -> binding.navBar.isVisible = true
             }

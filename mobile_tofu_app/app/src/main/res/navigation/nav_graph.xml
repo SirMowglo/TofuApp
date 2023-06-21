@@ -24,7 +24,15 @@
 
         <action
             android:id="@+id/fromLoginScreenFragmentToUserScreenFragment"
-            app:destination="@id/userScreenFragment" />
+            app:destination="@id/userScreenFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/loginScreenFragment"/>
+
+        <action
+            android:id="@+id/fromLoginScreenFragmentToRegisterScreenFragment"
+            app:destination="@id/registerScreenFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/loginScreenFragment"/>
     </fragment>
 
     <fragment
@@ -32,6 +40,7 @@
         android:name="com.example.tofuapp.ui.view.fragment.UserScreenFragment"
         android:label="fragment_user_screen"
         tools:layout="@layout/fragment_user_screen" >
+
         <action
             android:id="@+id/fromUserScreenFragmentToLoginScreenFragment"
             app:destination="@id/loginScreenFragment" />
@@ -57,5 +66,18 @@
         <action
             android:id="@+id/fromSettingsScreenFragmentToLoginScreenFragment"
             app:destination="@id/loginScreenFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerScreenFragment"
+        android:name="com.example.tofuapp.ui.view.fragment.RegisterScreenFragment"
+        android:label="fragment_register_screen"
+        tools:layout="@layout/fragment_register_screen" >
+
+        <action
+            android:id="@+id/fromRegisterScreenFragmentToLoginScreenFragment"
+            app:destination="@id/loginScreenFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/registerScreenFragment"/>
     </fragment>
 </navigation>
