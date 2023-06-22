@@ -126,7 +126,8 @@ Dado que la API corre en local, y no es el mismo local que donde se corre el mov
 
 ## Guia visual de las aplicaciones
 
-Guia visual para poder ver donde esta cada funcionalidad de las aplicaciones, y tener una idea visual de como son sin necesidad de ejecutar
+Guia visual para poder ver donde esta cada funcionalidad de las aplicaciones, y tener una idea visual de como son sin necesidad de ejecutar.
+Se puede usar el usuario ADamas con contraseña 1234Asdf para testeo, al igual que el usuario AleUser con misma contraseña
 
 ### Web
 
