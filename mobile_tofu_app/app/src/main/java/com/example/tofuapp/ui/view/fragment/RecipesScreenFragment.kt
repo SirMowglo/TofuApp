@@ -33,8 +33,10 @@ class RecipesScreenFragment : Fragment() {
     private val recipeClick by lazy {
         object : UserRecipesRecyclerAdapter.OnItemClickListener {
             override fun onItemClick(recipe: RecipeResponseDTO) {
+                val bundle= Bundle()
+                bundle.putString(RecipeDetailsScreenFragment.RECIPE_ID_KEY, recipe.id)
+                findNavController().navigate(R.id.fromRecipesScreenFragmentToRecipeDetailsScreenFragment, bundle)
                 super.onItemClick(recipe)
-                //TODO Implementar detalles al pulsar
             }
         }
     }

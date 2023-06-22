@@ -1,6 +1,7 @@
 package com.example.tofuapp.data.service
 
 import com.example.tofuapp.data.model.dto.PageDTO
+import com.example.tofuapp.data.model.dto.recipe.RecipeDetailsResponseDTO
 import com.example.tofuapp.data.model.dto.recipe.RecipeRequestDTO
 import com.example.tofuapp.data.model.dto.recipe.RecipeResponseDTO
 import okhttp3.ResponseBody
@@ -21,4 +22,7 @@ interface RecipeService {
     suspend fun addRecipe(@Body recipeRequestDTO: RecipeRequestDTO): Response<RecipeResponseDTO>
     @DELETE("recipe/{recipeId}")
     suspend fun deleteRecipe(@Path("recipeId") recipeId: String): Response<ResponseBody>
+    @GET("recipe/{recipeId}")
+    suspend fun getRecipeById(@Path("recipeId") recipeId: String): Response<RecipeDetailsResponseDTO>
+
 }

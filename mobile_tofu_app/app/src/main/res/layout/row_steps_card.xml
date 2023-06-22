@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="4dp"
+    app:cardBackgroundColor="@color/tofu_disabled_grey"
+    android:id="@+id/rowStepCard">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/rowStepNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Step: 1"
+            android:textAppearance="@style/appbar_title"
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="12dp"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/rowStepDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="12dp"
+            tools:text="Buenas tardeseste es el paso tal y nose que porque tal y no se cuanto paro bueno esto es par probar el coso ese"
+            android:textSize="20dp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textColor="@color/black_alpha_40" />
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

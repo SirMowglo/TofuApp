@@ -13,6 +13,10 @@ import javax.inject.Inject
 class RecipeRepository @Inject constructor(
     private val recipeService: RecipeService,
 ) {
+    fun getRecipeById(recipeId: String) = apiRequestFlow {
+        recipeService.getRecipeById(recipeId)
+    }
+
     fun getRecipesByAuthor(username: String) = apiRequestFlow {
         recipeService.getRecipesByAuthor(username)
     }

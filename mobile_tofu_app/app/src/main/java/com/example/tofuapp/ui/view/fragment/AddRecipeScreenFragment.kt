@@ -24,15 +24,19 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddRecipeScreenFragment : Fragment() {
     private val binding by lazy { FragmentAddRecipeScreenBinding.inflate(layoutInflater) }
     private val viewModel: AddRecipeViewModel by viewModels()
-    private val inputValidator = object : TextWatcher{
+    private val inputValidator = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            with(binding){
-                val prepTime: Int = Integer.parseInt(addRecipeInputPrepTime.text.toString())
+            with(binding) {
+                val prepTime: Int =
+                    if (addRecipeInputPrepTime.text.toString().isNotEmpty())
+                        Integer.parseInt(addRecipeInputPrepTime.text.toString())
+                    else 0
 
-                if(prepTime !in 1..999)
-                    addRecipeInputLayoutPrepTime.error = "Preparation time must be between 0 and 1000 minutes"
+                if (prepTime !in 1..999)
+                    addRecipeInputLayoutPrepTime.error =
+                        "Preparation time must be between 0 and 1000 minutes"
                 else addRecipeInputLayoutPrepTime.error = ""
 
                 recipeButtonLogin.isEnabled = (prepTime in 1..999)
@@ -42,6 +46,7 @@ class AddRecipeScreenFragment : Fragment() {
         override fun afterTextChanged(s: Editable?) {}
 
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,10 +63,10 @@ class AddRecipeScreenFragment : Fragment() {
             }
         }
 
-        viewModel.recipeResponse.observe(viewLifecycleOwner){recipeResponse ->
+        viewModel.recipeResponse.observe(viewLifecycleOwner) { recipeResponse ->
             binding.recipeButtonLogin.toggleVisibility(true)
             binding.recipeCircularLoading.toggleVisibility(false)
-            when(recipeResponse){
+            when (recipeResponse) {
                 is ApiResponse.Failure -> {
                     Toast.makeText(
                         context,
@@ -69,10 +74,12 @@ class AddRecipeScreenFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+
                 ApiResponse.Loading -> {
                     binding.recipeButtonLogin.toggleVisibility(true)
                     binding.recipeCircularLoading.toggleVisibility(false)
                 }
+
                 is ApiResponse.Success -> {
                     Toast.makeText(context, "Added succesfully!", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.fromAddRecipeScreenFragmentToUserScreenFragment)
@@ -81,11 +88,15 @@ class AddRecipeScreenFragment : Fragment() {
         }
 
     }
-    private fun FragmentAddRecipeScreenBinding.validateButton(inputValidator: TextWatcher, viewModel: AddRecipeViewModel){
+
+    private fun FragmentAddRecipeScreenBinding.validateButton(
+        inputValidator: TextWatcher,
+        viewModel: AddRecipeViewModel
+    ) {
         addRecipeInputPrepTime.addTextChangedListener(inputValidator)
         var chipType = "meal"
-        addRecipeChipGroupType.setOnCheckedStateChangeListener{ cg, _ ->
-            if(cg.checkedChipIds.isNotEmpty()){
+        addRecipeChipGroupType.setOnCheckedStateChangeListener { cg, _ ->
+            if (cg.checkedChipIds.isNotEmpty()) {
                 chipType = cg.findViewById<Chip>(cg.checkedChipId).text.toString().lowercase()
             }
         }
@@ -95,7 +106,9 @@ class AddRecipeScreenFragment : Fragment() {
                 RecipeRequestDTO(
                     addRecipeInputDescription.text.toString(),
                     addRecipeInputName.text.toString(),
-                    Integer.parseInt(addRecipeInputPrepTime.text.toString()),
+                    if (addRecipeInputPrepTime.text.toString().isNotEmpty())
+                        Integer.parseInt(addRecipeInputPrepTime.text.toString())
+                    else 0,
                     chipType
                 ),
                 object : CoroutineErrorHandler {

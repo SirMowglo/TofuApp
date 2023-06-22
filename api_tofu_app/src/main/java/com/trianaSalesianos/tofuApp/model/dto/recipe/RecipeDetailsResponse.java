@@ -41,6 +41,7 @@ public class RecipeDetailsResponse {
                 .img(recipe.getImg())
                 .author(UserResponse.fromUser(recipe.getAuthor()))
                 .prepTime(recipe.getPrepTime())
+                .type(recipe.getType().getName())
                 .nLikes(recipe.getFavoritedBy().size())
                 .ingredients(recipe.getRecipeIngredients()
                         .stream()

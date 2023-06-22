@@ -50,6 +50,12 @@
             app:destination="@id/addRecipeScreenFragment"
             app:popUpTo="@id/userScreenFragment"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/fromUserScreenFragmentToRecipeDetailsScreenFragment"
+            app:destination="@id/recipeDetailsScreenFragment"
+            app:popUpTo="@id/userScreenFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -61,6 +67,12 @@
         <action
             android:id="@+id/fromRecipesScreenFragmentToLoginScreenFragment"
             app:destination="@id/loginScreenFragment" />
+
+        <action
+            android:id="@+id/fromRecipesScreenFragmentToRecipeDetailsScreenFragment"
+            app:destination="@id/recipeDetailsScreenFragment"
+            app:popUpTo="@id/recipesScreenFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -98,5 +110,18 @@
             app:destination="@id/userScreenFragment"
             app:popUpTo="@id/addRecipeScreenFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipeDetailsScreenFragment"
+        android:name="com.example.tofuapp.ui.view.fragment.RecipeDetailsScreenFragment"
+        android:label="fragment_recipe_details_screen"
+        tools:layout="@layout/fragment_recipe_details_screen" >
+
+        <action
+            android:id="@+id/fromRecipeDetailsScreenFragmentToUserScreenFragment"
+            app:destination="@id/userScreenFragment"
+            app:popUpTo="@id/recipeDetailsScreenFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

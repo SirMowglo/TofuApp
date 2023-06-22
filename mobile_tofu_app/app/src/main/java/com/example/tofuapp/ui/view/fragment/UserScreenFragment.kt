@@ -16,6 +16,7 @@ import com.example.tofuapp.R
 import com.example.tofuapp.data.model.dto.recipe.RecipeResponseDTO
 import com.example.tofuapp.databinding.FragmentUserScreenBinding
 import com.example.tofuapp.ui.view.adapter.UserRecipesRecyclerAdapter
+import com.example.tofuapp.ui.view.fragment.RecipeDetailsScreenFragment.Companion.RECIPE_ID_KEY
 import com.example.tofuapp.ui.viewmodel.CoroutineErrorHandler
 import com.example.tofuapp.ui.viewmodel.CurrentUserViewModel
 import com.example.tofuapp.ui.viewmodel.TokenViewModel
@@ -37,8 +38,10 @@ class UserScreenFragment : Fragment() {
     private val recipeClick by lazy {
         object : UserRecipesRecyclerAdapter.OnItemClickListener {
             override fun onItemClick(recipe: RecipeResponseDTO) {
+                val bundle= Bundle()
+                bundle.putString(RECIPE_ID_KEY, recipe.id)
+                findNavController().navigate(R.id.fromUserScreenFragmentToRecipeDetailsScreenFragment, bundle)
                 super.onItemClick(recipe)
-                //TODO Implementar detalles al pulsar
             }
 
             override fun onLongItemClick(recipe: RecipeResponseDTO): Boolean {

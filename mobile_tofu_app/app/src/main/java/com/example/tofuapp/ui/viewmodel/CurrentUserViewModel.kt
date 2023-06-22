@@ -28,14 +28,14 @@ class CurrentUserViewModel @Inject constructor(
     private val _user = MutableLiveData<UserDetailsResponseDTO>()
     val user: LiveData<UserDetailsResponseDTO> = _user
 
+    private val _deleteRecipeResponse = MutableLiveData<ApiResponse<Boolean>>()
+
     private val _recipeResponse = MutableLiveData<ApiResponse<PageDTO<RecipeResponseDTO>>>()
     val recipeResponse: LiveData<ApiResponse<PageDTO<RecipeResponseDTO>>> = _recipeResponse
-
-    private val _deleteRecipeResponse = MutableLiveData<ApiResponse<Boolean>>()
-    val deleteRecipeResponse: LiveData<ApiResponse<Boolean>> = _deleteRecipeResponse
-
     private val _recipeList = MutableLiveData<List<RecipeResponseDTO>>()
     val recipeList: LiveData<List<RecipeResponseDTO>> = _recipeList
+
+    val deleteRecipeResponse: LiveData<ApiResponse<Boolean>> = _deleteRecipeResponse
 
 
     fun getCurrentUser(coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(

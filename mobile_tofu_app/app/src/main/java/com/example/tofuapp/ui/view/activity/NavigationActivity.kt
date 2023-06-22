@@ -31,6 +31,7 @@ class NavigationActivity : AppCompatActivity() {
                 R.id.launcherFragment -> binding.navBar.isVisible = false
                 R.id.registerScreenFragment -> binding.navBar.isVisible = false
                 R.id.addRecipeScreenFragment -> binding.navBar.isVisible = false
+                R.id.recipeDetailsScreenFragment -> binding.navBar.isVisible = false
                 R.id.loginScreenFragment -> binding.navBar.isVisible = false
                 else -> binding.navBar.isVisible = true
             }
