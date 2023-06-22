@@ -130,6 +130,38 @@ Guia visual para poder ver donde esta cada funcionalidad de las aplicaciones, y 
 
 ### Web
 
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_web_1.png)
 
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_web_2.png)
+
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_web_3.png)
+
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_web_4.png)
+
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_web_5.png)
+
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_web_6.png)
+
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_web_7.png)
+
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_web_8.png)
 
 ### Movil
+
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_mobile_1.png)
+
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_mobile_2.png)
+
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_mobile_3.png)
+
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_mobile_4.png)
+
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_mobile_5.png)
+
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_mobile_6.png)
+
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_mobile_7.png)
+
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_mobile_8.png)
+
+![](https://github.com/SirMowglo/TofuApp/blob/main/assets/screenshots/Screenshot_mobile_9.png)
