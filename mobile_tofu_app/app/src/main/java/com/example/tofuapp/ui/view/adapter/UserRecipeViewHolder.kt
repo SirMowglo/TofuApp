@@ -33,6 +33,7 @@ class UserRecipesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
             )
             rowRecipeImage.renderUrl(glideUrl)
 
+            rowRecipePrepTime.text ="${recipe.prepTime} m"
             rowRecipeNLikes.text = " ${recipe.nlikes}"
             rowRecipeName.text = recipe.name
             rowRecipeAuthorUsername.text = "@${recipe.author.username}"

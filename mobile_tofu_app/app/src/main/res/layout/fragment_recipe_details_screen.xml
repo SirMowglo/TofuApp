@@ -99,7 +99,7 @@
                     android:id="@+id/recipeLabelType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginHorizontal="12dp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:shadowColor="@color/black"
                     android:shadowDx="1"
@@ -110,6 +110,21 @@
                     android:textSize="24sp"
                     app:layout_constraintBottom_toTopOf="@id/recipeDetailsInfo"
                     app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/recipeLabelPrepTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="6"
+                    android:text="15 m"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toTopOf="@id/recipeDetailsInfo"
+                    app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.appbar.MaterialToolbar

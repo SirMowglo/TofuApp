@@ -60,7 +60,7 @@ class RecipeDetailsScreenFragment : Fragment() {
         viewModel.observerViewModel()
 
         binding.apply {
-
+            setCollapsingToolbar()
             recipeDetailsToolbar.setNavigationOnClickListener {
                 findNavController().navigate(R.id.fromRecipeDetailsScreenFragmentToUserScreenFragment)
             }
@@ -149,7 +149,8 @@ class RecipeDetailsScreenFragment : Fragment() {
                 recipeDetailsImage.renderUrl(glideUrl)
                 recipeDetailsAuthorUsername.text = "@${recipe.author.username}"
                 recipeDetailsName.text = recipe.name
-                recipeLabelType.text = recipe.type
+                recipeLabelType.text = recipe.type.replaceFirstChar(Char::uppercase)
+                recipeLabelPrepTime.text = "${recipe.prepTime} m"
                 recipeDetailsDescription.text = recipe.description
 
                 getStepsByRecipe(recipeId ?: "", object : CoroutineErrorHandler {

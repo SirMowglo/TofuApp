@@ -70,5 +70,21 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/rowRecipePrepTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15 m"
+            android:textSize="24sp"
+            android:shadowRadius="6"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowColor="@color/black"
+            android:layout_marginHorizontal="12dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/open_sans_semibold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -257,7 +257,7 @@
         android:textSize="@dimen/login_button_login_text_size"
         android:paddingVertical="@dimen/login_button_login_padding_vertical"
         android:layout_marginHorizontal="12dp"
-        android:text="@string/login_button_login"
+        android:text="Register"
         android:textColor="@color/white"
         android:backgroundTint="@drawable/selector_button_green_disabled"
         app:strokeColor="@color/black"

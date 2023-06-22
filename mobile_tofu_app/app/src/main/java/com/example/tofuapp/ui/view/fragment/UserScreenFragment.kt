@@ -154,6 +154,7 @@ class UserScreenFragment : Fragment() {
                         .build()
                 )
 
+                profileLabelFollowers.text = "Followers: ${user.nFollowers}"
                 profileLabelUsername.text = "@${user.username}"
                 profileLabelFullname.text = user.fullname
                 profileLabelDescription.text = user.description

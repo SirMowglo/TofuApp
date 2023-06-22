@@ -96,6 +96,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <TextView
+                    android:id="@+id/profileLabelFollowers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Followers: 0"
